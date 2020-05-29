@@ -1,0 +1,51 @@
+<template lang="pug">
+.home
+  .show-box
+  .bottom-bar
+    .item.active
+      .icon &#xe694;
+      p 首页
+    .item
+      .icon &#xe6c7;
+      p 排行
+    .item
+      .icon &#xe6c6;
+      p 邀请好友
+    .item
+      .icon &#xe619;
+      p 我的
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.show-box {
+  height: calc(100% - 55px);
+}
+.bottom-bar {
+  background-color: #f7f7f7;
+  display: flex;
+  height: 50px;
+  color: #d7d8dc;
+  text-align: center;
+  padding-top: 5px;
+  .item {
+    width: 25%;
+  }
+  .icon {
+    display: block;
+    font-size: 28px;
+    line-height: 30px;
+  }
+}
+.active {
+  color: #009fe9;
+}
+</style>
