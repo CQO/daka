@@ -1,6 +1,8 @@
 <template lang="pug">
 .home
-  .show-box
+  view.show-box(name="showBox")
+    .home(route="home") home
+    .home(route="rank") rank
   .bottom-bar
     .item.active
       .icon &#xe694;
