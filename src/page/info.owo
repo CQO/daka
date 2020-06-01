@@ -1,0 +1,22 @@
+<template lang="pug">
+.info
+  //- 头图
+  img.main-image(src="@|top-bar.jpg|")
+  .conn
+    .card
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.main-image {
+  width: 100%;
+}
+</style>

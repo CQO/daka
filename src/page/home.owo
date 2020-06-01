@@ -1,13 +1,13 @@
 <template lang="pug">
 .home
-  view.show-box(name="showBox")
-    .home(route="home") home
-    .home(route="rank") rank
+  view.show-box(name="showbox")
+    plug(_name="activity" _src="./src/page/activity.owo" route="home")
+    plug(_name="rank" _src="./src/page/rank.owo" route="rank")
   .bottom-bar
-    .item.active
+    .item(go="/view-showbox=home/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'home'")
       .icon &#xe694;
       p 首页
-    .item
+    .item(go="/view-showbox=rank/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'rank'")
       .icon &#xe6c7;
       p 排行
     .item
@@ -30,9 +30,13 @@
 <style lang="less">
 .show-box {
   height: calc(100% - 55px);
+  overflow: auto;
+  overflow-x: hidden;
+  background-color: #f8f8f8;
+  padding: 0 2vw;
 }
 .bottom-bar {
-  background-color: #f7f7f7;
+  background-color: white;
   display: flex;
   height: 50px;
   color: #d7d8dc;
@@ -40,6 +44,9 @@
   padding-top: 5px;
   .item {
     width: 25%;
+    p {
+      font-size: 12px;
+    }
   }
   .icon {
     display: block;
@@ -49,5 +56,11 @@
 }
 .active {
   color: #009fe9;
+}
+[route] {
+  padding-top: 10px;
+  width: 100%;
+  height: calc(100% - 10px);
+  // overflow: auto;
 }
 </style>

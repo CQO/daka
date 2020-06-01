@@ -6,13 +6,9 @@ body, html {
   height: 100vh;
   overflow: hidden;
   user-select: text;
-  font: normal 12px/180% "SimSun";
+  font-family: 'pingfang SC','helvetica neue',arial,'hiragino sans gb','microsoft yahei ui','microsoft yahei','simsun',sans-serif;
   -webkit-overflow-scrolling: touch;
   position: relative;
-}
-.owo {
-  width: 100%;
-  height: 100%;
 }
 html {
   background-color: white;
@@ -67,4 +63,8 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
   font-weight: normal;
   display: inline-block;
   user-select: none;
+}
+
+[route-active="false"] {
+  display: none;
 }

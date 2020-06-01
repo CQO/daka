@@ -1,0 +1,70 @@
+<template lang="pug">
+.mini-card
+  img.left(src="@|gift.svg|")
+  .cent
+    h2 每日打卡领取奖励
+    p 查看打卡记录
+  .right
+    p 累计打卡<span>0</span>天
+    .button 我的打卡
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.mini-card {
+  border: 1px solid #dadada;
+  width: 95%;
+  margin: 0;
+  border-radius: 10px;
+  height: 55px;
+  box-shadow: 1px 1px 5px #ccc;
+  display: flex;
+  padding: 5px 2vw;
+  background-color: white;
+}
+.left {
+  width: 34px;
+  padding: 8px;
+  background-color: #b5b5b5;
+  border-radius: 24px;
+  margin: 3px 5px;
+}
+.cent {
+  width: calc(100% - 150px);
+  margin-left: 8px;
+  h2 {
+    font-size: 16px;
+    line-height: 28px;
+    color: #333;
+  }
+  p {
+    font-size: 12px;
+    color: #888;
+  }
+}
+.right {
+  font-size: 12px;
+  color: #888;
+  span {
+    color: #ec814b;
+    font-size: 20px;
+    margin: 0 2px;
+    font-weight: bold;
+  }
+  .button {
+    background-image: linear-gradient(to right, #fa7e1e, #ffa648);
+    text-align: center;
+    border-radius: 11px;
+    color: white;
+    line-height: 25px;
+  }
+}
+</style>

@@ -1,0 +1,87 @@
+<template lang="pug">
+.max-card
+  img.left(src="@|gift.svg|")
+  .cent
+    h2 早餐打卡
+    p 每天06:00~07:00
+    .number 可瓜分<span>201254</span>元
+  .right
+    .button 参与挑战
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.max-card {
+  border: 1px solid #dadada;
+  width: 95%;
+  margin: 10px 0%;
+  border-radius: 10px;
+  height: 75px;
+  box-shadow: 1px 1px 5px #ccc;
+  display: flex;
+  padding: 10px 2vw;
+  background-color: white;
+}
+.left {
+  width: 70px;
+  padding: 8px;
+  background-color: #b5b5b5;
+  border-radius: 10px;
+  margin: 3px 5px;
+}
+.cent {
+  width: calc(100% - 185px);
+  margin-left: 8px;
+  h2 {
+    font-size: 16px;
+    line-height: 28px;
+    color: #333;
+  }
+  p {
+    font-size: 12px;
+    color: #888;
+    height: 26px;
+  }
+  .number {
+    font-size: 12px;
+    color: #888;
+    span {
+      font-size: 20px;
+      color: gold;
+      font-weight: bold;
+      margin: 0 2px;
+    }
+  }
+}
+.right {
+  font-size: 12px;
+  color: #888;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  span {
+    color: #ec814b;
+    font-size: 20px;
+    margin: 0 2px;
+    font-weight: bold;
+  }
+  .button {
+    background-image: linear-gradient(to right, #fa7e1e, #ffa648);
+    text-align: center;
+    border-radius: 15px;
+    color: white;
+    line-height: 30px;
+    width: 80px;
+    font-size: 14px;
+  }
+  
+}
+</style>

@@ -1,7 +1,7 @@
 {
 	"basePath": "./",
 	"root": "/src",
-	"title": "{TAG_14226_TAG}",
+	"title": "大咖打卡",
 	"scheme": [],
 	"outFolder": "./dist",
 	"resourceFolder": "./src/resource",
@@ -92,13 +92,18 @@
 	],
 	"pageList": [
 		{
-			"name": "loading",
-			"src": "./src/page/loading.owo",
+			"name": "login",
+			"src": "./src/page/login.owo",
 			"type": "page"
 		},
 		{
 			"name": "home",
 			"src": "./src/page/home.owo",
+			"type": "page"
+		},
+		{
+			"name": "info",
+			"src": "./src/page/info.owo",
 			"type": "page"
 		}
 	],
@@ -116,7 +121,7 @@
 			"serverPort": 8000,
 			"server": true,
 			"autoReload": true,
-			"remoteDebug": false,
+			"remoteDebug": true,
 			"watcherEnable": true
 		},
 		"build": {
