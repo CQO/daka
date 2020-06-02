@@ -1,0 +1,124 @@
+<template lang="pug">
+.my
+  .user-info
+    .user-bar
+      img(src="@|user.png|")
+      .user-name 飞奔的马桶盖
+    //- 总收益
+    .profit
+      .title 打卡收益
+      p 1000.00元
+    .card-box
+      .other-box
+        .days
+          .title 打卡天数
+          p 32天
+        .project
+          .title 进行中的打卡
+          p 3个
+      .item-bar
+        .icon &#xe68c;
+        .text 我的钱包
+      .item-bar
+        .icon &#xe63a;
+        .text 打卡记录
+      .item-bar
+        .icon &#xe6d0;
+        .text 常见问题
+      .item-bar
+        .icon &#xe711;
+        .text 联系我们
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.user-info {
+  background-image: url('@|my-bg.png|');
+  background-size: 100%;
+  height: 60vw;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 0 2%;
+}
+.user-bar {
+  display: flex;
+  line-height: 55px;
+  padding-top: 10px;
+  img {
+    width: 45px;
+    margin: 5px;
+    margin-right: 15px;
+  }
+}
+.other-box {
+  display: flex;
+  .days {
+    width: 50%;
+  }
+  .project {
+    width: 50%;
+  }
+}
+.profit {
+  margin: 10px 5px;
+  p {
+    font-size: 26px;
+    font-weight: bold;
+    color: gold;
+    line-height: 44px;
+  }
+  .title {
+    color: #d5d8d4;
+    font-size: 14px;
+  }
+}
+
+.card-box {
+  background-color: white;
+  border-radius: 10px;
+  width: 96%;
+  margin: 0 auto;
+  padding: 2%;
+  box-shadow: 1px 1px 5px #ababab;
+  .title {
+    color: #999;
+    font-size: 14px;
+  }
+}
+.other-box {
+  display: flex;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  .title {
+    color: #999;
+    font-size: 14px;
+  }
+  p {
+    font-size: 24px;
+    color: #e3871b;
+    font-weight: bold;
+    line-height: 55px;
+    text-align: center;
+  }
+}
+.item-bar {
+  color: black;
+  display: flex;
+  line-height: 50px;
+  .icon {
+    color: mediumslateblue;
+    width: 50px;
+    text-align: center;
+    font-size: 28px;
+    margin-right: 10px;
+  }
+}
+</style>

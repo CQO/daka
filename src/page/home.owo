@@ -3,6 +3,7 @@
   view.show-box(name="showbox")
     plug(_name="activity" _src="./src/page/activity.owo" route="home")
     plug(_name="rank" _src="./src/page/rank.owo" route="rank")
+    plug(_name="my" _src="./src/page/my.owo" route="my")
   .bottom-bar
     .item(go="/view-showbox=home/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'home'")
       .icon &#xe694;
@@ -13,7 +14,7 @@
     .item
       .icon &#xe6c6;
       p 邀请好友
-    .item
+    .item(go="/view-showbox=my/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'my'")
       .icon &#xe619;
       p 我的
 </template>
@@ -33,7 +34,7 @@
   overflow: auto;
   overflow-x: hidden;
   background-color: #f8f8f8;
-  padding: 0 2vw;
+  padding: 0;
 }
 .bottom-bar {
   background-color: white;
@@ -53,14 +54,15 @@
     font-size: 28px;
     line-height: 30px;
   }
+  .active {
+    color: #009fe9;
+  }
 }
-.active {
-  color: #009fe9;
-}
+
 [route] {
-  padding-top: 10px;
   width: 100%;
-  height: calc(100% - 10px);
+  height: 100%;
+  position: relative;
   // overflow: auto;
 }
 </style>

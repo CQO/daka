@@ -49,12 +49,12 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
 
 @font-face {
   font-family: 'iconfont';  /* project id 1851973 */
-  src: url('//at.alicdn.com/t/font_1851973_rdkknyko6us.eot');
-  src: url('//at.alicdn.com/t/font_1851973_rdkknyko6us.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1851973_rdkknyko6us.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1851973_rdkknyko6us.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1851973_rdkknyko6us.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1851973_rdkknyko6us.svg#iconfont') format('svg');
+  src: url('//at.alicdn.com/t/font_1851973_uotw6md8xri.eot');
+  src: url('//at.alicdn.com/t/font_1851973_uotw6md8xri.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1851973_uotw6md8xri.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1851973_uotw6md8xri.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1851973_uotw6md8xri.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1851973_uotw6md8xri.svg#iconfont') format('svg');
 }
 
 .icon {
@@ -67,4 +67,8 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
 
 [route-active="false"] {
   display: none;
+}
+
+.rank {
+  background-color: #cb78d3;
 }
