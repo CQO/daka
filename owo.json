@@ -80,7 +80,7 @@
 		{
 			"name": "toast",
 			"afterbody": true,
-			"src": "./owo_modules/toast.js"
+			"src": "https://cunchu.site/owo/tool/toast.js"
 		}
 	],
 	"styleList": [

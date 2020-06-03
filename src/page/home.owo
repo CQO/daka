@@ -5,16 +5,16 @@
     plug(_name="rank" _src="./src/page/rank.owo" route="rank")
     plug(_name="my" _src="./src/page/my.owo" route="my")
   .bottom-bar
-    .item(go="/view-showbox=home/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'home'")
+    .item(go="/view-showbox=home/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'home'")
       .icon &#xe694;
       p 首页
-    .item(go="/view-showbox=rank/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'rank'")
+    .item(go="/view-showbox=rank/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'rank'")
       .icon &#xe6c7;
       p 排行
     .item
       .icon &#xe6c6;
       p 邀请好友
-    .item(go="/view-showbox=my/moveToLeft/moveFromRight/true" o-class-active="this.view.showbox._activeName == 'my'")
+    .item(go="/view-showbox=my/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'my'")
       .icon &#xe619;
       p 我的
 </template>
@@ -22,7 +22,11 @@
 <script>
   module.exports = {
     created: function () {
-
+      owo.onViewChange = function () {
+        console.log('--------------------')
+        console.log(this)
+        // this.handleEvent(this, this.query('.bottom-bar'))
+      }
     }
   }
 </script>
