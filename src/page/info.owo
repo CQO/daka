@@ -1,9 +1,52 @@
 <template lang="pug">
-.info
+.info-page
   //- 头图
   img.main-image(src="@|top-bar.jpg|")
   .conn
     .card
+      .title-bar
+        h2 早起打卡
+        h3 当前挑战金<span>13242</span>元
+      .info 每天6:00~7:00早起打卡
+      .progress-box
+        .progress
+    //- 用户展示
+    .user-show.card
+      span 当前有124人参与打卡
+      .user-image-box
+        img(src="@|user.png|")
+        img(src="@|user.png|")
+        img(src="@|user.png|")
+        img(src="@|user.png|")
+        img(src="@|user.png|")
+    //- 参加按钮
+    .join-button
+      p.text-1 参与挑战
+      p.text-2 已阅读并同意规则    
+    //- 今日打卡进度
+    .other-people.card
+      .other-title-bar
+        h2 今日打卡战况
+        span 768成功|27失败
+      ul
+        li
+          .left
+            img(src="@|user.png|")
+            span 打卡之星
+            .name 招财进宝
+          .right 06:00:03打卡
+        li
+          .left
+            img(src="@|user.png|")
+            span 手气之星
+            .name 招财进宝
+          .right 0.52元
+        li
+          .left
+            img(src="@|user.png|")
+            span 毅力之星
+            .name 招财进宝
+          .right 连续打卡400次
 </template>
 
 <script>
@@ -16,7 +59,151 @@
 
 
 <style lang="less">
+.info-page {
+  background-color: #f8f8f8;
+}
+.conn {
+  position: absolute;
+  width: 100%;
+  top: 47vw;
+}
+.card {
+  background-color: white;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  padding: 2vw;
+  box-shadow: 1px 1px 5px #cacaca;
+}
 .main-image {
   width: 100%;
+  display: block;
+}
+.title-bar {
+  display: flex;
+  justify-content: space-between;
+  line-height: 30px;
+  h2 {
+    font-size: 16px;
+    color: #333;
+  }
+  h3 {
+    font-size: 12px;
+    color: #888;
+    font-weight: normal;
+    span {
+      color: gold;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 2px;
+    }
+  }
+}
+.info {
+  font-size: 12px;
+  color: #888;
+}
+.progress-box {
+  height: 8px;
+  background-color: bisque;
+  margin: 15px 0;
+  border-radius: 4px;
+  overflow: hidden;
+  .progress {
+    height: 100%;
+    width: 20%;
+    background-color: #009fe9;
+  }
+}
+.user-show {
+  display: flex;
+  margin-top: 15px;
+  font-size: 14px;
+  line-height: 30px;
+  color: coral;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-image-box {
+  display: flex;
+  img {
+    width: 25px;
+    margin-left: -5px;
+    display: block;
+  }
+}
+.join-button {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: orangered;
+  border-radius: 25px;
+  padding: 2px 0;
+  margin-top: 20px;
+  box-shadow: 1px 1px 4px #8c2809;
+  .text-1 {
+    font-size: 18px;
+    color: white;
+  }
+  .text-2 {
+    font-size: 12px;
+    color: wheat;
+  }
+}
+.other-title-bar {
+  display: flex;
+  justify-content: space-between;
+  h2 {
+    font-size: 16px;
+  }
+  span {
+    font-size: 14px;
+    color: #888;
+  }
+}
+.other-people {
+  margin-top: 20px;
+  li {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
+    align-items: center;
+    border-bottom: 1px solid #ffe0e0;
+  }
+  .left {
+    position: relative;
+    width: 180px;
+    height: 80px;
+    img {
+      width: 55px;
+      position: absolute;
+      top: 10px;
+      left: 2px;
+      margin: auto;
+    }
+    span {
+      position: absolute;
+      background-color: cornflowerblue;
+      color: white;
+      font-size: 12px;
+      padding: 1px 5px;
+      border-radius: 14px;
+      left: 1px;
+      bottom: 2px;
+      width: 50px;
+      text-align: center;
+      margin: auto;
+    }
+    .name {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      line-height: 40px;
+      height: 40px;
+      left: 75px;
+      font-size: 18px;
+    }
+  }
 }
 </style>

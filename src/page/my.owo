@@ -6,16 +6,28 @@
       .user-name 飞奔的马桶盖
     //- 总收益
     .profit
-      .title 打卡收益
+      .title 累计收入
       p 1000.00元
     .card-box
-      .other-box
-        .days
+      .other-box.clear
+        .gold.item
+          .title 我的钱包
+          p 124元
+        .home.item
+          .title 我的房间
+          p 3个
+        .days.item
           .title 打卡天数
           p 32天
-        .project
+        .project.item
           .title 进行中的打卡
           p 3个
+        .last-day.item
+          .title 连续打卡
+          p 14天
+        .next.item
+          .title 下次打卡时间
+          p 10小时后
       .item-bar
         .icon &#xe68c;
         .text 我的钱包
@@ -28,6 +40,7 @@
       .item-bar
         .icon &#xe711;
         .text 联系我们
+    .sign-out-button 退出登录
 </template>
 
 <script>
@@ -59,12 +72,9 @@
   }
 }
 .other-box {
-  display: flex;
-  .days {
-    width: 50%;
-  }
-  .project {
-    width: 50%;
+  .item {
+    width: 33.33%;
+    float: left;
   }
 }
 .profit {
@@ -84,17 +94,16 @@
 .card-box {
   background-color: white;
   border-radius: 10px;
-  width: 96%;
+  width: 92%;
   margin: 0 auto;
   padding: 2%;
-  box-shadow: 1px 1px 5px #ababab;
+  box-shadow: 1px 1px 5px #90959e;
   .title {
     color: #999;
     font-size: 14px;
   }
 }
 .other-box {
-  display: flex;
   text-align: center;
   border-bottom: 1px solid #ccc;
   .title {
@@ -120,5 +129,17 @@
     font-size: 28px;
     margin-right: 10px;
   }
+}
+.sign-out-button {
+  background-color: #009de9;
+  width: 96%;
+  margin: 0 auto;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  border-radius: 25px;
+  margin-top: 20px;
+  font-size: 20px;
+  box-shadow: 1px 1px 5px #90959e;
 }
 </style>

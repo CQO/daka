@@ -191,7 +191,7 @@ ul {
   position: absolute;
   width: 100%;
   bottom: 0;
-  height: calc(100% - 98vw);
+  height: calc(100% - 94vw);
   overflow: auto;
   border-radius: 10px 10px 0 0;
   li {

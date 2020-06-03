@@ -20,12 +20,11 @@
 
 <style lang="less">
 .max-card {
-  border: 1px solid #dadada;
   width: 95%;
   margin: 10px 0%;
   border-radius: 10px;
   height: 75px;
-  box-shadow: 1px 1px 5px #ccc;
+  box-shadow: 1px 1px 5px #d6b6b6;
   display: flex;
   padding: 10px 2vw;
   background-color: white;

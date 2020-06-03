@@ -1,0 +1,72 @@
+<template lang="pug">
+.invitation
+  img.main-image(src="@|invitation-bg.png|")
+  .conn
+    .card.card-1
+      .title 方式一: 邀请赚佣金
+      .rule 说明: 您可以自己设置佣金比例，生成连接后通过此链接注册的用户在获得收益时会返还给您设定比例的佣金。
+      .button.button-1 创建邀请链接
+    .card.card-1
+      .title 方式二: 开房赚佣金
+      .rule 说明: 您可以开设放间设置打卡时间、打卡天数、打卡分佣比例并供他人进行打卡，待打卡项目完成后您将获取您设置比例的佣金。
+      .button.button-2 创建打卡房间
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.main-image {
+  width: 100%;
+  margin-top: -20vw;
+}
+.conn {
+  position: absolute;
+  height: calc(100% - 52vw);
+  bottom: 0;
+  width: 90%;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+.card {
+  background-color: white;
+  padding: 3%;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  box-shadow: 1px 1px 5px #90959e;
+}
+.button {
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  background-color: peru;
+  color: seashell;
+  border-radius: 20px;
+  width: 70%;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+.button-2 {
+  background-color: #009fe9;
+}
+.rule {
+  background-color: #d5e8e8;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 10px;
+  color: slategrey;
+}
+.title {
+  color: orangered;
+  font-weight: bold;
+}
+</style>

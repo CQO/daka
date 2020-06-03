@@ -3,6 +3,7 @@
   view.show-box(name="showbox")
     plug(_name="activity" _src="./src/page/activity.owo" route="home")
     plug(_name="rank" _src="./src/page/rank.owo" route="rank")
+    plug(_name="invitation" _src="./src/page/invitation.owo" route="invitation")
     plug(_name="my" _src="./src/page/my.owo" route="my")
   .bottom-bar
     .item(go="/view-showbox=home/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'home'")
@@ -11,9 +12,9 @@
     .item(go="/view-showbox=rank/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'rank'")
       .icon &#xe6c7;
       p 排行
-    .item
+    .item(go="/view-showbox=invitation/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'invitation'")
       .icon &#xe6c6;
-      p 邀请好友
+      p 我要赚钱
     .item(go="/view-showbox=my/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'my'")
       .icon &#xe619;
       p 我的
@@ -22,10 +23,8 @@
 <script>
   module.exports = {
     created: function () {
-      owo.onViewChange = function () {
-        console.log('--------------------')
-        console.log(this)
-        // this.handleEvent(this, this.query('.bottom-bar'))
+      owo.onViewChange = () => {
+        this.handleEvent(this, this.query('.bottom-bar'))
       }
     }
   }
@@ -67,6 +66,9 @@
   width: 100%;
   height: 100%;
   position: relative;
-  // overflow: auto;
+}
+.activity {
+  padding: 2vw;
+  width: 96%;
 }
 </style>
