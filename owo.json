@@ -105,6 +105,11 @@
 			"name": "info",
 			"src": "./src/page/info.owo",
 			"type": "page"
+		},
+		{
+			"name": "wallet",
+			"src": "./src/page/wallet.owo",
+			"type": "page"
 		}
 	],
 	"mode": {

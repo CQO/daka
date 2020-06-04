@@ -4,9 +4,9 @@
   .button.button-1.active 奖励榜
   .button.button-2 邀请榜
   .so.so-0
-    img.so.so-1(src="@|388.png|")
-    img.so.so-2(src="@|333.png|")
-    img.so.so-3(src="@|330.png|")
+    img.so.so-1(src="@|388.png|" o-animation="flicker")
+    img.so.so-2(src="@|333.png|" o-animation="flicker")
+    img.so.so-3(src="@|330.png|" o-animation="shrink")
     img.so.so-4(src="@|394.png|")
     img.so.so-5(src="@|374.png|")
     img.so.so-6(src="@|376.png|")
