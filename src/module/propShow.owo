@@ -1,0 +1,65 @@
+<template lang="pug">
+.prop-show-box
+  .prop-show
+    p 参与此项挑战你需要支付5元入场费，打卡挑战期数为12期，每1天为一期，打卡时间为9：00-10：00，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。
+    .botton-bar
+      .butt.butt-1 我再想想
+      .butt.butt-2 立即参加
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+
+<style lang="less">
+.prop-show-box {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  height: 100%;
+  width: 100%;
+}
+.prop-show {
+  width: 300px;
+  height: 200px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  color: #333;
+  font-weight: bold;
+  line-height: 1.4;
+  p {
+    height: 165px;
+  }
+  .botton-bar {
+    display: flex;
+    line-height: 35px;
+    font-size: 16px;
+  }
+  .butt {
+    width: 42%;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+    margin: 0 4%;
+  }
+  .butt-1 {
+    background-color: steelblue;
+  }
+  .butt-2 {
+    background-color: coral;
+  }
+}
+</style>

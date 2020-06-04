@@ -78,6 +78,10 @@
 			"resource": true
 		},
 		{
+			"name": "swiper-5.4.1",
+			"src": "./src/resource/swiper-5.4.1.js"
+		},
+		{
 			"name": "toast",
 			"afterbody": true,
 			"src": "https://cunchu.site/owo/tool/toast.js"
@@ -88,14 +92,13 @@
 			"name": "main",
 			"src": "./src/main.css",
 			"resource": true
+		},
+		{
+			"name": "swiper-5.4.1",
+			"src": "./src/resource/swiper-5.4.1.css"
 		}
 	],
 	"pageList": [
-		{
-			"name": "login",
-			"src": "./src/page/login.owo",
-			"type": "page"
-		},
 		{
 			"name": "home",
 			"src": "./src/page/home.owo",
@@ -105,6 +108,16 @@
 			"name": "info",
 			"src": "./src/page/info.owo",
 			"type": "page"
+		},
+		{
+			"name": "login",
+			"src": "./src/page/login.owo",
+			"type": "page"
+		},
+		{
+			"name": "propShow",
+			"src": "./src/module/propShow.owo",
+			"type": "block"
 		}
 	],
 	"mode": {
@@ -143,9 +156,9 @@
 		}
 	},
 	"globalAni": {
-		"in": "rotateRightSideFirst",
-		"out": "moveFromRight&&delay200",
-		"backIn": "rotateLeftSideFirst",
-		"backOut": "moveFromLeft&&delay200"
+		"in": "rotatePushLeft",
+		"out": "moveFromRight&&ontop&&delay200",
+		"backIn": "rotatePushRight",
+		"backOut": "moveFromLeft&&ontop&&delay200"
 	}
 }

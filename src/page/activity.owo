@@ -1,15 +1,18 @@
 <template lang="pug">
-.activity
-  plug(_name="miniCard" _src="./src/module/miniCard.owo")
-  h1 推荐活动
-  plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
-  plug(_name="maxCard" _src="./src/module/maxCard.owo")
+.activity-box
+  plug(_name="module12" _src="https://template.owo.ink/5f1ecda61ba271b9.owo")
+  .card-box
+    h1(font="FZLTCHJW.TTF") 我的打卡
+    plug(_name="miniCard" _src="./src/module/miniCard.owo")
+    h1(font="FZLTCHJW.TTF") 推荐活动
+    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo")
 </template>
 
 <script>
@@ -28,7 +31,11 @@ h1 {
   font-size: 20px;
   border-left: 2px solid #009fe9;
   padding-left: 10px;
-  margin: 20px 0px;
+  margin: 15px 0px;
   line-height: 20px;
+  font-weight: normal;
+}
+.card-box {
+  padding: 2%;
 }
 </style>

@@ -6,7 +6,7 @@
     p 查看打卡记录
   .right
     p 累计打卡<span>0</span>天
-    .button 我的打卡
+    .button 点击打卡
 </template>
 
 <script>

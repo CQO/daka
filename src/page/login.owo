@@ -1,7 +1,7 @@
 <template lang="pug">
 .login
   .login-title-bar
-    img.back(src="https://cunchu.site/puge/login/back.png" go="/view-loginContent=login/moveToRight/moveFromLeft/true")
+    img.back(src="https://cunchu.site/puge/login/back.png" go="home//moveToRight/moveFromLeft/true")
     .register(go="/view-loginContent=register/moveToLeft/moveFromRight/true") 注册
   view.router(name="loginContent")
     .view-login(route="login")

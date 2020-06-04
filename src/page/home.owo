@@ -1,12 +1,12 @@
 <template lang="pug">
 .home
   view.show-box(name="showbox")
-    plug(_name="activity" _src="./src/page/activity.owo" route="home")
-    plug(_name="rank" _src="./src/page/rank.owo" route="rank")
-    plug(_name="invitation" _src="./src/page/invitation.owo" route="invitation")
-    plug(_name="my" _src="./src/page/my.owo" route="my")
+    .activity(_name="activity" _src="./src/page/activity.owo" route="activity")
+    .rank(_name="rank" _src="./src/page/rank.owo" route="rank")
+    .invitation(_name="invitation" _src="./src/page/invitation.owo" route="invitation")
+    .my(_name="my" _src="./src/page/my.owo" route="my")
   .bottom-bar
-    .item(go="/view-showbox=home/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'home'")
+    .item(go="/view-showbox=activity/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'activity'")
       .icon &#xe694;
       p 首页
     .item(go="/view-showbox=rank/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft" o-class-active="this.view.showbox._activeName == 'rank'")
@@ -66,9 +66,5 @@
   width: 100%;
   height: 100%;
   position: relative;
-}
-.activity {
-  padding: 2vw;
-  width: 96%;
 }
 </style>
