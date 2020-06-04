@@ -115,6 +115,11 @@
 			"type": "page"
 		},
 		{
+			"name": "wallet",
+			"src": "./src/page/wallet.owo",
+			"type": "page"
+		},
+		{
 			"name": "propShow",
 			"src": "./src/module/propShow.owo",
 			"type": "block"
