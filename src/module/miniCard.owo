@@ -59,6 +59,9 @@
     margin: 0 2px;
     font-weight: bold;
   }
+  p {
+    line-height: 22px;
+  }
   .button {
     background-image: linear-gradient(to right, #fa7e1e, #ffa648);
     text-align: center;

@@ -5,7 +5,7 @@
     h1(font="FZLTCHJW.TTF") 我的打卡
     plug(_name="miniCard" _src="./src/module/miniCard.owo")
     h1(font="FZLTCHJW.TTF") 推荐活动
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info////true")
+    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
     plug(_name="maxCard" _src="./src/module/maxCard.owo")
     plug(_name="maxCard" _src="./src/module/maxCard.owo")
     plug(_name="maxCard" _src="./src/module/maxCard.owo")

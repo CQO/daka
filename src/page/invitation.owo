@@ -28,12 +28,12 @@
 }
 .conn {
   position: absolute;
-  height: calc(100% - 52vw);
-  bottom: 0;
+  top: 30%;
   width: 90%;
   margin: 0 auto;
   left: 0;
   right: 0;
+  overflow: auto;
 }
 .card {
   background-color: white;
