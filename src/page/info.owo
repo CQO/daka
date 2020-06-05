@@ -20,7 +20,7 @@
         img(src="@|user.png|")
         img(src="@|user.png|")
     //- 参加按钮
-    .join-button 参与挑战  
+    .join-button(o-tap="joinGame") 参与挑战  
     //- 今日打卡进度
     .other-people.card
       .other-title-bar
@@ -51,6 +51,16 @@
   module.exports = {
     created: function () {
 
+    },
+    joinGame: function () {
+      owo.script.propShow.showProp(function () {
+        owo.script.propShow.hideProp()
+        owo.go({
+          page: 'wallet',
+          paramString: 'view-showbox=my'
+        })
+        owo.tool.toast('您的余额不足!')
+      })
     }
   }
 </script>
@@ -128,6 +138,7 @@
   display: flex;
   img {
     width: 25px;
+    height: 25px;
     margin-left: -5px;
     display: block;
   }

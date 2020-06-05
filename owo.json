@@ -123,6 +123,11 @@
 			"name": "propShow",
 			"src": "./src/module/propShow.owo",
 			"type": "block"
+		},
+		{
+			"name": "usePhone",
+			"src": "./src/module/usePhone.owo",
+			"type": "block"
 		}
 	],
 	"mode": {

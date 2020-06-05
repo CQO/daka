@@ -1,0 +1,58 @@
+<template lang="pug">
+.use-phone-box
+  .use-phone
+    img(src="@|qr-code.png|")
+    p 请用手机扫描查看
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+      setTimeout(() => {
+        // 判断是否为PC 如果是PC的话显示页面
+        const width = document.documentElement.clientWidth || document.body.offsetWidth || window.innerWidth
+        const height = document.documentElement.clientHeight || document.body.offsetHeight || window.innerHeight
+        if (width > height) {
+          this.$el.style.display = 'block'
+        } else {
+          this.$el.style.display = 'none'
+        }
+      }, 100);
+    }
+  }
+</script>
+
+<style lang="less">
+.use-phone-box {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: none;
+}
+.use-phone {
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  img {
+    width: 300px;
+    height: 300px;
+    display: block;
+  }
+  p {
+    width: 100%;
+    text-align: center;
+    font-size: 26px;
+    color: #333;
+    line-height: 50px;
+  }
+}
+</style>

@@ -28,12 +28,9 @@
         .next.item
           .title 下次打卡时间
           p 10小时后
-      .item-bar(go="wallet")
+      .item-bar(go="wallet////true")
         .icon &#xe68c;
         .text 我的钱包
-      .item-bar
-        .icon &#xe68c;
-        .text 收支明细
       .item-bar
         .icon &#xe63a;
         .text 打卡记录
@@ -43,7 +40,7 @@
       .item-bar
         .icon &#xe711;
         .text 联系我们
-    .sign-out-button(go="login") 退出登录
+    .sign-out-button(go="login////true") 退出登录
 </template>
 
 <script>
@@ -70,6 +67,7 @@
   padding-top: 10px;
   img {
     width: 45px;
+    height: 45px;
     margin: 5px;
     margin-right: 15px;
   }

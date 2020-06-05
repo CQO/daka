@@ -47,6 +47,11 @@ h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, bu
   clear: both;
 }
 
+img {
+  width: auto;
+  height: auto;
+}
+
 @font-face {
   font-family: 'iconfont';  /* project id 1851973 */
   src: url('//at.alicdn.com/t/font_1851973_uotw6md8xri.eot');
