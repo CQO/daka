@@ -25,11 +25,37 @@
       input.register-input(type="text" o-value="this.data.registerUserName" placeholder="用户名")
       input.register-input(type="password" o-value="this.data.registerPassWord" placeholder="密码")
       input.register-input(type="password" o-value="this.data.registerPassWordR" placeholder="确认密码")
-      input.register-input(type="text" o-value="this.data.registerEMail" placeholder="邮箱")
+      .phone-number-box
+        input.register-input.phone-number(type="text" o-value="this.data.registerPhone" placeholder="手机号码")
+        button(id="TencentCaptcha" data-appid="2092617728" data-cbfn="callback" type="button") 发送验证码
+      input.register-input(type="text" o-value="this.data.phoneCode" placeholder="手机验证码")
       .button(o-tap="register") 注册
 </template>
 
 <script>
+  window.callback = function(res) {
+    const phone = owo.script.login.data.registerPhone
+    if (!phone || phone == '') {
+      owo.tool.toast('没有填写手机号码!')
+      return
+    }
+    if (phone.length !== 11) {
+      owo.tool.toast('手机号码不正确!')
+      return
+    }
+    // res（用户主动关闭验证码）= {ret: 2, ticket: null}
+    // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
+    if (res.ret === 0) {
+      console.log('请求发送验证码!')
+      fetch(`http://127.0.0.1:8007/sendSms?ticket=${res.ticket}&phone=${phone}&randstr=${res.randstr}`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          owo.tool.toast('验证码发送成功!')
+        } else {
+          owo.tool.toast(`验证码发送失败: ${res.message}`)
+        }
+      })
+    }
+  }
   module.exports = {
     data: {
       userName: "puge",
@@ -37,7 +63,8 @@
       registerUserName: "",
       registerPassWord: "",
       registerPassWordR: "",
-      registerEMail: ""
+      registerPhone: "",
+      phoneCode: ''
     },
     created: function () {
       // 全局路由动画设置
@@ -48,7 +75,9 @@
       }
     },
     login: function () {
-      fetch(`http://154.8.196.163:8006/login?username=${this.data.userName}&password=${this.data.passWord}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
+      // 计算md5
+      const password = md5(this.data.passWord + 'puge')
+      fetch(`http://127.0.0.1:8007/login?username=${this.data.userName}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           if (owo.tool.toast) owo.tool.toast('登陆成功')
           else alert('登陆成功')
@@ -58,6 +87,9 @@
             inAnimation: "rotateRightSideFirst",
             outAnimation: "moveFromRight&&delay200"
           })
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
         }
       })
     },
@@ -75,15 +107,15 @@
         owo.tool.toast('重复密码不能为空哦!')
         return
       }
-      if (!this.data.registerEMail) {
-        owo.tool.toast('邮箱地址不能为空哦!')
+      if (!this.data.phoneCode) {
+        owo.tool.toast('手机验证码不能为空哦!')
         return
       }
       if (this.data.registerPassWord !== this.data.registerPassWordR) {
         owo.tool.toast('两次输入的密码不一致哦!')
         return
       }
-      fetch(`http://154.8.196.163:8006/register?username=${this.data.registerUserName}&password=${this.data.registerPassWord}&mail=${this.data.registerPassWord}`).then((response) => {return response.json();}).then((res) => {
+      fetch(`http://127.0.0.1:8007/register?username=${this.data.registerUserName}&password=${this.data.registerPassWord}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           owo.tool.toast('注册成功!')
         } else {
@@ -236,8 +268,30 @@ input {
     padding: 0 5vw;
     width: 73vw;
   }
+  .phone-number {
+    width: 42vw;
+    margin: 0;
+  }
   .button {
     background-color: #fa4169;
+  }
+}
+.phone-number-box {
+  display: flex;
+  width: 82vw;
+  margin: 0 auto;
+  margin-top: 20px;
+  justify-content: space-between;
+  align-items: center;
+  #TencentCaptcha {
+    height: 38px;
+    border: none;
+    background-color: #009fe9;
+    color: white;
+    width: 24vw;
+    border-radius: 27px;
+    line-height: 38px;
+    font-size: 14px;
   }
 }
 </style>
