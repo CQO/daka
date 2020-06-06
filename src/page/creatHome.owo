@@ -1,0 +1,79 @@
+<template lang="pug">
+.creat-home
+  .main-image
+  .card-box
+    .title(font="FZLTCHJW.TTF") 房间名称:
+    input(type="text" placeholder="请输入和你打卡内容有关的房间名")
+    .title(font="FZLTCHJW.TTF") 打卡开始时间:
+    input(type="time" value="10:00" placeholder="每天打卡开始时间")
+    .title(font="FZLTCHJW.TTF") 打卡结束时间:
+    input(type="time" value="11:00" placeholder="每天打卡结束时间")
+    .title(font="FZLTCHJW.TTF") 打卡周期:
+    input(type="number" placeholder="总计需要打卡多少天")
+    .title(font="FZLTCHJW.TTF") 分成比例:
+    input(type="number" placeholder="分成比例(1-99)")
+    .button(font="FZLTCHJW.TTF") 创建房间
+</template>
+
+<script>
+  module.exports = {
+    created: function () {
+
+    }
+  }
+</script>
+
+<style lang="less">
+.creat-home {
+  background-color: #f8f8f8;
+}
+.main-image {
+  height: 30%;
+  background-size: 100% auto;
+  background-position: center;
+  background-image: url('@|creatHome-bg.jpg|');
+}
+.card-box {
+  height: 71%;
+  position: absolute;
+  background-color: white;
+  width: 92%;
+  margin: 0 auto;
+  padding: 2%;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  top: 25%;
+  border-radius: 10px;
+  overflow: auto;
+  box-shadow: 1px 1px 6px #afafaf;
+}
+.title {
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+input {
+  height: 40px;
+  line-height: 40px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #f1e7e7;
+  width: 96%;
+  padding: 0 2%;
+  display: block;
+  font-size: 14px;
+  -webkit-appearance: none;
+}
+.button {
+  background-color: #009fe9;
+  color: white;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 25px;
+  font-size: 20px;
+  margin-top: 20px;
+  
+  box-shadow: 1px 1px 5px #9e0db7;
+}
+</style>

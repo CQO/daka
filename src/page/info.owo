@@ -19,12 +19,20 @@
         img(src="@|user.png|")
         img(src="@|user.png|")
         img(src="@|user.png|")
+    //- 设置挑战金额
+    .join-card.card
+      .title(font="FZLTCHJW.TTF") 可选挑战金额:
+      .set-money
+        span.active 5元
+        span 50元
+        span 500元
+        span 5000元
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战  
     //- 今日打卡进度
     .other-people.card
       .other-title-bar
-        h2(font="FZLTHJW.TTF") 今日打卡战况
+        h2(font="FZLTCHJW.TTF") 今日打卡战况
         span 768成功 | 27失败
       ul
         li
@@ -162,6 +170,7 @@
   justify-content: space-between;
   h2 {
     font-size: 16px;
+    font-weight: normal;
   }
   span {
     font-size: 12px;
@@ -216,6 +225,23 @@
   }
   .right {
     color: #888;
+  }
+}
+.join-card {
+  .title {
+    line-height: 30px;
+  }
+  span {
+    background-color: #ccc;
+    color: white;
+    padding: 0 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+    line-height: 26px;
+    font-size: 18px;
+  }
+  .active {
+    background-color: #009fe9;
   }
 }
 </style>

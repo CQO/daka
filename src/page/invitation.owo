@@ -6,7 +6,7 @@
       .title(font="FZLTCHJW.TTF") 方式一: 邀请赚佣金
       .rule 说明: 您可以自己设置佣金比例，生成连接后通过此链接注册的用户在获得收益时会返还给您设定比例的佣金。
       .button.button-1 创建邀请链接
-    .card.card-1
+    .card.card-1(go="creatHome")
       .title(font="FZLTCHJW.TTF") 方式二: 开房赚佣金
       .rule 说明: 您可以开设放间设置打卡时间、打卡天数、打卡分佣比例并供他人进行打卡，待打卡项目完成后您将获取您设置比例的佣金。
       .button.button-2 创建打卡房间
@@ -15,7 +15,7 @@
 <script>
   module.exports = {
     created: function () {
-
+      
     }
   }
 </script>
@@ -29,11 +29,12 @@
 .conn {
   position: absolute;
   top: 30%;
-  width: 90%;
+  width: 92%;
   margin: 0 auto;
   left: 0;
   right: 0;
   overflow: auto;
+  padding: 0 1%;
 }
 .card {
   background-color: white;
