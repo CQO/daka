@@ -5,20 +5,46 @@
     h1(font="FZLTCHJW.TTF") 我的打卡
     plug(_name="miniCard" _src="./src/module/miniCard.owo")
     h1(font="FZLTCHJW.TTF") 推荐活动
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-    plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+    .recommend-box
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
+      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
 </template>
 
 <script>
   module.exports = {
     created: function () {
-
+      // 获取房间列表
+      fetch(`http://127.0.0.1:8007/getHomeList`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          let newHtml = ''
+          // 数据库时间转时间
+          function getTimeStr(num) {
+            let hour = parseInt(num / 3600)
+            let minute = num % 3600
+            if (hour < 10) hour = '0' + hour
+            if (minute < 10) minute = '0' + minute
+            return `${hour}:${minute}`
+          }
+          // 遍历出每一个房间
+          res.data.forEach(element => {
+            const dataTime = JSON.parse(element.daka_time)
+            newHtml += `<div class="max-card" go="info" template="maxCard"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+          })
+          this.query('.recommend-box').innerHTML = newHtml
+          setTimeout(() => {
+            this.handleEvent()
+          }, 100);
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
+        }
+      })
     }
   }
 </script>

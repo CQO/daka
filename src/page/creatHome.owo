@@ -3,22 +3,80 @@
   .main-image
   .card-box
     .title(font="FZLTCHJW.TTF") 房间名称:
-    input(type="text" placeholder="请输入和你打卡内容有关的房间名")
+    input(type="text" placeholder="请输入和你打卡内容有关的房间名" o-value="this.data.name")
     .title(font="FZLTCHJW.TTF") 打卡开始时间:
-    input(type="time" value="10:00" placeholder="每天打卡开始时间")
+    input.start-day(type="date" value="" placeholder="每天打卡开始日期" o-value="this.data.startDay")
+    .title(font="FZLTCHJW.TTF") 打卡开始时间:
+    input.start-time(type="time" value="10:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
     .title(font="FZLTCHJW.TTF") 打卡结束时间:
-    input(type="time" value="11:00" placeholder="每天打卡结束时间")
+    input.end-time(type="time" value="11:00" placeholder="每天打卡结束时间" o-value="this.data.endTime")
     .title(font="FZLTCHJW.TTF") 打卡周期:
-    input(type="number" placeholder="总计需要打卡多少天")
+    input(type="number" placeholder="总计需要打卡多少天" o-value="this.data.avtiveDays")
     .title(font="FZLTCHJW.TTF") 分成比例:
-    input(type="number" placeholder="分成比例(1-99)")
-    .button(font="FZLTCHJW.TTF") 创建房间
+    input(type="number" placeholder="分成比例(1-99)" o-value="this.data.bonus")
+    .button(font="FZLTCHJW.TTF" o-tap="creatHome") 创建房间
 </template>
 
 <script>
   module.exports = {
+    data: {
+      name: "",
+      avtiveDays: 5,
+      bonus: 1,
+    },
     created: function () {
 
+    },
+    timeHandle: function (timeText) {
+      const timeArr = timeText.split(':')
+      return(parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60)
+    },
+    creatHome: function () {
+      const startTime = this.query('.start-time').value
+      const endTime = this.query('.end-time').value
+      const startDay = parseInt(new Date(this.query('.start-day').value).getTime() / 1000)
+      console.log(startDay)
+      if (!owo.state.token || !owo.state.userID) {
+        owo.tool.toast('您还未登录!')
+        owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
+        return
+      }
+      if (!this.data.name) {
+        owo.tool.toast('房间名没有输入!')
+        return
+      }
+      if (!startDay) {
+        owo.tool.toast('起始日期没有输入!')
+        return
+      }
+      if (!this.data.avtiveDays) {
+        owo.tool.toast('打卡天数没有输入!')
+        return
+      }
+      if (!this.data.bonus) {
+        owo.tool.toast('分成比例没有设置!')
+        return
+      }
+      if (!startTime) {
+        owo.tool.toast('开始时间没有设置!')
+        return
+      }
+      if (!endTime) {
+        owo.tool.toast('结束时间没有设置!')
+        return
+      }
+      fetch(`http://127.0.0.1:8007/creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${owo.state.token}&userID=${owo.state.userID}&startDay=${startDay}`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          if (owo.tool.toast) owo.tool.toast('创建成功')
+          else alert('创建成功')
+          // do something
+          // 保存token
+          owo.go('home')
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
+        }
+      })
     }
   }
 </script>

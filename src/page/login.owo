@@ -100,6 +100,9 @@
           if (owo.tool.toast) owo.tool.toast('登陆成功')
           else alert('登陆成功')
           // do something
+          // 保存token
+          owo.state.userID = res.data.userID
+          owo.state.token = res.data.token
           owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
         } else {
           if (owo.tool.toast) owo.tool.toast(res.message)
