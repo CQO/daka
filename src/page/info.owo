@@ -63,10 +63,7 @@
     joinGame: function () {
       owo.script.propShow.showProp(function () {
         owo.script.propShow.hideProp()
-        owo.go({
-          page: 'wallet',
-          paramString: 'view-showbox=my'
-        })
+        owo.go('wallet', 'view-showbox=my')
         owo.tool.toast('您的余额不足!')
       })
     }

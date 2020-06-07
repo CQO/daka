@@ -1,8 +1,8 @@
 <template lang="pug">
 .login
   .login-title-bar
-    img.back(src="https://cunchu.site/puge/login/back.png" go="home//moveToRight/moveFromLeft/true")
-    .register(go="/view-loginContent=register/moveToLeft/moveFromRight/true") 注册
+    img.back(src="https://cunchu.site/puge/login/back.png" o-tap="toLogin")
+    .register(o-tap="toRegister") 注册
   view.router(name="loginContent")
     .view-login(route="login")
       .image-box
@@ -17,17 +17,26 @@
       .button(o-tap="login" o-hover="radial-out") 登录
       .tool-bar
         .left
-        .right(go-route="") 忘记密码
+        .right(o-tap="toForgetPassword") 忘记密码
+    .view-login(route="forgetPassword")
+      p.title 找回密码
+      .phone-number-box
+        input.register-input.phone-number(type="text" o-value="this.data.registerPhone" placeholder="手机号码")
+        button.captcha-button(data-appid="2092617728" data-cbfn="callback" type="button") 发送验证码
+      input.register-input(type="text" o-value="this.data.phoneCode" placeholder="验证码")
+      input.register-input(type="password" o-value="this.data.forgetPassWord" placeholder="新密码")
+      input.register-input(type="password" o-value="this.data.forgetPassWordR" placeholder="重复新密码")
+      .button(o-tap="forget") 重置密码
     .view-register(route="register")
       //- 装饰背景
       img.bg-1(src="https://cunchu.site/puge/login/art.png")
-      p 欢迎注册PUGE账号
+      p.title 欢迎注册PUGE账号
       input.register-input(type="text" o-value="this.data.registerUserName" placeholder="用户名")
       input.register-input(type="password" o-value="this.data.registerPassWord" placeholder="密码")
       input.register-input(type="password" o-value="this.data.registerPassWordR" placeholder="确认密码")
       .phone-number-box
         input.register-input.phone-number(type="text" o-value="this.data.registerPhone" placeholder="手机号码")
-        button(id="TencentCaptcha" data-appid="2092617728" data-cbfn="callback" type="button") 发送验证码
+        button.captcha-button(data-appid="2092617728" data-cbfn="callback" type="button") 发送验证码
       input.register-input(type="text" o-value="this.data.phoneCode" placeholder="手机验证码")
       .button(o-tap="register") 注册
 </template>
@@ -64,15 +73,24 @@
       registerPassWord: "",
       registerPassWordR: "",
       registerPhone: "",
-      phoneCode: ''
+      phoneCode: '',
+      forgetPassWord: '',
+      forgetPassWordR: ''
     },
     created: function () {
-      // 全局路由动画设置
-      owo.state.go = {
-        animationIn: "moveToRight",
-        animationOut: "moveFromLeft",
-        forward: false
-      }
+      setTimeout(() => {
+        if (owo.state.urlVariable["view-loginContent"] != 'login') {
+          this.query('.register').style.opacity = '0'
+          this.query('.back').style.opacity = '1'
+        } else {
+          this.query('.register').style.opacity = '1'
+          this.query('.back').style.opacity = '0'
+        }
+      }, 0);
+      // 注册腾讯验证按钮
+      this.queryAll('.captcha-button').forEach(element => {
+        new TencentCaptcha(element)
+      })
     },
     login: function () {
       // 计算md5
@@ -82,11 +100,7 @@
           if (owo.tool.toast) owo.tool.toast('登陆成功')
           else alert('登陆成功')
           // do something
-          owo.go({
-            page: "home",
-            inAnimation: "rotateRightSideFirst",
-            outAnimation: "moveFromRight&&delay200"
-          })
+          owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
         } else {
           if (owo.tool.toast) owo.tool.toast(res.message)
           else alert(res.message)
@@ -115,11 +129,55 @@
         owo.tool.toast('两次输入的密码不一致哦!')
         return
       }
-      fetch(`http://127.0.0.1:8007/register?username=${this.data.registerUserName}&password=${this.data.registerPassWord}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
+      const password = md5(this.data.registerPassWord + 'puge')
+      fetch(`http://127.0.0.1:8007/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           owo.tool.toast('注册成功!')
+          this.toLogin()
         } else {
           owo.tool.toast(`注册失败: ${res.message}`)
+        }
+      })
+    },
+    toRegister: function () {
+      // go="/view-loginContent=register/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft"
+      this.query('.register').style.opacity = '0'
+      this.query('.back').style.opacity = '1'
+      owo.go('/view-loginContent=register/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft')
+    },
+    toLogin: function () {
+      this.query('.register').style.opacity = '1'
+      this.query('.back').style.opacity = '0'
+      owo.go('/view-loginContent=login/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft')
+    },
+    toForgetPassword: function () {
+      this.query('.register').style.opacity = '0'
+      this.query('.back').style.opacity = '1'
+      owo.go('/view-loginContent=forgetPassword/moveToLeft/moveFromRight/true/moveToRight/moveFromLeft')
+    },
+    forget: function () {
+      if (!this.data.forgetPassWord) {
+        owo.tool.toast('新密码不能为空!')
+        return
+      }
+      if (this.data.forgetPassWordR !== this.data.forgetPassWord) {
+        owo.tool.toast('重复密码与新密码不一致!')
+        return
+      }
+      console.log(this.data)
+      if (!this.data.phoneCode) {
+        owo.tool.toast('手机验证码没有输入!')
+        return
+      }
+      const password = md5(this.data.forgetPassWordR + 'puge')
+      fetch(`http://127.0.0.1:8007/forget?phone=${this.data.registerPhone}&password=${this.data.forgetPassWord}&code=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          if (owo.tool.toast) owo.tool.toast('密码重置成功!')
+          else alert('密码重置成功!')
+          this.toLogin()
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
         }
       })
     }
@@ -187,18 +245,18 @@ input {
   border-radius: 25px;
   outline: none;
 }
+input {
+  border: none;
+  background-color: transparent;
+  height: 100%;
+  padding-left: 17%;
+  display: block;
+  width: 83%;
+  font-size: 18px;
+  border-radius: 25px;
+  outline: none;
+}
 .view-login {
-  input {
-    border: none;
-    background-color: transparent;
-    height: 100%;
-    padding-left: 17%;
-    display: block;
-    width: 83%;
-    font-size: 18px;
-    border-radius: 25px;
-    outline: none;
-  }
   input:active {
     box-shadow: 1px 1px 5px #ccc;
   }
@@ -248,33 +306,33 @@ input {
     left: 0;
     width: 47vw;
   }
-  p {
-    line-height: 40px;
-    font-size: 23px;
-    padding-top: 60px;
-    z-index: 99;
-    background-image: url(https://cunchu.site/puge/login/Signup.png);
-    background-size: 91vw;
-    background-repeat: no-repeat;
-    background-position-y: 15px;
-    padding-left: 20px;
-    font-weight: bold;
-  }
-  .register-input {
-    height: 50px;
-    background-color: #f7f7fb;
-    margin: 0 auto;
-    margin-top: 20px;
-    padding: 0 5vw;
-    width: 73vw;
-  }
-  .phone-number {
-    width: 42vw;
-    margin: 0;
-  }
-  .button {
-    background-color: #fa4169;
-  }
+}
+.title {
+  line-height: 40px;
+  font-size: 23px;
+  padding-top: 60px;
+  z-index: 99;
+  background-image: url(https://cunchu.site/puge/login/Signup.png);
+  background-size: 91vw;
+  background-repeat: no-repeat;
+  background-position-y: 15px;
+  padding-left: 20px;
+  font-weight: bold;
+}
+.register-input {
+  height: 50px;
+  background-color: #f7f7fb;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding: 0 5vw;
+  width: 73vw;
+}
+.phone-number {
+  width: 42vw;
+  margin: 0;
+}
+.button {
+  background-color: #fa4169;
 }
 .phone-number-box {
   display: flex;
@@ -283,7 +341,7 @@ input {
   margin-top: 20px;
   justify-content: space-between;
   align-items: center;
-  #TencentCaptcha {
+  .captcha-button {
     height: 38px;
     border: none;
     background-color: #009fe9;
