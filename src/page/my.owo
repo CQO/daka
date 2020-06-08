@@ -13,21 +13,15 @@
         .gold.item
           .title 我的钱包
           p 124元
-        .home.item
-          .title 我的房间
-          p 3个
-        .days.item
-          .title 打卡天数
-          p 32天
         .project.item
           .title 进行中的打卡
           p 3个
         .last-day.item
-          .title 连续打卡
-          p 14天
-        .next.item
-          .title 下次打卡时间
-          p 10小时后
+          .title 累计打卡
+          p 14次
+      .item-bar(go="wallet")
+        .icon &#xe68c;
+        .text 我的房间
       .item-bar(go="wallet")
         .icon &#xe68c;
         .text 我的钱包
@@ -41,12 +35,29 @@
         .icon &#xe711;
         .text 联系我们
     .sign-out-button(go="login") 退出登录
+  .no-login-box
+    .no-login-item
+      img(src="@|no-login.png|")
+      p 您当前未登录账户，请登录以查看您的信息
+      .button(go="login") 去登录
 </template>
 
 <script>
   module.exports = {
-    created: function () {
-
+    show: function () {
+      const userInfo = owo.state.userInfo
+      console.log(userInfo)
+      // 判断用户是否登录
+      if (userInfo) {
+        this.query('.no-login-box').style.display = 'none'
+        this.query('.user-info').style.display = 'block'
+        this.query('.profit p').innerHTML = userInfo.revenue
+        this.query('.gold p').innerHTML = userInfo.balance
+        this.query('.last-day p').innerHTML = userInfo.clock_num || 0 + '次'
+      } else {
+        this.query('.no-login-box').style.display = 'block'
+        this.query('.user-info').style.display = 'none'
+      }
     }
   }
 </script>
@@ -60,6 +71,9 @@
   background-repeat: no-repeat;
   color: white;
   padding: 0 2%;
+}
+.no-login {
+  display: none;
 }
 .user-bar {
   display: flex;
@@ -142,5 +156,37 @@
   margin: 20px 0;
   font-size: 20px;
   box-shadow: 1px 1px 5px #90959e;
+}
+.no-login-box {
+  width: 100%;
+  height: 100%;
+  .no-login-item {
+    width: 180px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    height: 300px;
+    img {
+      width: 100%;
+    }
+    p {
+      color: #111111;
+      text-align: center;
+      line-height: 26px;
+    }
+    .button {
+      background-color: #0088ff;
+      text-align: center;
+      color: white;
+      line-height: 40px;
+      width: 140px;
+      margin: 0 auto;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+  }
 }
 </style>

@@ -79,7 +79,8 @@
     },
     created: function () {
       setTimeout(() => {
-        if (owo.state.urlVariable["view-loginContent"] != 'login') {
+        const loginContent = owo.state.urlVariable["view-loginContent"]
+        if (loginContent != 'login' && loginContent !== undefined) {
           this.query('.register').style.opacity = '0'
           this.query('.back').style.opacity = '1'
         } else {
@@ -101,9 +102,10 @@
           else alert('登陆成功')
           // do something
           // 保存token
-          owo.state.userID = res.data.userID
-          owo.state.token = res.data.token
-          owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
+          owo.state.userInfo = res.data
+          setTimeout(() => {
+            owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
+          }, 0);
         } else {
           if (owo.tool.toast) owo.tool.toast(res.message)
           else alert(res.message)
