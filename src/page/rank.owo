@@ -1,8 +1,8 @@
 <template lang="pug">
 .rank
   //- 顶部的切换按钮
-  .button.button-1.active 奖励榜
-  .button.button-2 邀请榜
+  .button.button-1(o-tap="showReward") 奖励榜
+  .button.button-2(o-tap="showInvite") 邀请榜
   .so.so-0
     img.so.so-1(src="@|388.png|" o-animation="flicker")
     img.so.so-2(src="@|333.png|" o-animation="flicker")
@@ -20,63 +20,51 @@
     .name.name-3 郭培培
     .gold.gold-3 135243
   //- 完整排行榜
-  ul
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
-    li
-      span.index 1
-      img(src="@|user.png|")
-      span.name 小小包
-      span.gold 1251
+  ul.rank
 </template>
 
 <script>
   module.exports = {
     created: function () {
-
+      this.showReward()
+    },
+    showReward: function () {
+      this.query('.button-1').classList.add('active')
+      this.query('.button-2').classList.remove('active')
+      // 获取房间列表
+      fetch(`http://127.0.0.1:8007/getRewardList`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          let newHtml = ''
+          // 遍历出每一个人
+          for (let index = 0; index < res.data.length; index++) {
+            const element = res.data[index];
+            newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.reward}</span></li>` 
+          }
+          this.query('.rank').innerHTML = newHtml
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
+        }
+      })
+    },
+    showInvite: function () {
+      this.query('.button-1').classList.remove('active')
+      this.query('.button-2').classList.add('active')
+      // 获取房间列表
+      fetch(`http://127.0.0.1:8007/getInviteNumList`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          let newHtml = ''
+          // 遍历出每一个人
+          for (let index = 0; index < res.data.length; index++) {
+            const element = res.data[index];
+            newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.invite_num}</span></li>` 
+          }
+          this.query('.rank').innerHTML = newHtml
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
+        }
+      })
     }
   }
 </script>
