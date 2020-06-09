@@ -6,14 +6,6 @@
     plug(_name="miniCard" _src="./src/module/miniCard.owo")
     h1(font="FZLTCHJW.TTF") 推荐活动
     .recommend-box
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
-      plug(_name="maxCard" _src="./src/module/maxCard.owo" go="info")
 </template>
 
 <script>
@@ -23,28 +15,24 @@
       fetch(`http://127.0.0.1:8007/getHomeList`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           let newHtml = ''
-          // 数据库时间转时间
-          function getTimeStr(num) {
-            let hour = parseInt(num / 3600)
-            let minute = num % 3600
-            if (hour < 10) hour = '0' + hour
-            if (minute < 10) minute = '0' + minute
-            return `${hour}:${minute}`
-          }
           // 遍历出每一个房间
           res.data.forEach(element => {
             const dataTime = JSON.parse(element.daka_time)
-            newHtml += `<div class="max-card" go="info" template="maxCard"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            newHtml += `<div class="max-card" o-tap="goInfo"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           })
           this.query('.recommend-box').innerHTML = newHtml
           setTimeout(() => {
-            this.handleEvent()
+            console.log(this)
+            this.handleEvent(this, this.query('.recommend-box'))
           }, 100);
         } else {
           if (owo.tool.toast) owo.tool.toast(res.message)
           else alert(res.message)
         }
       })
+    },
+    goInfo: function () {
+      owo.go('info/id=3')
     }
   }
 </script>
@@ -63,5 +51,68 @@ h1 {
 }
 .card-box {
   padding: 2%;
+}
+.max-card {
+  width: 95%;
+  margin: 10px 0%;
+  border-radius: 10px;
+  height: 75px;
+  box-shadow: 1px 1px 5px #d6b6b6;
+  display: flex;
+  padding: 10px 2vw;
+  background-color: white;
+  .left {
+    width: 70px;
+    padding: 8px;
+    background-color: #b5b5b5;
+    border-radius: 10px;
+    margin: 3px 5px;
+  }
+  .cent {
+    width: calc(100% - 185px);
+    margin-left: 8px;
+    h2 {
+      font-size: 16px;
+      line-height: 28px;
+      color: #333;
+    }
+    p {
+      font-size: 12px;
+      color: #888;
+      height: 26px;
+    }
+    .number {
+      font-size: 12px;
+      color: #888;
+      span {
+        font-size: 20px;
+        color: gold;
+        font-weight: bold;
+        margin: 0 2px;
+      }
+    }
+  }
+  .right {
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    span {
+      color: #ec814b;
+      font-size: 20px;
+      margin: 0 2px;
+      font-weight: bold;
+    }
+    .button {
+      background-image: linear-gradient(to right, #fa7e1e, #ffa648);
+      text-align: center;
+      border-radius: 15px;
+      color: white;
+      line-height: 30px;
+      width: 80px;
+      font-size: 14px;
+    }
+  }
 }
 </style>

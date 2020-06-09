@@ -5,14 +5,14 @@
   .conn
     .card
       .title-bar
-        h2 早起打卡
-        h3 当前挑战金<span>13242</span>元
-      .info 每天6:00~7:00早起打卡
+        h2
+        h3 
+      .info
       .progress-box
         .progress
     //- 用户展示
     .user-show.card
-      span 当前有124人参与打卡
+      span
       .user-image-box
         img(src="@|user.png|")
         img(src="@|user.png|")
@@ -32,8 +32,8 @@
     //- 今日打卡进度
     .other-people.card
       .other-title-bar
-        h2(font="FZLTCHJW.TTF") 今日打卡战况
-        span 768成功 | 27失败
+        h2(font="FZLTCHJW.TTF") 昨日打卡战况
+        span 
       ul
         li
           .left
@@ -57,8 +57,28 @@
 
 <script>
   module.exports = {
-    created: function () {
-
+    show: function () {
+      // 获取房间信息
+      const roomID = _owo.getQueryVariable().id
+      fetch(`http://127.0.0.1:8007/getRoomInfo?roomID=${roomID}&`).then((response) => {return response.json();}).then((res) => {
+        if (res.err === 0) {
+          console.log(res.data)
+          this.query('.title-bar h2').innerText = res.data.name
+          this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${res.data.money}</span> 元`
+          // 成功人数和失败人数
+          this.query('.other-title-bar span').innerText = `${res.data.success_num || 0} 人成功 | ${res.data.fail_num || 0} 人失败`
+          // 参加人数
+          let joinNum = res.data.join_people || ''
+          joinNum = joinNum.split(',')
+          this.query('.user-show span').innerText = `当前有${joinNum}人参与打卡`
+          // 打卡时间
+          let dakaTime = JSON.parse(res.data.daka_time)
+          this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[0])}打卡`
+        } else {
+          if (owo.tool.toast) owo.tool.toast(res.message)
+          else alert(res.message)
+        }
+      })
     },
     joinGame: function () {
       owo.script.propShow.showProp(function () {
@@ -98,6 +118,7 @@
   display: flex;
   justify-content: space-between;
   line-height: 30px;
+  height: 30px;
   h2 {
     font-size: 16px;
     color: #333;
@@ -115,13 +136,15 @@
   }
 }
 .info {
-  font-size: 12px;
+  font-size: 14px;
   color: #888;
+  line-height: 24px;
+  height: 24px;
 }
 .progress-box {
   height: 8px;
   background-color: bisque;
-  margin: 15px 0;
+  margin: 10px 0;
   border-radius: 4px;
   overflow: hidden;
   .progress {
@@ -134,6 +157,7 @@
   display: flex;
   margin-top: 15px;
   font-size: 14px;
+  height: 30px;
   line-height: 30px;
   color: coral;
   justify-content: space-between;
@@ -231,11 +255,11 @@
   span {
     background-color: #ccc;
     color: white;
-    padding: 0 10px;
+    padding: 2px 12px;
     border-radius: 5px;
     margin-right: 5px;
     line-height: 26px;
-    font-size: 18px;
+    font-size: 16px;
   }
   .active {
     background-color: #009fe9;
