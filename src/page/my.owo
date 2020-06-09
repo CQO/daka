@@ -45,9 +45,6 @@
 <script>
   module.exports = {
     show: function () {
-      const userInfo = owo.state.userInfo
-      console.log(userInfo)
-      // 判断用户是否登录
       if (userInfo) {
         this.query('.no-login-box').style.display = 'none'
         this.query('.user-info').style.display = 'block'

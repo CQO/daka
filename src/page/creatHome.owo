@@ -36,7 +36,7 @@
       const endTime = this.query('.end-time').value
       const startDay = parseInt(new Date(this.query('.start-day').value).getTime() / 1000)
       console.log(startDay)
-      if (!owo.state.userInfo.token || !owo.state.userInfo.userID) {
+      if (!userInfo.token || !userInfo.id) {
         owo.tool.toast('您还未登录!')
         owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
         return
@@ -65,7 +65,7 @@
         owo.tool.toast('结束时间没有设置!')
         return
       }
-      fetch(`http://127.0.0.1:8007/creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${owo.state.userInfo.token}&userID=${owo.state.userInfo.userID}&startDay=${startDay}`).then((response) => {return response.json();}).then((res) => {
+      fetch(`http://127.0.0.1:8007/creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           if (owo.tool.toast) owo.tool.toast('创建成功')
           else alert('创建成功')

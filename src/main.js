@@ -15,3 +15,20 @@ function getTimeStr(num) {
   if (minute < 10) minute = '0' + minute
   return `${hour}:${minute}`
 }
+
+function getData (url, callBack) {
+  fetch(`http://127.0.0.1:8007/${url}`).then((response) => {return response.json();}).then((res) => {
+    if (res.err === 0) {
+      callBack(res.data)
+    } else {
+      switch (res.err) {
+        case 100:
+          owo.tool.toast('认证过期!')
+          owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
+          break
+        default:
+          owo.tool.toast(res.message)
+      }
+    }
+  })
+}

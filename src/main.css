@@ -77,3 +77,11 @@ img {
 .rank {
   background-color: #cb78d3;
 }
+
+.attended .join-button {
+  display: none;
+}
+
+.attended .daka-button {
+  display: block;
+}

@@ -42,6 +42,9 @@
 </template>
 
 <script>
+  let storageUserInfo = localStorage.getItem('userInfo')
+  if (storageUserInfo) window.userInfo = JSON.parse(storageUserInfo)
+  else window.userInfo = null
   window.callback = function(res) {
     const phone = owo.script.login.data.registerPhone
     if (!phone || phone == '') {
@@ -102,7 +105,9 @@
           else alert('登陆成功')
           // do something
           // 保存token
-          owo.state.userInfo = res.data
+          window.userInfo = res.data
+          // 存储到本地数据库中
+          localStorage.setItem("userInfo", JSON.stringify(userInfo))
           setTimeout(() => {
             owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
           }, 0);
