@@ -23,10 +23,10 @@
     .join-card.card
       .title(font="FZLTCHJW.TTF") 可选挑战金额:
       .set-money
-        span.active 5元
-        span 50元
-        span 500元
-        span 5000元
+        span(o-tap="changeNumber(5)" o-class-active="this.data.joinMoney == 5") 5元
+        span(o-tap="changeNumber(50)" o-class-active="this.data.joinMoney == 50") 50元
+        span(o-tap="changeNumber(500)" o-class-active="this.data.joinMoney == 500") 500元
+        span(o-tap="changeNumber(5000)" o-class-active="this.data.joinMoney == 5000") 5000元
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战  
     //- 今日打卡进度
@@ -57,6 +57,9 @@
 
 <script>
   module.exports = {
+    data: {
+      joinMoney: 5
+    },
     show: function () {
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id
@@ -81,11 +84,15 @@
       })
     },
     joinGame: function () {
-      owo.script.propShow.showProp(function () {
+      owo.script.propShow.showProp(`参与此项挑战你需要支付${this.data.joinMoney}元入场费，打卡挑战期数为12期，每1天为一期，打卡时间为9：00-10：00，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, function () {
         owo.script.propShow.hideProp()
         owo.go('wallet', 'view-showbox=my')
         owo.tool.toast('您的余额不足!')
       })
+    },
+    changeNumber: function (num) {
+      this.data.joinMoney = parseInt(num)
+      this.handleEvent(this, this.query('.set-money'))
     }
   }
 </script>

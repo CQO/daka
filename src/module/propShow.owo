@@ -1,7 +1,7 @@
 <template lang="pug">
 .prop-show-box
   .prop-show
-    p 参与此项挑战你需要支付5元入场费，打卡挑战期数为12期，每1天为一期，打卡时间为9：00-10：00，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。
+    p
     .botton-bar
       .butt.butt-1(o-tap="hideProp") 我再想想
       .butt.butt-2(o-tap="clickFun") 立即参加
@@ -12,7 +12,8 @@
     created: function () {
 
     },
-    showProp: function (clickFun) {
+    showProp: function (text, clickFun) {
+      this.query('.prop-show p').innerHTML = text
       if (clickFun) this.clickFun = clickFun
       this.$el.style.display = 'block'
     },
