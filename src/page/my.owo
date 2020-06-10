@@ -15,7 +15,7 @@
           p 124元
         .project.item
           .title 进行中的打卡
-          p 3个
+          p
         .last-day.item
           .title 累计打卡
           p 14次
@@ -34,7 +34,7 @@
       .item-bar
         .icon &#xe711;
         .text 联系我们
-    .sign-out-button(go="login") 退出登录
+    .sign-out-button(o-tap="login") 退出登录
   .no-login-box
     .no-login-item
       img(src="@|no-login.png|")
@@ -45,16 +45,25 @@
 <script>
   module.exports = {
     show: function () {
-      if (userInfo) {
-        this.query('.no-login-box').style.display = 'none'
-        this.query('.user-info').style.display = 'block'
-        this.query('.profit p').innerHTML = userInfo.revenue
-        this.query('.gold p').innerHTML = userInfo.balance
-        this.query('.last-day p').innerHTML = userInfo.clock_num || 0 + '次'
-      } else {
+      if (!userInfo) {
         this.query('.no-login-box').style.display = 'block'
         this.query('.user-info').style.display = 'none'
+        return
       }
+      getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        if (data) {
+          this.query('.no-login-box').style.display = 'none'
+          this.query('.user-info').style.display = 'block'
+          this.query('.profit p').innerHTML = data.revenue
+          this.query('.gold p').innerHTML = data.balance
+          this.query('.last-day p').innerHTML = data.clock_num || 0 + '次'
+          this.query('.project p').innerHTML = Object.keys(JSON.parse(data.join_room)).length + '个'
+        }
+      })
+    },
+    exit: function () {
+      localStorage.removeItem("userInfo")
+      owo.go('login')
     }
   }
 </script>

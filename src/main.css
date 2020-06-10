@@ -78,10 +78,18 @@ img {
   background-color: #cb78d3;
 }
 
-.attended .join-button {
+.not-started .join-button, .attended .join-button {
   display: none;
 }
 
 .attended .daka-button {
+  display: block;
+}
+
+.attended .join-card {
+  display: none;
+}
+
+.not-started .no-button {
   display: block;
 }

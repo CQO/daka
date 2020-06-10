@@ -30,6 +30,7 @@
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战
     .daka-button(o-tap="joinGame") 立即打卡
+    .no-button
     //- 今日打卡进度
     .other-people.card
       .other-title-bar
@@ -80,12 +81,19 @@
           let dakaTime = JSON.parse(res.data.daka_time)
           this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[0])}打卡`
           // 判断是否可以参加挑战
-          // 判断是否登录
-          if (userInfo) {
-            // 判断我又没有参加过这个挑战
-            if (joinPeopleList[userInfo.id]) {
-              this.$el.classList.add('attended')
+          var dateObj = new Date();
+          const nowTime = dateObj.getHours() * 3600 + dateObj.getMinutes() * 60
+          if (getTimeStr(dakaTime[0]) < nowTime && nowTime < getTimeStr(dakaTime[1])) {
+            // 判断是否登录
+            if (userInfo) {
+              // 判断我又没有参加过这个挑战
+              if (joinPeopleList[userInfo.id]) {
+                this.$el.classList.add('attended')
+              }
             }
+          } else {
+            this.query('.no-button').innerHTML = `未到活动时间${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[0])}`
+            this.$el.classList.add('not-started')
           }
         } else {
           if (owo.tool.toast) owo.tool.toast(res.message)
@@ -223,6 +231,20 @@
   font-size: 20px;
   line-height: 45px;
   color: white;
+  display: none;
+}
+.no-button {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  background-color: #ccc;
+  border-radius: 25px;
+  padding: 2px 0;
+  margin-top: 20px;
+  box-shadow: 1px 1px 4px #79807b;
+  font-size: 17px;
+  line-height: 45px;
+  color: #666;
   display: none;
 }
 .other-title-bar {
