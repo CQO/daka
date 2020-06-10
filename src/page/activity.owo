@@ -3,7 +3,7 @@
   plug(_name="module12" _src="https://template.owo.ink/5f1ecda61ba271b9.owo")
   .card-box
     h1(font="FZLTCHJW.TTF") 我的打卡
-    plug(_name="miniCard" _src="./src/module/miniCard.owo")
+    .my-recommend-box
     h1(font="FZLTCHJW.TTF") 推荐活动
     .recommend-box
 </template>
@@ -12,27 +12,36 @@
   module.exports = {
     created: function () {
       // 获取房间列表
-      fetch(`http://127.0.0.1:8007/getHomeList`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          let newHtml = ''
+      getData('getHomeList', (data) => {
+        let newHtml = ''
+          // 生成出我的打卡
+          if (userInfo) {
+            let myRoomGtml = ``
+            const joinRoom = JSON.parse(userInfo.join_room)
+            console.log(joinRoom)
+            for (const key in joinRoom) {
+              if (joinRoom.hasOwnProperty(key)) {
+                const element = joinRoom[key];
+                myRoomGtml = `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>累计打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
+              }
+            }
+            this.query('.my-recommend-box').innerHTML = myRoomGtml
+          }
+          
           // 遍历出每一个房间
-          res.data.forEach(element => {
+          data.forEach(element => {
             const dataTime = JSON.parse(element.daka_time)
-            newHtml += `<div class="max-card" o-tap="goInfo"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           })
           this.query('.recommend-box').innerHTML = newHtml
+          
           setTimeout(() => {
-            console.log(this)
-            this.handleEvent(this, this.query('.recommend-box'))
+            this.handleEvent(this, this.$el)
           }, 100);
-        } else {
-          if (owo.tool.toast) owo.tool.toast(res.message)
-          else alert(res.message)
-        }
       })
     },
-    goInfo: function () {
-      owo.go('info/id=3')
+    goInfo: function (id) {
+      owo.go(`info/id=${id}`)
     }
   }
 </script>
@@ -113,6 +122,57 @@ h1 {
       width: 80px;
       font-size: 14px;
     }
+  }
+}
+.mini-card {
+  border: 1px solid #dadada;
+  width: 95%;
+  margin: 0;
+  border-radius: 10px;
+  height: 55px;
+  box-shadow: 1px 1px 5px #ccc;
+  display: flex;
+  padding: 5px 2vw;
+  background-color: white;
+}
+.left {
+  width: 34px;
+  padding: 8px;
+  background-color: #b5b5b5;
+  border-radius: 24px;
+  margin: 3px 5px;
+}
+.cent {
+  width: calc(100% - 150px);
+  margin-left: 8px;
+  h2 {
+    font-size: 16px;
+    line-height: 28px;
+    color: #333;
+  }
+  p {
+    font-size: 12px;
+    color: #888;
+  }
+}
+.right {
+  font-size: 12px;
+  color: #888;
+  span {
+    color: #ec814b;
+    font-size: 20px;
+    margin: 0 2px;
+    font-weight: bold;
+  }
+  p {
+    line-height: 22px;
+  }
+  .button {
+    background-image: linear-gradient(to right, #fa7e1e, #ffa648);
+    text-align: center;
+    border-radius: 11px;
+    color: white;
+    line-height: 25px;
   }
 }
 </style>

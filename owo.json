@@ -146,6 +146,11 @@
 			"name": "creatHome",
 			"src": "./src/page/creatHome.owo",
 			"type": "page"
+		},
+		{
+			"name": "outherLogin",
+			"src": "./src/page/outherLogin.owo",
+			"type": "page"
 		}
 	],
 	"mode": {
@@ -170,7 +175,7 @@
 			"basePath": "./",
 			"alertLink": false,
 			"route": {
-				"startAtHome": true
+				"startAtHome": false
 			},
 			"outPut": {
 				"minifyCss": false,
@@ -180,7 +185,7 @@
 				"merge": false,
 				"allAnimate": false
 			},
-			"startAtHome": true
+			"startAtHome": false
 		}
 	},
 	"globalAni": {

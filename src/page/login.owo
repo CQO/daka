@@ -18,6 +18,7 @@
       .tool-bar
         .left
         .right(o-tap="toForgetPassword") 忘记密码
+      .weixin-login(o-tap="weixinLoginUrl") 微信登陆
     .view-login(route="forgetPassword")
       p.title 找回密码
       .phone-number-box
@@ -99,7 +100,7 @@
     login: function () {
       // 计算md5
       const password = md5(this.data.passWord + 'puge')
-      fetch(`http://127.0.0.1:8007/login?username=${this.data.userName}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
+      fetch(`${serverIP}/login?username=${this.data.userName}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           if (owo.tool.toast) owo.tool.toast('登陆成功')
           else alert('登陆成功')
@@ -189,6 +190,11 @@
           if (owo.tool.toast) owo.tool.toast(res.message)
           else alert(res.message)
         }
+      })
+    },
+    weixinLoginUrl: function () {
+      getData('getWeixinLoginUrl', (url) => {
+        window.location.replace(url)
       })
     }
   }

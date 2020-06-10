@@ -9,27 +9,23 @@
   module.exports = {
     created: function () {
       // 获取轮播图
-      fetch(`http://127.0.0.1:8007/getSwiper`).then((response) => {return response.json();}).then((res) => {
+      getData('getSwiper', (data) => {
         let newHtml = ``
-        if (res.err === 0) {
-          res.data.forEach(element => {
-            newHtml += `<div class="swiper-slide"><a href="${element.url}"><img src="${element.image}"><div class="text">${element.desc}</div></a></div>`
+        data.forEach(element => {
+          newHtml += `<div class="swiper-slide"><a href="${element.url}"><img src="${element.image}"><div class="text">${element.desc}</div></a></div>`
+        })
+        this.query('.swiper-wrapper').innerHTML = newHtml
+        // 轮播图展示区域swiper
+        setTimeout(() => {
+          new Swiper(this.$el.getElementsByClassName('swiper-container')[0], {
+            pagination: {
+              el: this.$el.getElementsByClassName('pagination')[0]
+            },
+            loop: true,
+            autoplay: {},
+            paginationClickable: true
           })
-          this.query('.swiper-wrapper').innerHTML = newHtml
-          // 轮播图展示区域swiper
-          setTimeout(() => {
-            new Swiper(this.$el.getElementsByClassName('swiper-container')[0], {
-              pagination: {
-                el: this.$el.getElementsByClassName('pagination')[0]
-              },
-              loop: true,
-              autoplay: {},
-              paginationClickable: true
-            })
-          }, 0)
-        } else {
-          owo.tool.toast('获取轮播图数据失败!')
-        }
+        }, 0)
       })
     }
   }

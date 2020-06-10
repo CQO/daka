@@ -1,0 +1,38 @@
+<template lang="pug">
+.outher-login
+  .button(o-tap="getAccessToken") access_token
+  .button(o-tap="fukuan") fukuan
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      userInfo: null
+    },
+    created: function () {
+      
+    },
+    getAccessToken: function () {
+      const urlPram = _owo.getQueryVariable()
+      getData(`getAccessToken?code=${urlPram.code}`, (data) => {
+        this.data.userInfo = data
+        alert(JSON.stringify(data))
+      })
+    },
+    fukuan: function () {
+      getData(`credit?openid=${this.data.userInfo.openid}`, (data) => {
+        alert(JSON.stringify(data))
+      })
+    }
+  }
+</script>
+
+
+<style lang="less">
+.button {
+  width: 200px;
+  height: 60px;
+  background-color: #009fe9;
+  margin: 10px;
+}
+</style>
