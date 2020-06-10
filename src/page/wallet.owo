@@ -4,7 +4,7 @@
     .number-box
       .title 可提现金额
       .number 1234.00元
-    .button.button-1 充值
+    .button.button-1(o-tap="credit") 充值
     .button.button-2 提现
   ul
     li
@@ -73,6 +73,11 @@
   module.exports = {
     created: function () {
 
+    },
+    credit: function () {
+      getData('credit', (data) => {
+        console.log(data)
+      })
     }
   }
 </script>
