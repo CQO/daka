@@ -34,7 +34,7 @@
       .item-bar
         .icon &#xe711;
         .text 联系我们
-    .sign-out-button(o-tap="login") 退出登录
+    .sign-out-button(o-tap="exit") 退出登录
   .no-login-box
     .no-login-item
       img(src="@|no-login.png|")

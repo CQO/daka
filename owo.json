@@ -92,8 +92,12 @@
 		},
 		{
 			"name": "TCaptcha",
-			"afterbody": true,
 			"src": "https://ssl.captcha.qq.com/TCaptcha.js"
+		},
+		{
+			"name": "jweixin",
+			"afterbody": true,
+			"src": "https://res.wx.qq.com/open/js/jweixin-1.6.0.js"
 		}
 	],
 	"styleList": [
