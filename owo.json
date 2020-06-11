@@ -98,6 +98,10 @@
 			"name": "jweixin",
 			"afterbody": true,
 			"src": "https://res.wx.qq.com/open/js/jweixin-1.6.0.js"
+		},
+		{
+			"name": "dayjs",
+			"src": "http://cunchu.site/owo/script/dayjs.min.js"
 		}
 	],
 	"styleList": [

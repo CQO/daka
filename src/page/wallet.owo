@@ -7,72 +7,19 @@
     .button.button-1(o-tap="credit") 充值
     .button.button-2 提现
   ul
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
-    li
-      .left
-        p.name 清晨打卡 活动奖励
-        p 2020年3月21日
-      .right
-        span + 329.00
 </template>
 
 <script>
   module.exports = {
     created: function () {
-
+      getData(`billList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        let newHtml = ``
+        data.forEach(element => {
+          const time = dayjs(parseInt(element.time)).format('YYYY年MM月DD日 HH:mm:ss')
+          newHtml += `<li><div class="left"><p class="name">${element.source}</p><p>${time}</p></div><div class="right"><span>${element.amount}</span></div></li>`
+        })
+        this.query('ul').innerHTML = newHtml
+      })
     },
     credit: function () {
       getData('credit', (data) => {

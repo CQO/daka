@@ -2,7 +2,7 @@
 .activity-box
   plug(_name="module12" _src="https://template.owo.ink/5f1ecda61ba271b9.owo")
   .card-box
-    h1(font="FZLTCHJW.TTF") 我的打卡
+    h1.involved-title(font="FZLTCHJW.TTF") 我的打卡
     .my-recommend-box
     h1(font="FZLTCHJW.TTF") 推荐活动
     .recommend-box
@@ -15,23 +15,25 @@
       getData('getHomeList', (data) => {
         let newHtml = ''
           // 生成出我的打卡
-          if (userInfo) {
+          if (userInfo && userInfo.join_room) {
             let myRoomGtml = ``
             const joinRoom = JSON.parse(userInfo.join_room)
             console.log(joinRoom)
             for (const key in joinRoom) {
               if (joinRoom.hasOwnProperty(key)) {
                 const element = joinRoom[key];
-                myRoomGtml = `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>累计打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
+                myRoomGtml = `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>累计打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
               }
             }
             this.query('.my-recommend-box').innerHTML = myRoomGtml
+          } else {
+            this.query('.involved-title').style.display = 'none'
           }
           
           // 遍历出每一个房间
           data.forEach(element => {
             const dataTime = JSON.parse(element.daka_time)
-            newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="./static/resource/gift.svg"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           })
           this.query('.recommend-box').innerHTML = newHtml
           
