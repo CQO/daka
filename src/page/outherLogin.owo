@@ -2,12 +2,14 @@
 .outher-login
   .button(o-tap="getAccessToken") access_token
   .button(o-tap="fukuan") fukuan
+  .button(o-tap="pay") pay
 </template>
 
 <script>
   module.exports = {
     data: {
-      userInfo: null
+      userInfo: null,
+      payInfo: null
     },
     created: function () {
       
@@ -21,7 +23,17 @@
     },
     fukuan: function () {
       getData(`credit?openid=${this.data.userInfo.openid}`, (data) => {
-        alert(JSON.stringify(data))
+        this.data.payInfo = data
+      })
+    },
+    pay: function () {
+      weixinPay({
+         "appId": this.data.payInfo.appId,     //公众号名称，由商户传入     
+         "timeStamp": this.data.payInfo.timeStamp,         //时间戳，自1970年以来的秒数     
+         "nonceStr": this.data.payInfo.nonceStr, //随机串     
+         "package": this.data.payInfo.package,     
+         "signType":"MD5",         //微信签名方式：     
+         "paySign": this.data.payInfo.sign //微信签名 
       })
     }
   }

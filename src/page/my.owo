@@ -20,7 +20,7 @@
           .title 累计打卡
           p 14次
       .item-bar(go="wallet")
-        .icon &#xe68c;
+        .icon &#xe6fa;
         .text 我的房间
       .item-bar(go="wallet")
         .icon &#xe68c;
@@ -28,6 +28,9 @@
       .item-bar
         .icon &#xe63a;
         .text 打卡记录
+      .item-bar
+        .icon &#xe66b;
+        .text 账号设置
       .item-bar
         .icon &#xe6d0;
         .text 常见问题

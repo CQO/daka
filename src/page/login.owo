@@ -7,7 +7,6 @@
     .view-login(route="login")
       .image-box
         img(src="https://cunchu.site/puge/login/image-box.png")
-      .hellow-text 嗨，欢迎回来!
       .user-name-bar.input-bar
         img.bar-icon(src="https://cunchu.site/puge/login/user.png")
         input(type="text" o-value="this.data.userName" placeholder="用户名")
@@ -18,7 +17,9 @@
       .tool-bar
         .left
         .right(o-tap="toForgetPassword") 忘记密码
-      .weixin-login(o-tap="weixinLoginUrl") 微信登陆
+      .weixin-login.outher-login
+        img(o-tap="weixinLoginUrl" src="@|weixin.png|")
+        p 微信登陆
     .view-login(route="forgetPassword")
       p.title 找回密码
       .phone-number-box
@@ -366,6 +367,23 @@ input {
     border-radius: 27px;
     line-height: 38px;
     font-size: 14px;
+  }
+}
+.weixin-login {
+  width: 80px;
+  text-align: center;
+  line-height: 26px;
+  font-size: 12px;
+  color: #999;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 2%;
+  img {
+    width: 45px;
+    display: block;
+    margin: 0 auto;
   }
 }
 </style>
