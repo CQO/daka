@@ -93,3 +93,10 @@ img {
 .not-started .no-button {
   display: block;
 }
+
+.invite .button-1 {
+  background-color: #975ddf;
+}
+.invite .button-2 {
+  background-color: #ff8cb0;
+}

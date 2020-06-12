@@ -8,17 +8,17 @@
     img.so.so-2(src="@|333.png|" o-animation="flicker")
     img.so.so-3(src="@|330.png|" o-animation="shrink")
     img.so.so-4(src="@|394.png|")
-    img.so.so-5(src="@|374.png|")
-    img.so.so-6(src="@|376.png|")
-    img.so.so-7(src="@|378.png|")
     img.so.so-8(src="@|393.png|")
     //- 前三名名字和奖金
     .name.name-1 郭培培
     .gold.gold-1 135243
+    img.so.so-7.user-image-1
     .name.name-2 郭培培
     .gold.gold-2 135243
+    img.so.so-6.user-image-2
     .name.name-3 郭培培
     .gold.gold-3 135243
+    img.so.so-5.user-image-3
   //- 完整排行榜
   ul.rank
 </template>
@@ -29,41 +29,70 @@
       this.showReward()
     },
     showReward: function () {
-      this.query('.button-1').classList.add('active')
-      this.query('.button-2').classList.remove('active')
+      this.$el.classList.remove('invite')
       // 获取房间列表
-      fetch(`http://127.0.0.1:8007/getRewardList`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          let newHtml = ''
-          // 遍历出每一个人
-          for (let index = 0; index < res.data.length; index++) {
-            const element = res.data[index];
-            newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.reward}</span></li>` 
+      getData(`/getRewardList`, (data) => {
+        let newHtml = ''
+        // 遍历出每一个人
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          // 对前三名进行特殊处理
+          switch (index) {
+            case 0:
+              this.query('.name-1').innerHTML = element.username
+              this.query('.gold-1').innerHTML = element.reward || 0
+              this.query('.user-image-1').src = "@|user.png|"
+              break;
+            case 1:
+              this.query('.name-2').innerHTML = element.username
+              this.query('.gold-2').innerHTML = element.reward || 0
+              this.query('.user-image-2').src = "@|user.png|"
+              break;
+            case 2:
+              this.query('.name-3').innerHTML = element.username
+              this.query('.gold-3').innerHTML = element.reward || 0
+              this.query('.user-image-3').src = "@|user.png|"
+              break;
+            default:
+              newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.reward || 0}</span></li>`
+              break;
           }
-          this.query('.rank').innerHTML = newHtml
-        } else {
-          if (owo.tool.toast) owo.tool.toast(res.message)
-          else alert(res.message)
         }
+        this.query('.rank').innerHTML = newHtml
       })
     },
     showInvite: function () {
+      this.$el.classList.add('invite')
       this.query('.button-1').classList.remove('active')
       this.query('.button-2').classList.add('active')
-      // 获取房间列表
-      fetch(`http://127.0.0.1:8007/getInviteNumList`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          let newHtml = ''
-          // 遍历出每一个人
-          for (let index = 0; index < res.data.length; index++) {
-            const element = res.data[index];
-            newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.invite_num}</span></li>` 
+      getData(`/getInviteNumList`, (data) => {
+        let newHtml = ''
+        // 遍历出每一个人
+        for (let index = 0; index < data.length; index++) {
+          const element = data[index];
+          // 对前三名进行特殊处理
+          switch (index) {
+            case 0:
+              this.query('.name-1').innerHTML = element.username
+              this.query('.gold-1').innerHTML = element.invite_num || 0
+              this.query('.user-image-1').src = "@|user.png|"
+              break;
+            case 1:
+              this.query('.name-2').innerHTML = element.username
+              this.query('.gold-2').innerHTML = element.invite_num || 0
+              this.query('.user-image-2').src = "@|user.png|"
+              break;
+            case 2:
+              this.query('.name-3').innerHTML = element.username
+              this.query('.gold-3').innerHTML = element.invite_num || 0
+              this.query('.user-image-3').src = "@|user.png|"
+              break;
+            default:
+              newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.png|"><span class="name">${element.username}</span><span class="gold">${element.invite_num || 0}</span></li>` 
+              break;
           }
-          this.query('.rank').innerHTML = newHtml
-        } else {
-          if (owo.tool.toast) owo.tool.toast(res.message)
-          else alert(res.message)
         }
+        this.query('.rank').innerHTML = newHtml
       })
     }
   }
@@ -108,15 +137,15 @@
   }
   .gold-1 {
     top: 52.4%;
-    left: 39%;
+    left: 35%;
   }
   .gold-2 {
-    top: 59.8%;
-    left: 12%;
+    top: 60%;
+    left: 8%;
   }
   .gold-3 {
     top: 59%;
-    right: 21%;
+    left: 63%;
   }
 }
 .so-1 {
@@ -173,6 +202,8 @@
   top: 0%;
   height: 100%;
   z-index: -8;
+  user-select: none;
+  pointer-events: none;
 }
 ul {
   background-color: white;
@@ -231,11 +262,17 @@ ul {
 }
 .button-1 {
   left: 6%;
+  background-color: #ff8cb0;
 }
 .button-2 {
   right: 6%;
 }
-.active {
-  background-color: #ff8cb0;
+.so-0 .gold {
+  background-size: 15px;
+  background-repeat: no-repeat;
+  padding-left: 18px;
+  line-height: 20px;
+  background-position: left center;
+  background-image: url('@|gold.svg|');
 }
 </style>

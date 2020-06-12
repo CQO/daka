@@ -61,12 +61,8 @@
     // res（验证成功） = {ret: 0, ticket: "String", randstr: "String"}
     if (res.ret === 0) {
       console.log('请求发送验证码!')
-      fetch(`http://127.0.0.1:8007/sendSms?ticket=${res.ticket}&phone=${phone}&randstr=${res.randstr}`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          owo.tool.toast('验证码发送成功!')
-        } else {
-          owo.tool.toast(`验证码发送失败: ${res.message}`)
-        }
+      getData(`/sendSms?ticket=${res.ticket}&phone=${phone}&randstr=${res.randstr}`, (data) => {
+        owo.tool.toast('验证码发送成功!')
       })
     }
   }
@@ -142,13 +138,9 @@
         return
       }
       const password = md5(this.data.registerPassWord + 'puge')
-      fetch(`http://127.0.0.1:8007/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          owo.tool.toast('注册成功!')
-          this.toLogin()
-        } else {
-          owo.tool.toast(`注册失败: ${res.message}`)
-        }
+      getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`, (data) => {
+        owo.tool.toast('注册成功!')
+        this.toLogin()
       })
     },
     toRegister: function () {
@@ -182,15 +174,10 @@
         return
       }
       const password = md5(this.data.forgetPassWordR + 'puge')
-      fetch(`http://127.0.0.1:8007/forget?phone=${this.data.registerPhone}&password=${this.data.forgetPassWord}&code=${this.data.phoneCode}`).then((response) => {return response.json();}).then((res) => {
-        if (res.err === 0) {
-          if (owo.tool.toast) owo.tool.toast('密码重置成功!')
-          else alert('密码重置成功!')
-          this.toLogin()
-        } else {
-          if (owo.tool.toast) owo.tool.toast(res.message)
-          else alert(res.message)
-        }
+      getData(`/forget?phone=${this.data.registerPhone}&password=${this.data.forgetPassWord}&code=${this.data.phoneCode}`, (data) => {
+        if (owo.tool.toast) owo.tool.toast('密码重置成功!')
+        else alert('密码重置成功!')
+        this.toLogin()
       })
     },
     weixinLoginUrl: function () {
