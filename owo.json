@@ -137,6 +137,11 @@
 			"type": "page"
 		},
 		{
+			"name": "myRoom",
+			"src": "./src/page/myRoom.owo",
+			"type": "page"
+		},
+		{
 			"name": "propShow",
 			"src": "./src/module/propShow.owo",
 			"type": "block"

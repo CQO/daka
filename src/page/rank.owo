@@ -206,7 +206,7 @@
   pointer-events: none;
 }
 ul {
-  background-color: white;
+  background-color: #f8f8f8;
   position: absolute;
   width: 100%;
   bottom: 0;

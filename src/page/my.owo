@@ -19,7 +19,7 @@
         .last-day.item
           .title 累计打卡
           p 14次
-      .item-bar(go="wallet")
+      .item-bar(go="myRoom")
         .icon &#xe6fa;
         .text 我的房间
       .item-bar(go="wallet")
@@ -48,21 +48,18 @@
 <script>
   module.exports = {
     show: function () {
-      if (!userInfo) {
+      if (!window.userInfo) {
         this.query('.no-login-box').style.display = 'block'
         this.query('.user-info').style.display = 'none'
         return
+      } else {
+        this.query('.no-login-box').style.display = 'none'
+        this.query('.user-info').style.display = 'block'
+        this.query('.profit p').innerHTML = userInfo.revenue
+        this.query('.gold p').innerHTML = userInfo.balance + '元'
+        this.query('.last-day p').innerHTML = userInfo.clock_num || 0 + '次'
+        this.query('.project p').innerHTML = Object.keys(JSON.parse(userInfo.join_room)).length + '个'
       }
-      getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
-        if (data) {
-          this.query('.no-login-box').style.display = 'none'
-          this.query('.user-info').style.display = 'block'
-          this.query('.profit p').innerHTML = data.revenue
-          this.query('.gold p').innerHTML = data.balance + '元'
-          this.query('.last-day p').innerHTML = data.clock_num || 0 + '次'
-          this.query('.project p').innerHTML = Object.keys(JSON.parse(data.join_room)).length + '个'
-        }
-      })
     },
     exit: function () {
       localStorage.removeItem("userInfo")

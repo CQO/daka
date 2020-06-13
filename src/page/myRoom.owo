@@ -1,0 +1,87 @@
+<template lang="pug">
+.my-room
+  .top-box
+  ul
+</template>
+
+<script>
+  module.exports = {
+    show: function () {
+      getData(`getCreatRoom?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        let newHtml = ``
+        data.forEach(element => {
+          let time = '未知时间'
+          if (element.creat_time) {
+            time = dayjs(parseInt(element.creat_time)).format('YYYY年MM月DD日 HH:mm:ss')
+          }
+          newHtml += `<li o-tap="goInfo(${element.id})" class="${element.recommend ? 'recommend': ''}"><div class="left"><p class="name">${element.name}</p><p>创建时间: ${time}</p><span>瓜分金额: ${element.money}</span></div></li>`
+        })
+        this.query('ul').innerHTML = newHtml
+        setTimeout(() => {
+          this.handleEvent(this, this.$el)
+        }, 100);
+      })
+    },
+    goInfo: function (id) {
+      owo.go(`info/id=${id}`)
+    }
+  }
+</script>
+
+
+<style lang="less">
+.my-room {
+  background-color: #f8f8f8;
+}
+.top-box {
+  width: 100%;
+  height: 35%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-image: url('@|my-bg.png|');
+}
+ul {
+  background-color: white;
+  width: 86%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 13%;
+  padding: 4%;
+  border-radius: 10px;
+  height: 81%;
+  overflow: auto;
+  box-shadow: 1px 1px 5px #8a92af;
+  li {
+    line-height: 30px;
+    font-size: 14px;
+    display: flex;
+    padding-top: 5px;
+    justify-content: space-between;
+    color: #333;
+    border-bottom: 1px dotted #f7e6e6;
+    color: #666;
+  }
+  .name {
+    font-size: 16px;
+    color: #333;
+  }
+  .right {
+    line-height: 60px;
+    color: steelblue;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
+.name {
+  font-weight: bold;
+}
+// 推荐
+.recommend {
+  background-image: url('@|tuijian.svg|');
+  background-repeat: no-repeat;
+  background-size: 30px;
+  background-position: right 5px;
+}
+</style>

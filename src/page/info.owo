@@ -65,6 +65,7 @@
     show: function () {
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id
+      
       getData(`getRoomInfo?roomID=${roomID}`, (data) => {
         this.query('.title-bar h2').innerText = data.name
         this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`

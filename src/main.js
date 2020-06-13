@@ -27,18 +27,22 @@ function getData (url, callBack) {
           owo.tool.toast('认证过期!')
           owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
           break
+        case 101:
+          owo.tool.toast(res.message)
+          window.location.href = ''
+          break
         default:
           owo.tool.toast(res.message)
       }
     }
   })
 }
-setTimeout(() => {
-  const urlPram = _owo.getQueryVariable()
-  if (urlPram.code) {
-    owo.go('outherLogin')
-  }
-}, 1000);
+// setTimeout(() => {
+//   const urlPram = _owo.getQueryVariable()
+//   if (urlPram.code) {
+//     owo.go('outherLogin')
+//   }
+// }, 1000);
 
 function weixinPay (payInfo) {
   WeixinJSBridge.invoke(
@@ -51,3 +55,42 @@ function weixinPay (payInfo) {
     }
   ); 
 }
+
+// 如果有用户信息自动更新用户信息
+let storUserInfo = localStorage.getItem('userInfo')
+if (storUserInfo) {
+  window.userInfo = JSON.parse(storUserInfo)
+  if (userInfo.token && userInfo.id) {
+    getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+      if (data) {
+        userInfo = data
+        // 存储到本地数据库中
+        localStorage.setItem("userInfo", JSON.stringify(userInfo))
+        console.log('用户数据已更新!')
+      }
+    })
+  }
+} else {
+  window.userInfo = null
+}
+
+// 获取轮播图
+getData('getSwiper', (data) => {
+  let newHtml = ``
+  data.forEach(element => {
+    newHtml += `<div class="swiper-slide"><a href="${element.url}"><img src="${element.image}"><div class="text">${element.desc}</div></a></div>`
+  })
+  document.getElementsByClassName('swiper-wrapper')[0].innerHTML = newHtml
+  // 轮播图展示区域swiper
+  setTimeout(() => {
+    new Swiper(document.getElementsByClassName('swiper-container')[0], {
+      pagination: {
+        el: document.getElementsByClassName('pagination')[0]
+      },
+      loop: true,
+      autoplay: {},
+      paginationClickable: true
+    })
+    console.log('轮播图初始化成功!')
+  }, 0)
+})
