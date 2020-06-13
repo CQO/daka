@@ -12,6 +12,7 @@
 <script>
   module.exports = {
     created: function () {
+      this.query('.number').innerText = userInfo.balance + '元'
       getData(`billList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
         let newHtml = ``
         data.forEach(element => {
