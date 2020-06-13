@@ -82,6 +82,13 @@
         joinPeopleList = JSON.parse(joinPeopleList)
         let joinNum = Object.keys(joinPeopleList).length
         this.query('.user-show span').innerText = `当前有${joinNum}人参与打卡`
+        // 判断是否已经打过卡了
+        const dakaList = JSON.parse(data.daka_list)
+        if (dakaList[userInfo.id]) {
+          this.query('.no-button').innerHTML = `已成功打卡!`
+          this.$el.classList.add('not-started')
+          return
+        }
         // 打卡时间
         let dakaTime = JSON.parse(data.daka_time)
         this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
