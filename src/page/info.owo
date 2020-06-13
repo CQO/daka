@@ -29,7 +29,7 @@
         span(o-tap="changeNumber(5000)" o-class-active="this.data.joinMoney == 5000") 5000元
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战
-    .daka-button(o-tap="joinGame") 立即打卡
+    .daka-button.captcha-button(data-appid="2092617728" data-cbfn="owo.script.info.dakaCallBack") 立即打卡
     .no-button
     //- 今日打卡进度
     .other-people.card
@@ -61,6 +61,12 @@
   module.exports = {
     data: {
       joinMoney: 5
+    },
+    created: function () {
+      // 注册腾讯验证按钮
+      this.queryAll('.captcha-button').forEach(element => {
+        new TencentCaptcha(element)
+      })
     },
     show: function () {
       // 获取房间信息
@@ -115,6 +121,16 @@
     changeNumber: function (num) {
       this.data.joinMoney = parseInt(num)
       this.handleEvent(this, this.query('.set-money'))
+    },
+    dakaCallBack: function (res) {
+      if (res.ret === 0) {
+        // 获取房间信息
+        const roomID = _owo.getQueryVariable().id
+        console.log(res)
+        getData(`/clockIn?ticket=${res.ticket}&randstr=${res.randstr}&token=${userInfo.token}&userID=${userInfo.id}&roomID=${roomID}`, (data) => {
+          owo.tool.toast('打卡成功!')
+        })
+      }
     }
   }
 </script>
