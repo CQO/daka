@@ -243,6 +243,7 @@ ul {
     background-repeat: no-repeat;
     background-position: center left;
     padding-left: 22px;
+    background-size: 19px;
   }
 }
 .button {

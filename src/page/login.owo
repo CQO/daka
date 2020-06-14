@@ -135,7 +135,9 @@
         return
       }
       const password = md5(this.data.registerPassWord + 'puge')
-      getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}`, (data) => {
+      // 获取是否被邀请的信息
+      const variable = _owo.getQueryVariable()
+      getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}&inviter=${variable.inviter}&num=${variable.num}`, (data) => {
         owo.tool.toast('注册成功!')
         this.toLogin()
       })

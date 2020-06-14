@@ -100,3 +100,6 @@ img {
 .invite .button-2 {
   background-color: #ff8cb0;
 }
+.invite ul .gold, .invite .so-0 .gold {
+  background-image: url("@|stars.svg|");
+}
