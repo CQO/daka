@@ -86,7 +86,7 @@ img {
   display: block;
 }
 
-.attended .join-card {
+.attended .join-card, .attended .no-button {
   display: none;
 }
 

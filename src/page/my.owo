@@ -25,7 +25,7 @@
       .item-bar(go="wallet")
         .icon &#xe68c;
         .text 我的钱包
-      .item-bar
+      .item-bar(go="myClock")
         .icon &#xe63a;
         .text 打卡记录
       .item-bar

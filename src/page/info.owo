@@ -60,7 +60,8 @@
 <script>
   module.exports = {
     data: {
-      joinMoney: 5
+      joinMoney: 5,
+      roomName: ''
     },
     created: function () {
       // 注册腾讯验证按钮
@@ -70,9 +71,9 @@
     },
     show: function () {
       // 获取房间信息
-      const roomID = _owo.getQueryVariable().id
-      
+      const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (data) => {
+        this.data.roomName = data.name
         this.query('.title-bar h2').innerText = data.name
         this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`
         // 成功人数和失败人数
@@ -83,12 +84,17 @@
         let joinNum = Object.keys(joinPeopleList).length
         this.query('.user-show span').innerText = `当前有${joinNum}人参与打卡`
         // 判断是否已经打过卡了
-        const dakaList = JSON.parse(data.daka_list)
+        if (!data.daka_list) data.daka_list = '{}'
+        let dakaList = JSON.parse(data.daka_list)
+        if (!dakaList) dakaList = {}
+        console.log(dakaList)
         if (dakaList[userInfo.id]) {
           this.query('.no-button').innerHTML = `已成功打卡!`
           this.$el.classList.add('not-started')
+          this.$el.classList.remove('attended')
           return
         }
+        this.$el.classList.remove('not-started')
         // 打卡时间
         let dakaTime = JSON.parse(data.daka_time)
         this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
@@ -101,6 +107,7 @@
             // 判断我又没有参加过这个挑战
             if (joinPeopleList[userInfo.id]) {
               this.$el.classList.add('attended')
+              this.$el.classList.remove('not-started')
             }
           }
         } else {
@@ -122,6 +129,7 @@
         const roomID = _owo.getQueryVariable().id
         getData(`joinGame?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}&money=${this.data.joinMoney}`, (data) => {
           owo.tool.toast('参加挑战成功!')
+          owo.script.info.show()
         })
       })
     },
@@ -134,8 +142,9 @@
         // 获取房间信息
         const roomID = _owo.getQueryVariable().id
         console.log(res)
-        getData(`/clockIn?ticket=${res.ticket}&randstr=${res.randstr}&token=${userInfo.token}&userID=${userInfo.id}&roomID=${roomID}`, (data) => {
+        getData(`/clockIn?ticket=${res.ticket}&randstr=${res.randstr}&token=${userInfo.token}&userID=${userInfo.id}&roomID=${roomID}&name=${owo.script.info.data.roomName}`, (data) => {
           owo.tool.toast('打卡成功!')
+          owo.script.info.show()
         })
       }
     }

@@ -142,6 +142,11 @@
 			"type": "page"
 		},
 		{
+			"name": "myClock",
+			"src": "./src/page/myClock.owo",
+			"type": "page"
+		},
+		{
 			"name": "propShow",
 			"src": "./src/module/propShow.owo",
 			"type": "block"

@@ -1,5 +1,5 @@
 <template lang="pug">
-.my-room
+.my-clock
   .top-box
   ul
 </template>
@@ -30,7 +30,7 @@
 
 
 <style lang="less">
-.my-room {
+.my-clock {
   background-color: #f8f8f8;
 }
 .top-box {
