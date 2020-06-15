@@ -66,7 +66,7 @@
   module.exports = {
     data: {
       userPhone: 13100402643,
-      passWord: "mmit7750",
+      passWord: "123456",
       registerUserName: "",
       registerPassWord: "",
       registerPassWordR: "",

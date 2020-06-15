@@ -1,0 +1,100 @@
+<template lang="pug">
+.change-user-info
+  .item-box
+    h2 用户昵称
+    input.user-name(type="text")
+    .button(o-tap="changeUserName") 修改昵称
+  .item-box
+    h2 新密码
+    input.new-password(type="password")
+    h2 重复新密码
+    input.new-password-re(type="password")
+    .button(o-tap="changePassWord") 修改密码
+  .item-box
+    .item
+      img(src="@|weixin.png|")
+      span 绑定微信
+</template>
+
+<script>
+  module.exports = {
+    data: {
+    },
+    created: function () {
+      // 获取用户信息
+      this.query('.user-name').value = userInfo.username
+    },
+    changeUserName: function () {
+      const newName = this.query('.user-name').value
+      getData(`updataUserName?token=${userInfo.token}&userID=${userInfo.id}&userName=${newName}`, (data) => {
+        owo.tool.toast('昵称修改成功!')
+        userInfo.username = newName
+        // 存储到本地数据库中
+        localStorage.setItem("userInfo", JSON.stringify(userInfo))
+      })
+    },
+    changePassWord: function () {
+      const newPassword = this.query('.new-password').value
+      if (newPassword !== this.query('.new-password-re').value) {
+        owo.tool.toast('两次输入的密码不一致!')
+        return
+      }
+      getData(`changePassWord?token=${userInfo.token}&userID=${userInfo.id}&newPassword=${owo.script.login.encry(newPassword)}`, (data) => {
+        owo.tool.toast('密码修改成功!')
+      })
+    }
+  }
+</script>
+
+
+<style lang="less">
+.change-user-info {
+  background-color: #f8f8f8;
+}
+.item-box {
+  border-bottom: 1px solid #f1dfdf;
+}
+input {
+  width: 96%;
+  border: none;
+  height: 40px;
+  padding: 0 2%;
+  background-color: white;
+  font-size: 19px;
+}
+h2 {
+  font-size: 18px;
+  color: #666;
+  font-weight: normal;
+  line-height: 32px;
+  width: 98%;
+  display: block;
+  margin: 0 auto;
+}
+.button {
+  width: 100%;
+  background-color: #009fe9;
+  text-align: center;
+  line-height: 45px;
+  color: white;
+  font-size: 20px;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.item {
+  height: 40px;
+  line-height: 40px;
+  background-color: white;
+  width: 98%;
+  padding: 0 1%;
+  color: #333;
+  display: flex;
+  img {
+    width: 32px;
+    margin: 4px;
+  }
+}
+</style>

@@ -37,12 +37,12 @@ function getData (url, callBack) {
     }
   })
 }
-// setTimeout(() => {
-//   const urlPram = _owo.getQueryVariable()
-//   if (urlPram.code) {
-//     owo.go('outherLogin')
-//   }
-// }, 1000);
+setTimeout(() => {
+  const urlPram = _owo.getQueryVariable()
+  if (urlPram.code) {
+    owo.go('outherLogin')
+  }
+}, 1000);
 
 function weixinPay (payInfo) {
   WeixinJSBridge.invoke(

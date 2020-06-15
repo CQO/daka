@@ -161,6 +161,11 @@
 			"name": "outherLogin",
 			"src": "./src/page/outherLogin.owo",
 			"type": "page"
+		},
+		{
+			"name": "changeUserInfo",
+			"src": "./src/page/changeUserInfo.owo",
+			"type": "page"
 		}
 	],
 	"mode": {
