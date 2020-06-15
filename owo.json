@@ -82,10 +82,6 @@
 			"src": "./src/resource/swiper-5.4.1.js"
 		},
 		{
-			"name": "md5.min",
-			"src": "./src/resource/md5.min.js"
-		},
-		{
 			"name": "toast",
 			"afterbody": true,
 			"src": "https://cunchu.site/owo/tool/toast.js"

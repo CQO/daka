@@ -12,6 +12,7 @@
       .button.button-2(go="creatHome") 创建打卡房间
   .share-box
     .share
+      h2 邀请好友
       //- 佣金比例
       p 设置被邀请用户的收益有百分之多少归属于你(如果设置为1则被邀请用户参加活动获得收益后扣除1%的金额给你分红)
       input#invitationNum(type="number" value="1" min="0" max="99" o-input="numChange")
@@ -113,6 +114,9 @@
   height: 100%;
   background-color: rgba(248, 248, 248, 0.9);
   display: none;
+  .button {
+    margin-top: 10px;
+  }
 }
 .share {
   position: absolute;
@@ -122,7 +126,7 @@
   margin: auto;
   top: 0;
   bottom: 0;
-  height: 380px;
+  height: 400px;
   background-color: white;
   padding: 10px;
   border-radius: 10px;
@@ -130,6 +134,13 @@
   p {
     font-size: 14px;
     color: #333;
+    line-height: 1.7;
+  }
+  h2 {
+    line-height: 25px;
+    font-size: 20px;
+    color: cornflowerblue;
+    margin-bottom: 10px;
   }
   input {
     width: 96%;

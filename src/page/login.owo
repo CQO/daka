@@ -9,7 +9,7 @@
         img(src="https://cunchu.site/puge/login/image-box.png")
       .user-name-bar.input-bar
         img.bar-icon(src="https://cunchu.site/puge/login/user.png")
-        input(type="text" o-value="this.data.userName" placeholder="用户名")
+        input(type="number" o-value="this.data.userPhone" placeholder="手机号")
       .pass-word-bar.input-bar
         img.bar-icon(src="https://cunchu.site/puge/login/password.png")
         input(type="password" o-value="this.data.passWord" placeholder="密码")
@@ -33,7 +33,7 @@
       //- 装饰背景
       img.bg-1(src="https://cunchu.site/puge/login/art.png")
       p.title 欢迎注册PUGE账号
-      input.register-input(type="text" o-value="this.data.registerUserName" placeholder="用户名")
+      input.register-input(type="text" o-value="this.data.registerUserName" placeholder="用户昵称")
       input.register-input(type="password" o-value="this.data.registerPassWord" placeholder="密码")
       input.register-input(type="password" o-value="this.data.registerPassWordR" placeholder="确认密码")
       .phone-number-box
@@ -65,7 +65,7 @@
   }
   module.exports = {
     data: {
-      userName: "puge",
+      userPhone: 13100402643,
       passWord: "mmit7750",
       registerUserName: "",
       registerPassWord: "",
@@ -91,10 +91,22 @@
         new TencentCaptcha(element)
       })
     },
+    encry: function (text) {
+      text = text.replace('e', 'k')
+      text = text.replace('b', 'a')
+      text = text.replace('q', 'aw')
+      text = text.replace('3', '1')
+      text = text.replace('12', '21')
+      text = text.replace('6', '4')
+      text = text.replace('k', '2')
+      text = text.replace('w', 'n')
+      text = text.replace('o', 'e')
+      return text
+    },
     login: function () {
       // 计算md5
-      const password = md5(this.data.passWord + 'puge')
-      fetch(`${serverIP}/login?username=${this.data.userName}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
+      const password = this.encry(this.data.passWord)
+      fetch(`${serverIP}/login?phone=${this.data.userPhone}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           if (owo.tool.toast) owo.tool.toast('登陆成功')
           else alert('登陆成功')
@@ -134,7 +146,7 @@
         owo.tool.toast('两次输入的密码不一致哦!')
         return
       }
-      const password = md5(this.data.registerPassWord + 'puge')
+      const password = this.encry(this.data.passWord)
       // 获取是否被邀请的信息
       const variable = _owo.getQueryVariable()
       getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}&inviter=${variable.inviter}&num=${variable.num}`, (data) => {
