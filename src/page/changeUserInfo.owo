@@ -1,5 +1,6 @@
 <template lang="pug">
 .change-user-info
+  plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo")
   .item-box
     h2 用户昵称
     input.user-name(type="text")

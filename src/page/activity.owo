@@ -22,7 +22,7 @@
             for (const key in joinRoom) {
               if (joinRoom.hasOwnProperty(key)) {
                 const element = joinRoom[key];
-                myRoomGtml += `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>累计打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
+                myRoomGtml += `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>剩余打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
               }
             }
             this.query('.my-recommend-box').innerHTML = myRoomGtml

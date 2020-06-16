@@ -14,11 +14,11 @@
     .user-show.card
       span
       .user-image-box
-        img(src="@|user.png|")
-        img(src="@|user.png|")
-        img(src="@|user.png|")
-        img(src="@|user.png|")
-        img(src="@|user.png|")
+        img(src="@|user.svg|")
+        img(src="@|user.svg|")
+        img(src="@|user.svg|")
+        img(src="@|user.svg|")
+        img(src="@|user.svg|")
     //- 设置挑战金额
     .join-card.card
       .title(font="FZLTCHJW.TTF") 可选挑战金额:
@@ -39,19 +39,19 @@
       ul
         li
           .left
-            img(src="@|user.png|")
+            img(src="@|user.svg|")
             span 打卡之星
             .name 招财进宝
           .right 06:00:03打卡
         li
           .left
-            img(src="@|user.png|")
+            img(src="@|user.svg|")
             span(style=" background-color: darkgoldenrod;") 手气之星
             .name 招财进宝
           .right 0.52元
         li
           .left
-            img(src="@|user.png|")
+            img(src="@|user.svg|")
             span(style=" background-color: chartreuse;") 毅力之星
             .name 招财进宝
           .right 连续打卡400次

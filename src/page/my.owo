@@ -2,7 +2,7 @@
 .my
   .user-info
     .user-bar
-      img(src="@|user.png|")
+      img(src="@|user.svg|")
       .user-name
     //- 总收益
     .profit
