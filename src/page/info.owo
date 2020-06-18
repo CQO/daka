@@ -43,10 +43,10 @@
             span 打卡之星
             .name 招财进宝
           .right 06:00:03打卡
-        li
+        li.money
           .left
             img(src="@|user.svg|")
-            span(style=" background-color: darkgoldenrod;") 手气之星
+            span(style=" background-color: darkgoldenrod;") 奖励之星
             .name 招财进宝
           .right 0.52元
         li
@@ -95,13 +95,18 @@
         // 最先打卡者
         let fastestPeople = {
           time: Infinity,
-          name: ''
+        }
+        let moneyPeople = {
+          money: 0,
         }
         for (const key in joinPeopleList) {
           if (joinPeopleList.hasOwnProperty(key)) {
             const element = joinPeopleList[key];
             if (element.time < fastestPeople.time) {
               fastestPeople = element
+            }
+            if (element.money > moneyPeople.money) {
+              moneyPeople = element
             }
             if (element.failNum == undefined) {
               successNum++
@@ -113,7 +118,9 @@
         // 最快的人
         this.query('.fastest .name').innerText = fastestPeople.name
         this.query('.fastest .right').innerText = dayjs(parseInt(fastestPeople.time * 1000)).format('HH:mm:ss') + '打卡'
-
+        // 投入最多的人
+        this.query('.money .name').innerText = moneyPeople.name
+        this.query('.money .right').innerText = '至少分得' + moneyPeople.money + '元'
 
         this.query('.other-title-bar span').innerHTML = `${successNum} 人成功 | ${failNum} 人失败`
         console.log(fastestPeople)
