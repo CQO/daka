@@ -7,6 +7,12 @@ function scrollIntoView () {
 //   e.preventDefault() // 阻止默认的处理方式(阻止下拉滑动的效果)
 // }, {passive: false})
 
+
+function getNowTime() {
+  var myDate = new Date();
+  return (myDate.getHours() * 3600) + (myDate.getMinutes() * 60)
+}
+
 // 数据库时间转时间
 function getTimeStr(num) {
   let hour = parseInt(num / 3600)

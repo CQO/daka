@@ -37,7 +37,7 @@
         h2(font="FZLTCHJW.TTF") 昨日打卡战况
         span 
       ul
-        li
+        li.fastest
           .left
             img(src="@|user.svg|")
             span 打卡之星
@@ -78,6 +78,8 @@
         this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`
         // 成功人数和失败人数
         this.query('.other-title-bar span').innerText = `${data.success_num || 0} 人成功 | ${data.fail_num || 0} 人失败`
+        // 计算进度条进度
+        this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
         // 参加人数
         let joinPeopleList = data.join_people || '{}'
         joinPeopleList = JSON.parse(joinPeopleList)
@@ -87,7 +89,34 @@
         if (!data.daka_list) data.daka_list = '{}'
         let dakaList = JSON.parse(data.daka_list)
         if (!dakaList) dakaList = {}
-        console.log(dakaList)
+        // 判断打卡成功失败人数
+        let failNum = 0
+        let successNum = 0
+        // 最先打卡者
+        let fastestPeople = {
+          time: Infinity,
+          name: ''
+        }
+        for (const key in joinPeopleList) {
+          if (joinPeopleList.hasOwnProperty(key)) {
+            const element = joinPeopleList[key];
+            if (element.time < fastestPeople.time) {
+              fastestPeople = element
+            }
+            if (element.failNum == undefined) {
+              successNum++
+            } else {
+              failNum++
+            }
+          }
+        }
+        // 最快的人
+        this.query('.fastest .name').innerText = fastestPeople.name
+        this.query('.fastest .right').innerText = dayjs(parseInt(fastestPeople.time * 1000)).format('HH:mm:ss') + '打卡'
+
+
+        this.query('.other-title-bar span').innerHTML = `${successNum} 人成功 | ${failNum} 人失败`
+        console.log(fastestPeople)
         if (dakaList[userInfo.id]) {
           this.query('.no-button').innerHTML = `已成功打卡!`
           this.$el.classList.add('not-started')
@@ -127,7 +156,7 @@
           return
         }
         const roomID = _owo.getQueryVariable().id
-        getData(`joinGame?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}&money=${this.data.joinMoney}`, (data) => {
+        getData(`joinGame?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}&money=${this.data.joinMoney}&userName=${userInfo.username}`, (data) => {
           owo.tool.toast('参加挑战成功!')
           owo.script.info.show()
         })
@@ -210,7 +239,8 @@
   overflow: hidden;
   .progress {
     height: 100%;
-    width: 20%;
+    width: 0%;
+    transition: width 1s;
     background-color: #009fe9;
   }
 }
@@ -300,7 +330,7 @@
   }
   .left {
     position: relative;
-    width: 180px;
+    width: 220px;
     height: 80px;
     img {
       width: 55px;

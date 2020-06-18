@@ -34,7 +34,7 @@
     creatHome: function () {
       const startTime = this.query('.start-time').value
       const endTime = this.query('.end-time').value
-      const startDay = parseInt(new Date(this.query('.start-day').value).getTime() / 1000)
+      const startDay = this.query('.start-day').value
       console.log(startDay)
       if (!userInfo.token || !userInfo.id) {
         owo.tool.toast('您还未登录!')

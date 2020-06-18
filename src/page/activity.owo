@@ -22,7 +22,17 @@
             for (const key in joinRoom) {
               if (joinRoom.hasOwnProperty(key)) {
                 const element = joinRoom[key];
-                myRoomGtml += `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>查看打卡记录</p></div><div class="right"><p>剩余打卡<span>0</span>天</p><div class="button">点击打卡</div></div></div>`
+                // 房间的时间
+                const roomTime = JSON.parse(element.dakaTime)
+                const nowTime = getNowTime()
+                // 显示的文字
+                let showText = '今日已结束'
+                if (roomTime[0] > nowTime) {
+                  showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
+                } else if (roomTime[1] > nowTime) {
+                  showText = `可以打卡`
+                }
+                myRoomGtml += `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
               }
             }
             this.query('.my-recommend-box').innerHTML = myRoomGtml
@@ -83,7 +93,7 @@ h1 {
     width: calc(100% - 185px);
     margin-left: 8px;
     h2 {
-      font-size: 16px;
+      font-size: 18px;
       line-height: 28px;
       color: #333;
     }
@@ -156,11 +166,14 @@ h1 {
   p {
     font-size: 12px;
     color: #888;
+    line-height: 24px;
   }
 }
 .right {
   font-size: 12px;
   color: #888;
+  width: 80px;
+  text-align: center;
   span {
     color: #ec814b;
     font-size: 20px;
