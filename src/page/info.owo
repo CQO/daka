@@ -49,10 +49,10 @@
             span(style=" background-color: darkgoldenrod;") 奖励之星
             .name 招财进宝
           .right 0.52元
-        li
+        li.last
           .left
             img(src="@|user.svg|")
-            span(style=" background-color: chartreuse;") 毅力之星
+            span(style=" background-color: chartreuse;") 惊险之星
             .name 招财进宝
           .right 连续打卡400次
 </template>
@@ -73,6 +73,8 @@
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (data) => {
+        // 打卡时间
+        let dakaTime = JSON.parse(data.daka_time)
         this.data.roomName = data.name
         this.query('.title-bar h2').innerText = data.name
         this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`
@@ -99,11 +101,17 @@
         let moneyPeople = {
           money: 0,
         }
+        let lastPeople = {
+          time: 0
+        }
         for (const key in joinPeopleList) {
           if (joinPeopleList.hasOwnProperty(key)) {
             const element = joinPeopleList[key];
             if (element.time < fastestPeople.time) {
               fastestPeople = element
+            }
+            if (element.time > lastPeople.time) {
+              lastPeople = element
             }
             if (element.money > moneyPeople.money) {
               moneyPeople = element
@@ -121,6 +129,9 @@
         // 投入最多的人
         this.query('.money .name').innerText = moneyPeople.name
         this.query('.money .right').innerText = '至少分得' + moneyPeople.money + '元'
+        // 最晚打卡的人
+        this.query('.last .name').innerText = lastPeople.name
+        this.query('.last .right').innerText = dayjs(parseInt(fastestPeople.time * 1000)).format('HH:mm:ss') + '打卡'
 
         this.query('.other-title-bar span').innerHTML = `${successNum} 人成功 | ${failNum} 人失败`
         console.log(fastestPeople)
@@ -131,8 +142,7 @@
           return
         }
         this.$el.classList.remove('not-started')
-        // 打卡时间
-        let dakaTime = JSON.parse(data.daka_time)
+        
         this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
         // 判断是否可以参加挑战
         var dateObj = new Date();
