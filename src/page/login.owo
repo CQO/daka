@@ -8,7 +8,7 @@
       .image-box
         img(src="https://cunchu.site/puge/login/image-box.png")
       .user-name-bar.input-bar
-        img.bar-icon(src="https://cunchu.site/puge/login/user.svg")
+        img.bar-icon(src="https://cunchu.site/puge/login/user.png")
         input(type="number" o-value="this.data.userPhone" placeholder="手机号")
       .pass-word-bar.input-bar
         img.bar-icon(src="https://cunchu.site/puge/login/password.png")
