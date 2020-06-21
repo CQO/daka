@@ -158,8 +158,8 @@
 			"type": "page"
 		},
 		{
-			"name": "outherLogin",
-			"src": "./src/page/outherLogin.owo",
+			"name": "recharge",
+			"src": "./src/page/recharge.owo",
 			"type": "page"
 		},
 		{

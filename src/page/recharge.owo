@@ -1,0 +1,134 @@
+<template lang="pug">
+.recharge
+  plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="充值中心")
+  .info-bar
+    .left 当前余额:
+    .right
+  .line
+  .card
+    .input-box
+      input.money-input(type="number" placeholder="请输入充值金额")
+    .select-box.clear
+      .item(o-tap="changeMoney(5)") 5元
+      .item(o-tap="changeMoney(10)") 10元
+      .item(o-tap="changeMoney(50)") 50元
+      .item(o-tap="changeMoney(100)") 100元
+      .item(o-tap="changeMoney(500)") 500元
+  .line
+  .card.select
+    .weixin
+      .left
+        img(src="@|weixin.png|")
+        span 微信支付
+  .button(o-tap="pay") 去充值
+</template>
+
+<script>
+  module.exports = {
+    data: {
+      payInfo: {}
+    },
+    changeMoney: function (number) {
+      number = parseInt(number)
+      this.query('.money-input').value = number
+      if (userInfo.weixin_id) {
+        getData(`credit?openid=${userInfo.weixin_id}&num=${number}`, (data) => {
+          this.data.payInfo = data
+        })
+      } else {
+        owo.tool.toast('请先绑定微信后使用!')
+      }
+    },
+    pay: function () {
+      if (userInfo.weixin_id) {
+        const num = this.query('.money-input').value
+        getData(`credit?openid=${userInfo.weixin_id}&num=${num}`, (data) => {
+          this.data.payInfo = data
+          weixinPay({
+            "appId": this.data.payInfo.appId,     //公众号名称，由商户传入     
+            "timeStamp": this.data.payInfo.timeStamp,         //时间戳，自1970年以来的秒数     
+            "nonceStr": this.data.payInfo.nonceStr, //随机串     
+            "package": this.data.payInfo.package,     
+            "signType":"MD5",         //微信签名方式：     
+            "paySign": this.data.payInfo.sign //微信签名 
+          })
+        })
+      } else {
+        owo.tool.toast('请先绑定微信后使用!')
+      }
+    }
+  }
+</script>
+
+
+<style lang="less">
+.info-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+  line-height: 40px;
+}
+.line {
+  height: 20px;
+  background-color: #f6f5fa;
+}
+.input-box {
+  background-image: url('@|money.png|');
+  background-repeat: no-repeat;
+  background-size: 15px;
+  background-position: 10px center;
+  input {
+    text-align: right;
+    width: 96%;
+    height: 45px;
+    border: none;
+    margin: 0 2%;
+    font-size: 18px;
+    background-color: transparent;
+    color: #333;
+    border-bottom: 1px solid #e6e6e6;
+  }
+}
+.select-box {
+  margin: 10px 0;
+  .item {
+    width: calc(33% - 9px);
+    text-align: center;
+    line-height: 40px;
+    background-color: #f13f4b;
+    color: white;
+    font-size: 20px;
+    border-radius: 5px;
+    float: left;
+    margin: 6px 5px;
+  }
+}
+.weixin {
+  .left {
+    display: flex;
+    height: 45px;
+    align-items: center;
+    margin: 5px 0;
+    img {
+      width: 40px;
+      height: 40px;
+      margin: 0 3%;
+    }
+  }
+}
+.button {
+  background-color: #f13f4b;
+  color: white;
+  height: 45px;
+  line-height: 45px;
+  text-align: center;
+  width: 96%;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+  bottom: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+}
+</style>

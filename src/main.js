@@ -54,10 +54,13 @@ function weixinPay (payInfo) {
   WeixinJSBridge.invoke(
     'getBrandWCPayRequest', payInfo, function(res) {
       if(res.err_msg == "get_brand_wcpay_request:ok" ) {
-        alert(JSON.stringify(res))
-        // 使用以上方式判断前端返回,微信团队郑重提示：
-        //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
-      } 
+        getData(`getOrder?trade=${owo.script.recharge.data.payInfo.out_trade_no}&userID=${userInfo.id}&token=${userInfo.token}`, (userInfo) => {
+          userInfo = JSON.parse(userInfo)
+          window.userInfo = userInfo
+          localStorage.setItem("userInfo", JSON.stringify(userInfo))
+          console.log('用户数据已更新!')
+        })
+      }
     }
   ); 
 }
@@ -67,10 +70,10 @@ let storUserInfo = localStorage.getItem('userInfo')
 if (storUserInfo) {
   window.userInfo = JSON.parse(storUserInfo)
   if (userInfo.token && userInfo.id) {
-    getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
-      if (data) {
-        userInfo = data
+    getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (userInfo) => {
+      if (userInfo) {
         // 存储到本地数据库中
+        window.userInfo = userInfo
         localStorage.setItem("userInfo", JSON.stringify(userInfo))
         console.log('用户数据已更新!')
       }

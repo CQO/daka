@@ -4,14 +4,17 @@
     .number-box
       .title 可提现金额
       .number 1234.00元
-    .button.button-1(o-tap="credit") 充值
-    .button.button-2 提现
+    .button.button-1(go="recharge") 充值
+    .button.button-2(o-tap="pay") 提现
   ul
 </template>
 
 <script>
   module.exports = {
-    created: function () {
+    data: {
+      payInfo: {}
+    },
+    show: function () {
       this.query('.number').innerText = userInfo.balance + '元'
       getData(`billList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
         let newHtml = ``
@@ -20,11 +23,6 @@
           newHtml += `<li><div class="left"><p class="name">${element.source}</p><p>${time}</p></div><div class="right"><span>${element.amount}</span></div></li>`
         })
         this.query('ul').innerHTML = newHtml
-      })
-    },
-    credit: function () {
-      getData('credit', (data) => {
-        console.log(data)
       })
     }
   }

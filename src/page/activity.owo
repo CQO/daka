@@ -10,7 +10,7 @@
 
 <script>
   module.exports = {
-    created: function () {
+    show: function () {
       // 获取房间列表
       getData('getHomeList', (data) => {
         let newHtml = ''

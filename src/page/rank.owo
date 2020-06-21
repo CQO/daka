@@ -36,25 +36,26 @@
         // 遍历出每一个人
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
+          let imgUrl = element.image || "@|user.svg|"
           // 对前三名进行特殊处理
           switch (index) {
             case 0:
               this.query('.name-1').innerHTML = element.username
               this.query('.gold-1').innerHTML = element.reward || 0
-              this.query('.user-image-1').src = "@|user.svg|"
+              this.query('.user-image-1').src = imgUrl
               break;
             case 1:
               this.query('.name-2').innerHTML = element.username
               this.query('.gold-2').innerHTML = element.reward || 0
-              this.query('.user-image-2').src = "@|user.svg|"
+              this.query('.user-image-2').src = imgUrl
               break;
             case 2:
               this.query('.name-3').innerHTML = element.username
               this.query('.gold-3').innerHTML = element.reward || 0
-              this.query('.user-image-3').src = "@|user.svg|"
+              this.query('.user-image-3').src = imgUrl
               break;
             default:
-              newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.svg|"><span class="name">${element.username}</span><span class="gold">${element.reward || 0}</span></li>`
+              newHtml += `<li><span class="index">${index + 1}</span><img src="${imgUrl}"><span class="name">${element.username}</span><span class="gold">${element.reward || 0}</span></li>`
               break;
           }
         }
@@ -70,25 +71,27 @@
         // 遍历出每一个人
         for (let index = 0; index < data.length; index++) {
           const element = data[index];
+          console.log(element)
+          let imgUrl = element.image || "@|user.svg|"
           // 对前三名进行特殊处理
           switch (index) {
             case 0:
               this.query('.name-1').innerHTML = element.username
               this.query('.gold-1').innerHTML = element.invite_num || 0
-              this.query('.user-image-1').src = "@|user.svg|"
+              this.query('.user-image-1').src = imgUrl
               break;
             case 1:
               this.query('.name-2').innerHTML = element.username
               this.query('.gold-2').innerHTML = element.invite_num || 0
-              this.query('.user-image-2').src = "@|user.svg|"
+              this.query('.user-image-2').src = imgUrl
               break;
             case 2:
               this.query('.name-3').innerHTML = element.username
               this.query('.gold-3').innerHTML = element.invite_num || 0
-              this.query('.user-image-3').src = "@|user.svg|"
+              this.query('.user-image-3').src = imgUrl
               break;
             default:
-              newHtml += `<li><span class="index">${index + 1}</span><img src="@|user.svg|"><span class="name">${element.username}</span><span class="gold">${element.invite_num || 0}</span></li>` 
+              newHtml += `<li><span class="index">${index + 1}</span><img src="${imgUrl}"><span class="name">${element.username}</span><span class="gold">${element.invite_num || 0}</span></li>` 
               break;
           }
         }
@@ -231,6 +234,7 @@ ul {
     width: 40px;
     height: 40px;
     margin: 5px;
+    border-radius: 20px;
   }
   .name {
     width: calc(100% - 170px);

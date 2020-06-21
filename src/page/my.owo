@@ -55,11 +55,16 @@
       } else {
         this.query('.no-login-box').style.display = 'none'
         this.query('.user-info').style.display = 'block'
-        this.query('.profit p').innerHTML = userInfo.revenue
+        this.query('.profit p').innerHTML = userInfo.revenue + '元'
         this.query('.gold p').innerHTML = userInfo.balance + '元'
-        this.query('.last-day p').innerHTML = userInfo.clock_num || 0 + '次'
+        this.query('.last-day p').innerHTML = (userInfo.clock_num || 0) + '次'
         this.query('.project p').innerHTML = Object.keys(JSON.parse(userInfo.join_room)).length + '个'
         this.query('.user-name').innerText = userInfo.username
+        // 用户头像
+        if (userInfo.image) {
+          this.query('.user-bar img').src = userInfo.image
+        }
+        
       }
     },
     exit: function () {
@@ -91,6 +96,7 @@
     height: 45px;
     margin: 5px;
     margin-right: 15px;
+    border-radius: 25px;
   }
 }
 .other-box {
