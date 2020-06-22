@@ -73,6 +73,14 @@
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (data) => {
+        if (data.finish === 1) {
+          setTimeout(() => {
+            this.query('.no-button').innerHTML = `已结束!`
+          }, 100);
+          this.$el.classList.add('finish')
+        } else {
+          this.$el.classList.remove('finish')
+        }
         // 打卡时间
         let dakaTime = JSON.parse(data.daka_time)
         this.data.roomName = data.name
@@ -98,15 +106,6 @@
         this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
         // 判断是否加入
         if (userList.length > 0) {
-          if (userList.finish === 1) {
-            setTimeout(() => {
-              this.query('.no-button').innerHTML = `已结束!`
-            }, 100);
-            this.$el.classList.add('not-started')
-            this.$el.classList.remove('attended')
-            return
-          }
-          
           
           let myInfo = null
           // 判断打卡成功失败人数
@@ -133,9 +132,10 @@
               successNum++
             }
           })
-          console.log(fastestPeople)
+          // console.log(fastestPeople)
           // 判断我有没有参与
           if (myInfo !== null) {
+            console.log(myInfo)
             if (myInfo.state == 1) {
               console.log('已成功打卡!')
               this.query('.no-button').innerHTML = `已成功打卡!`
@@ -175,6 +175,9 @@
 
           this.query('.other-title-bar span').innerHTML = `${successNum}/${userList.length}的参与者已打卡`
           this.query('.other-people').style.display = 'block'
+        } else {
+          this.$el.classList.remove('not-started')
+          this.query('.other-people').style.display = 'none'
         }
       })
     },

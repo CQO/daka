@@ -110,3 +110,11 @@ img {
 .no-running .no-button {
   display: block;
 }
+
+.finish.info-page .join-button, .finish.info-page .daka-button {
+  display: none;
+}
+
+.finish.info-page .no-button {
+  display: block;
+}

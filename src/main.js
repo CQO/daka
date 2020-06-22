@@ -43,6 +43,10 @@ function getData (url, callBack) {
           callBack(res.data)
           console.log('用户数据已更新!')
           break
+        case 103:
+          owo.tool.toast('您的余额不足!')
+          owo.go('wallet')
+          break
         default:
           owo.tool.toast(res.message)
       }
