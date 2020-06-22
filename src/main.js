@@ -37,6 +37,12 @@ function getData (url, callBack) {
           owo.tool.toast(res.message)
           window.location.href = ''
           break
+        case 102:
+          window.userInfo = res.data
+          localStorage.setItem("userInfo", JSON.stringify(res.data))
+          callBack(res.data)
+          console.log('用户数据已更新!')
+          break
         default:
           owo.tool.toast(res.message)
       }
@@ -55,10 +61,7 @@ function weixinPay (payInfo) {
     'getBrandWCPayRequest', payInfo, function(res) {
       if(res.err_msg == "get_brand_wcpay_request:ok" ) {
         getData(`getOrder?trade=${owo.script.recharge.data.payInfo.out_trade_no}&userID=${userInfo.id}&token=${userInfo.token}`, (userInfo) => {
-          userInfo = JSON.parse(userInfo)
-          window.userInfo = userInfo
-          localStorage.setItem("userInfo", JSON.stringify(userInfo))
-          console.log('用户数据已更新!')
+          owo.tool.toast('支付成功!')
         })
       }
     }
@@ -71,12 +74,7 @@ if (storUserInfo) {
   window.userInfo = JSON.parse(storUserInfo)
   if (userInfo.token && userInfo.id) {
     getData(`getUserInfo?token=${userInfo.token}&userID=${userInfo.id}`, (userInfo) => {
-      if (userInfo) {
-        // 存储到本地数据库中
-        window.userInfo = userInfo
-        localStorage.setItem("userInfo", JSON.stringify(userInfo))
-        console.log('用户数据已更新!')
-      }
+      owo.tool.toast('登陆成功!')
     })
   }
 } else {

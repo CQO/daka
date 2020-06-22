@@ -1,0 +1,75 @@
+<template lang="pug">
+.my-card
+  plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="我的卡券")
+  .my-card-title
+    span 我的补签卡数量:
+    span.num
+  .card-box(o-tap="buy(1)")
+    .money 30元
+    p 卡券内容: 一张补签卡<br>功能：可以补签一次打卡<br>可用范围：所有打卡房间
+  .card-box(o-tap="buy(5)")
+    .money 100元
+    p 卡券内容: 五张补签卡<br>功能：可以补签一次打卡<br>可用范围：所有打卡房间
+</template>
+
+<script>
+  module.exports = {
+    show: function () {
+      this.query('.my-card-title .num').innerText = userInfo.resurrection + '张'
+      // getData(`getClockList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+      // })
+    },
+    buy: function (num) {
+      getData(`buyResurrection?token=${userInfo.token}&userID=${userInfo.id}&num=${parseInt(num)}`, (data) => {
+        owo.tool.toast('购买成功!')
+        this.show()
+      })
+    }
+  }
+</script>
+
+
+<style lang="less">
+.card-box {
+  background-image: url('@|card.png|');
+}
+.my-card {
+  background-color: #efefef;
+}
+.card-box {
+  width: 96%;
+  height: 40vw;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+  margin-top: 10px;
+}
+.card-box {
+  position: relative;
+  p {
+    color: #6c6c6c;
+    font-size: 13px;
+    position: absolute;
+    top: 22vw;
+    left: 2vw;
+  }
+  .money {
+    position: absolute;
+    font-size: 30px;
+    color: white;
+    line-height: 40px;
+    top: 6vw;
+    left: 11vw;
+    font-weight: bold;
+  }
+}
+.my-card-title {
+  background-color: white;
+  line-height: 40px;
+  display: flex;
+  justify-content: space-between;
+  width: 94%;
+  padding: 0 3%;
+  color: #333;
+}
+</style>

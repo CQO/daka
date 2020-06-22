@@ -14,42 +14,39 @@
       // 获取房间列表
       getData('getHomeList', (data) => {
         let newHtml = ''
-          // 生成出我的打卡
-          if (userInfo && userInfo.join_room) {
-            let myRoomGtml = ``
-            const joinRoom = JSON.parse(userInfo.join_room)
-            console.log(joinRoom)
-            for (const key in joinRoom) {
-              if (joinRoom.hasOwnProperty(key)) {
-                const element = joinRoom[key];
-                // 房间的时间
-                const roomTime = JSON.parse(element.dakaTime)
-                const nowTime = getNowTime()
-                // 显示的文字
-                let showText = '今日已结束'
-                if (roomTime[0] > nowTime) {
-                  showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
-                } else if (roomTime[1] > nowTime) {
-                  showText = `可以打卡`
-                }
-                myRoomGtml += `<div class="mini-card" o-tap="goInfo(${key})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
-              }
-            }
-            this.query('.my-recommend-box').innerHTML = myRoomGtml
-          } else {
-            this.query('.involved-title').style.display = 'none'
+        
+        
+        // 遍历出每一个房间
+        data.forEach(element => {
+          const dataTime = JSON.parse(element.daka_time)
+          newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+        })
+        this.query('.recommend-box').innerHTML = newHtml
+        
+        setTimeout(() => {
+          this.handleEvent(this, this.$el)
+        }, 100);
+      })
+      getData(`getMyRoom?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        if (data.lenght == 0) this.query('.involved-title').style.display = 'none'
+        let myRoomGtml = ''
+        data.forEach(element => {
+          // 房间的时间
+          const roomTime = JSON.parse(element.daka_time)
+          const nowTime = getNowTime()
+          // 显示的文字
+          let showText = '今日已结束'
+          if (roomTime[0] > nowTime) {
+            showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
+          } else if (roomTime[1] > nowTime) {
+            showText = `可以打卡`
           }
-          
-          // 遍历出每一个房间
-          data.forEach(element => {
-            const dataTime = JSON.parse(element.daka_time)
-            newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
-          })
-          this.query('.recommend-box').innerHTML = newHtml
-          
+          myRoomGtml += `<div class="mini-card" o-tap="goInfo(${element.room_id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.room_name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
+          this.query('.my-recommend-box').innerHTML = myRoomGtml
           setTimeout(() => {
-            this.handleEvent(this, this.$el)
+            this.handleEvent(this, this.query('.my-recommend-box'))
           }, 100);
+        });
       })
     },
     goInfo: function (id) {

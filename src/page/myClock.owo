@@ -14,7 +14,7 @@
           if (element.time) {
             time = dayjs(parseInt(element.time)).format('YYYY年MM月DD日 HH:mm:ss')
           }
-          newHtml += `<li o-tap="goInfo(${element.id})"><div class="left"><p class="name">打卡房间: ${element.name}</p><p>打卡时间: ${time}</p></div></li>`
+          newHtml += `<li o-tap="goInfo(${element.id})"><div class="left"><p class="name">打卡房间: ${element.text}</p><p>打卡时间: ${time}</p></div></li>`
         })
         this.query('ul').innerHTML = newHtml
         setTimeout(() => {

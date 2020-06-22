@@ -166,6 +166,11 @@
 			"name": "changeUserInfo",
 			"src": "./src/page/changeUserInfo.owo",
 			"type": "page"
+		},
+		{
+			"name": "myCard",
+			"src": "./src/page/myCard.owo",
+			"type": "page"
 		}
 	],
 	"mode": {

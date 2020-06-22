@@ -28,6 +28,9 @@
       .item-bar(go="myClock")
         .icon &#xe63a;
         .text 打卡记录
+      .item-bar(go="myCard")
+        .icon &#xe629;
+        .text 我的卡券
       .item-bar(go="changeUserInfo")
         .icon &#xe66b;
         .text 账号设置
@@ -58,14 +61,15 @@
         this.query('.profit p').innerHTML = userInfo.revenue + '元'
         this.query('.gold p').innerHTML = userInfo.balance + '元'
         this.query('.last-day p').innerHTML = (userInfo.clock_num || 0) + '次'
-        this.query('.project p').innerHTML = Object.keys(JSON.parse(userInfo.join_room)).length + '个'
         this.query('.user-name').innerText = userInfo.username
         // 用户头像
         if (userInfo.image) {
           this.query('.user-bar img').src = userInfo.image
         }
-        
       }
+      getData(`getMyRoom?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        this.query('.project p').innerHTML = data.length + '个'
+      })
     },
     exit: function () {
       localStorage.removeItem("userInfo")
