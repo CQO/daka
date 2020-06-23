@@ -30,6 +30,8 @@
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战
     .daka-button.captcha-button(data-appid="2092617728" data-cbfn="owo.script.info.dakaCallBack") 立即打卡
+    //- 补签按钮
+    .compensate-button(o-tap="compensate") 立即补签(1张补签卡)
     .no-button
     //- 今日打卡进度
     .other-people.card
@@ -141,9 +143,16 @@
               this.query('.no-button').innerHTML = `已成功打卡!`
               this.$el.classList.add('not-started')
               this.$el.classList.remove('attended')
+              this.$el.classList.remove('compensate')
+            } else if (myInfo.state == 2) {
+              console.log('可以补签!')
+              this.$el.classList.add('compensate')
+              this.$el.classList.remove('attended')
+              this.$el.classList.remove('not-started')
             } else {
               this.$el.classList.add('attended')
               this.$el.classList.remove('not-started')
+              this.$el.classList.remove('compensate')
             }
           }
           
@@ -212,6 +221,14 @@
           owo.script.info.show()
         })
       }
+    },
+    compensate: function () {
+      // 补签
+      const roomID = _owo.getQueryVariable().id
+      getData(`compensate?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        owo.tool.toast('补签成功!')
+        owo.script.info.show()
+      })
     }
   }
 </script>
@@ -312,7 +329,7 @@
   line-height: 45px;
   color: white;
 }
-.daka-button {
+.daka-button, .compensate-button {
   width: 70%;
   margin: 0 auto;
   text-align: center;
@@ -326,6 +343,7 @@
   color: white;
   display: none;
 }
+
 .no-button {
   width: 70%;
   margin: 0 auto;

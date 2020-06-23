@@ -118,3 +118,11 @@ img {
 .finish.info-page .no-button {
   display: block;
 }
+
+.compensate .join-button, .compensate .daka-button {
+  display: none;
+}
+
+.compensate .compensate-button {
+  display: block;
+}
