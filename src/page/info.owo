@@ -55,8 +55,8 @@
           .left
             img(src="@|user.svg|")
             span(style=" background-color: chartreuse;") 惊险之星
-            .name 招财进宝
-          .right 连续打卡400次
+            .name
+          .right
 </template>
 
 <script>
@@ -80,6 +80,8 @@
             this.query('.no-button').innerHTML = `已结束!`
           }, 100);
           this.$el.classList.add('finish')
+          // 如果游戏结束了那么标记房间结束
+          getData(`markRoom?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}`)
         } else {
           this.$el.classList.remove('finish')
         }
@@ -176,10 +178,13 @@
           })
           // 最晚打卡的人
           this.query('.last .right').innerText = dayjs(parseInt(fastestPeople.clock_time)).format('HH:mm:ss') + '打卡'
+          
           getData(`getUserShowInfo?userID=${lastPeople.user_id}`, (data) => {
+            console.log('---------------------------')
+            console.log(data)
             if (!data) return
             if (data.image) this.query('.last img').src = data.image
-            this.query('.money .name').innerText = data.username
+            this.query('.last .name').innerText = data.username
           })
 
           this.query('.other-title-bar span').innerHTML = `${successNum}/${userList.length}的参与者已打卡`

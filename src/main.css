@@ -111,18 +111,18 @@ img {
   display: block;
 }
 
-.finish.info-page .join-button, .finish.info-page .daka-button {
-  display: none;
-}
-
-.finish.info-page .no-button {
-  display: block;
-}
-
 .compensate .join-button, .compensate .daka-button {
   display: none;
 }
 
 .compensate .compensate-button {
+  display: block;
+}
+
+.finish.info-page .join-button, .finish.info-page .daka-button, .finish.info-page .compensate-button {
+  display: none;
+}
+
+.finish.info-page .no-button {
   display: block;
 }

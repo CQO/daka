@@ -26,7 +26,7 @@ const serverIP = 'http://154.8.196.163:8007'
 function getData (url, callBack) {
   fetch(`${serverIP}/${url}`).then((response) => {return response.json();}).then((res) => {
     if (res.err === 0) {
-      callBack(res.data)
+      if (callBack) callBack(res.data)
     } else {
       switch (res.err) {
         case 100:
@@ -40,7 +40,7 @@ function getData (url, callBack) {
         case 102:
           window.userInfo = res.data
           localStorage.setItem("userInfo", JSON.stringify(res.data))
-          callBack(res.data)
+          if (callBack) callBack(res.data)
           console.log('用户数据已更新!')
           break
         case 103:
