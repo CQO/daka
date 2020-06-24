@@ -29,9 +29,6 @@
       const newName = this.query('.user-name').value
       getData(`updataUserName?token=${userInfo.token}&userID=${userInfo.id}&userName=${newName}`, (data) => {
         owo.tool.toast('昵称修改成功!')
-        userInfo.username = newName
-        // 存储到本地数据库中
-        localStorage.setItem("userInfo", JSON.stringify(userInfo))
       })
     },
     changePassWord: function () {

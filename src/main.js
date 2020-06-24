@@ -21,6 +21,7 @@ function getTimeStr(num) {
   if (minute < 10) minute = '0' + minute
   return `${hour}:${minute}`
 }
+
 // const serverIP = 'http://127.0.0.1:8007'
 const serverIP = 'http://154.8.196.163:8007'
 function getData (url, callBack) {
@@ -39,7 +40,7 @@ function getData (url, callBack) {
           break
         case 102:
           window.userInfo = res.data
-          localStorage.setItem("userInfo", JSON.stringify(res.data))
+          setCookie("userInfo", JSON.stringify(res.data))
           if (callBack) callBack(res.data)
           console.log('用户数据已更新!')
           break
@@ -53,6 +54,7 @@ function getData (url, callBack) {
     }
   })
 }
+
 setTimeout(() => {
   const urlPram = _owo.getQueryVariable()
   if (urlPram.code) {
@@ -73,7 +75,7 @@ function weixinPay (payInfo) {
 }
 
 // 如果有用户信息自动更新用户信息
-let storUserInfo = localStorage.getItem('userInfo')
+let storUserInfo = getCookie('userInfo')
 if (storUserInfo) {
   window.userInfo = JSON.parse(storUserInfo)
   if (userInfo.token && userInfo.id) {
@@ -105,3 +107,25 @@ getData('getSwiper', (data) => {
     console.log('轮播图初始化成功!')
   }, 0)
 })
+
+//设置cookie
+function setCookie(c_name, value) {
+  var exdate = new Date()
+  var expiredays = 356 * 24 * 60 * 60 * 1000
+  exdate.setDate(exdate.getDate() + expiredays)
+  document.cookie = c_name+ "=" + escape(value) + ";expires=" + exdate.toGMTString()
+}
+
+//取回cookie
+function getCookie(c_name) {
+  if (document.cookie.length > 0) {
+    c_start=document.cookie.indexOf(c_name + "=")
+    if (c_start!=-1) { 
+      c_start = c_start + c_name.length + 1 
+      c_end = document.cookie.indexOf(";", c_start)
+      if (c_end == -1) c_end = document.cookie.length
+      return unescape(document.cookie.substring(c_start, c_end))
+    }
+  }
+  return ""
+}

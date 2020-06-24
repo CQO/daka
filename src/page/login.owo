@@ -106,6 +106,15 @@
     login: function () {
       // 计算md5
       const password = this.encry(this.data.passWord)
+      if (!this.data.userPhone) {
+        owo.tool.toast('手机号不能为空!')
+        return
+      }
+      if (!password) {
+        if (owo.tool.toast) owo.tool.toast('密码不能为空!')
+        else alert('密码不能为空!')
+        return
+      }
       fetch(`${serverIP}/login?phone=${this.data.userPhone}&password=${password}&type=supervisor`).then((response) => {return response.json();}).then((res) => {
         if (res.err === 0) {
           if (owo.tool.toast) owo.tool.toast('登陆成功')
@@ -114,7 +123,7 @@
           // 保存token
           window.userInfo = res.data
           // 存储到本地数据库中
-          localStorage.setItem("userInfo", JSON.stringify(userInfo))
+          setCookie("userInfo", JSON.stringify(userInfo))
           setTimeout(() => {
             owo.go('home//rotateRightSideFirst/moveFromRight&&delay200')
           }, 0);

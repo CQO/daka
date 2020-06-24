@@ -1,0 +1,16 @@
+<template lang="pug">
+.withdrawal
+  plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="提现申请")
+</template>
+
+<script>
+  module.exports = {
+    data: {
+    }
+  }
+</script>
+
+
+<style lang="less">
+
+</style>

@@ -171,6 +171,11 @@
 			"name": "myCard",
 			"src": "./src/page/myCard.owo",
 			"type": "page"
+		},
+		{
+			"name": "withdrawal",
+			"src": "./src/page/withdrawal.owo",
+			"type": "page"
 		}
 	],
 	"mode": {

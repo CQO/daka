@@ -262,7 +262,7 @@
           // alert(JSON.stringify(userInfo))
           weixinUserInfo = userInfo
           getData(`getUserByOpenID?code=` + userInfo.openid, (data) => {
-            localStorage.setItem("userInfo", JSON.stringify(data))
+            getCookie("userInfo", JSON.stringify(data))
             // alert(JSON.stringify(data))
             // 判断是否有用户
             if (data) {

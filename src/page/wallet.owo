@@ -5,7 +5,7 @@
       .title 可提现金额
       .number 1234.00元
     .button.button-1(go="recharge") 充值
-    .button.button-2(o-tap="pay") 提现
+    .button.button-2(go="withdrawal") 提现
   ul
 </template>
 
