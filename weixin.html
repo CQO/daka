@@ -222,6 +222,13 @@
           text = text.replace('o', 'e')
           return text
         }
+        //设置cookie
+        function setCookie(c_name, value) {
+          var exdate = new Date()
+          var expiredays = 356 * 24 * 60 * 60 * 1000
+          exdate.setDate(exdate.getDate() + expiredays)
+          document.cookie = c_name+ "=" + escape(value) + ";expires=" + exdate.toGMTString()
+        }
         function register () {
           const registerUserName = document.querySelector('#userName').value;
           const registerPassWord = document.querySelector('.password').value
@@ -262,7 +269,7 @@
           // alert(JSON.stringify(userInfo))
           weixinUserInfo = userInfo
           getData(`getUserByOpenID?code=` + userInfo.openid, (data) => {
-            getCookie("userInfo", JSON.stringify(data))
+            setCookie("userInfo", JSON.stringify(data))
             // alert(JSON.stringify(data))
             // 判断是否有用户
             if (data) {

@@ -41,21 +41,21 @@
           switch (index) {
             case 0:
               this.query('.name-1').innerHTML = element.username
-              this.query('.gold-1').innerHTML = element.reward || 0
+              this.query('.gold-1').innerHTML = element.revenue || 0
               this.query('.user-image-1').src = imgUrl
               break;
             case 1:
               this.query('.name-2').innerHTML = element.username
-              this.query('.gold-2').innerHTML = element.reward || 0
+              this.query('.gold-2').innerHTML = element.revenue || 0
               this.query('.user-image-2').src = imgUrl
               break;
             case 2:
               this.query('.name-3').innerHTML = element.username
-              this.query('.gold-3').innerHTML = element.reward || 0
+              this.query('.gold-3').innerHTML = element.revenue || 0
               this.query('.user-image-3').src = imgUrl
               break;
             default:
-              newHtml += `<li><span class="index">${index + 1}</span><img src="${imgUrl}"><span class="name">${element.username}</span><span class="gold">${element.reward || 0}</span></li>`
+              newHtml += `<li><span class="index">${index + 1}</span><img src="${imgUrl}"><span class="name">${element.username}</span><span class="gold">${element.revenue || 0}</span></li>`
               break;
           }
         }
@@ -185,6 +185,7 @@
   width: 12.95%;
   height: 12.95%;
   z-index: -5;
+  border-radius: 35px;
 }
 .so-6 {
   left: 9.42%;
@@ -192,6 +193,7 @@
   width: 14.25%;
   height: 14.25%;
   z-index: -6;
+  border-radius: 35px;
 }
 .so-7 {
   left: 33.92%;
@@ -199,6 +201,7 @@
   width: 19.67%;
   height: 19.67%;
   z-index: -7;
+  border-radius: 35px;
 }
 .so-8 {
   left: 0%;
