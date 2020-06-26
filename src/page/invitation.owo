@@ -13,9 +13,6 @@
   .share-box
     .share
       h2 邀请好友
-      //- 佣金比例
-      p 设置被邀请用户的收益有百分之多少归属于你(如果设置为1则被邀请用户参加活动获得收益后扣除1%的金额给你分红)
-      input#invitationNum(type="number" value="1" min="0" max="99" o-input="numChange")
       p 你的邀请链接，只有用户通过以下链接注册才会给你分红
       textarea#invitationLink
       .button-box
@@ -29,7 +26,8 @@
     },
     showLinkBox: function () {
       if (userInfo && userInfo.id) {
-        this.numChange()
+        const texta = document.getElementById('invitationLink')
+        texta.value = `${window.location.origin}/?view-loginContent=register&invitation=${userInfo.id}?#login`
         this.query('.share-box').style.display = 'block'
       } else {
         owo.tool.toast('需要登陆后才能使用此功能!')
@@ -47,11 +45,6 @@
       } else {
         owo.tool.toast('复制失败，请手动复制!')
       }
-    },
-    numChange: function () {
-      const texta = document.getElementById('invitationLink')
-      const num = document.getElementById('invitationNum').value
-      texta.value = `http://127.0.0.1:8000/?view-loginContent=register&invitation=${userInfo.id}&num=${num}?#login`
     }
   }
 </script>
@@ -126,7 +119,7 @@
   margin: auto;
   top: 0;
   bottom: 0;
-  height: 400px;
+  height: 290px;
   background-color: white;
   padding: 10px;
   border-radius: 10px;

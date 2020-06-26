@@ -33,7 +33,7 @@ span {
   bottom: 0;
   margin: auto;
   height: 40px;
-  width: 120px;
+  width: 140px;
   line-height: 40px;
   text-align: center;
   font-size: 18px;

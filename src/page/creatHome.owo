@@ -17,7 +17,15 @@
     .title(font="FZLTCHJW.TTF") 奖励方式:
     .select-button-box
       .select-button.item-1.active(o-tap="changeType(0)") 按比分配
-      .select-button.item-2(o-tap="changeType(1)") 随机分配
+      .select-button.item-2(o-tap="changeType(5)") 随机分配
+    //- 随机分配金额选择
+    .select-money-box
+      .title(font="FZLTCHJW.TTF") 房间金额:
+      .number-selsct
+        .select-button(o-class-active="this.data.type == 5" o-tap="changeType(5)") 5元
+        .select-button(o-class-active="this.data.type == 10" o-tap="changeType(10)") 10元
+        .select-button(o-class-active="this.data.type == 50" o-tap="changeType(50)") 50元
+        .select-button(o-class-active="this.data.type == 500" o-tap="changeType(500)") 500元
     .button(font="FZLTCHJW.TTF" o-tap="creatHome") 创建房间
 </template>
 
@@ -79,11 +87,19 @@
       })
     },
     changeType: function (type) {
-      this.queryAll('.select-button').forEach(element => {
-        element.classList.remove('active')
-      });
-      this.$target.classList.add('active')
+      type = parseInt(type)
       this.data.type = parseInt(type)
+      if (type == 0) {
+        this.query('.select-button-box .item-1').classList.add('active')
+        this.query('.select-button-box .item-2').classList.remove('active')
+        this.query('.select-money-box').style.display = 'none'
+      } else {
+        this.query('.select-button-box .item-1').classList.remove('active')
+        this.query('.select-button-box .item-2').classList.add('active')
+        this.query('.select-money-box').style.display = 'block'
+        console.log(this)
+        this.handleEvent(this, this.query('.select-money-box'))
+      }
     }
   }
 </script>
@@ -115,7 +131,7 @@
 }
 .title {
   line-height: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 input {
   height: 40px;
@@ -143,15 +159,23 @@ input {
 }
 .select-button-box {
   display: flex;
-  .select-button {
-    background-color: darkgray;
-    padding: 5px 10px;
-    border-radius: 5px;
-    margin-right: 10px;
-    color: white;
-  }
-  .active {
-    background-color: #009fe9;
-  }
+  margin-bottom: 5px;
+  
+}
+.select-button {
+  background-color: darkgray;
+  padding: 5px 10px;
+  border-radius: 5px;
+  margin-right: 10px;
+  color: white;
+}
+.active {
+  background-color: #009fe9;
+}
+.number-selsct {
+  display: flex;
+}
+.select-money-box {
+  display: none;
 }
 </style>

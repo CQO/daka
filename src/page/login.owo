@@ -6,7 +6,7 @@
   view.router(name="loginContent")
     .view-login(route="login")
       .image-box
-        img(src="https://cunchu.site/puge/login/image-box.png")
+        img(src="@|logo.png|")
       .user-name-bar.input-bar
         img.bar-icon(src="https://cunchu.site/puge/login/user.png")
         input(type="number" o-value="this.data.userPhone" placeholder="手机号")
@@ -158,7 +158,7 @@
       const password = this.encry(this.data.passWord)
       // 获取是否被邀请的信息
       const variable = _owo.getQueryVariable()
-      getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}&inviter=${variable.inviter}&num=${variable.num}`, (data) => {
+      getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}&inviter=${variable.inviter}`, (data) => {
         owo.tool.toast('注册成功!')
         this.toLogin()
       })
@@ -239,7 +239,8 @@
 .image-box img {
   height: 160px;
   display: block;
-  margin: 40px auto;
+  margin: 30px auto;
+  border-radius: 80px;
 }
 .hellow-text {
   color: #5fccff;

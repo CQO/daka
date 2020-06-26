@@ -34,10 +34,10 @@
       .item-bar(go="changeUserInfo")
         .icon &#xe66b;
         .text 账号设置
-      .item-bar
+      .item-bar(o-tap="toLianxi")
         .icon &#xe6d0;
-        .text 常见问题
-      .item-bar
+        .text 打卡规则及问题
+      .item-bar(o-tap="toLianxi")
         .icon &#xe711;
         .text 联系我们
     .sign-out-button(o-tap="exit") 退出登录
@@ -74,6 +74,11 @@
     exit: function () {
       getCookie("userInfo")
       owo.go('login')
+    },
+    toLianxi: function () {
+      document.querySelector('.outher-info .title-bar-top span').innerText = '打卡规则及问题'
+      document.querySelector('.outher-info-box').innerHTML = 'cwzyzm88（微信号）<br>18628887509（电话号）'
+      owo.go('outherInfo')
     }
   }
 </script>

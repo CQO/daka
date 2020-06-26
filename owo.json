@@ -176,6 +176,11 @@
 			"name": "withdrawal",
 			"src": "./src/page/withdrawal.owo",
 			"type": "page"
+		},
+		{
+			"name": "outherInfo",
+			"src": "./src/page/outherInfo.owo",
+			"type": "page"
 		}
 	],
 	"mode": {

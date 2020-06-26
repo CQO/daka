@@ -1,0 +1,15 @@
+<template lang="pug">
+.outher-info
+  plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="我的卡券")
+  .outher-info-box
+</template>
+
+
+<style lang="less">
+.outher-info-box {
+  background-color: #f8f8f8;
+  height: calc(100% - 61px);
+  overflow: auto;
+  padding: 10px;
+}
+</style>

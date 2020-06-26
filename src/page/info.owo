@@ -13,12 +13,7 @@
     //- 用户展示
     .user-show.card
       span
-      .user-image-box
-        img(src="@|user.svg|")
-        img(src="@|user.svg|")
-        img(src="@|user.svg|")
-        img(src="@|user.svg|")
-        img(src="@|user.svg|")
+      p
     //- 设置挑战金额
     .join-card.card
       .title(font="FZLTCHJW.TTF") 可选挑战金额:
@@ -27,6 +22,9 @@
         span(o-tap="changeNumber(50)" o-class-active="this.data.joinMoney == 50") 50元
         span(o-tap="changeNumber(500)" o-class-active="this.data.joinMoney == 500") 500元
         span(o-tap="changeNumber(5000)" o-class-active="this.data.joinMoney == 5000") 5000元
+    .join-card-red.card
+      p 挑战金额：
+      p 5元
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战
     .daka-button.captcha-button(data-appid="2092617728" data-cbfn="owo.script.info.dakaCallBack") 立即打卡
@@ -96,15 +94,27 @@
         // 计算进度条进度
         this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
         this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
-        this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
+        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
+        
+        this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
+
+        // 判断是否为固定加入金额
+        if (data.type != 0) {
+          this.query('.join-card-red').innerHTML = `<span>挑战金额:</span><span>${data.type}元</span>`
+          this.query('.join-card-red').style.display = 'flex'
+          this.query('.join-card').style.display = 'none'
+          this.data.joinMoney = data.type
+        }
         // 判断是否可以参加挑战
         var dateObj = new Date();
         const nowTime = dateObj.getHours() * 3600 + dateObj.getMinutes() * 60
         if (dakaTime[0] < nowTime && nowTime < dakaTime[1]) {
           this.$el.classList.add('running')
+          this.$el.classList.remove('no-running')
         } else {
           this.query('.no-button').innerHTML = `未到活动时间${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
           this.$el.classList.add('no-running')
+          this.$el.classList.remove('running')
         }
       })
       // 获取当前房间打卡用户
@@ -306,14 +316,20 @@
   }
 }
 .user-show {
-  display: flex;
   margin-top: 15px;
   font-size: 14px;
-  height: 30px;
   line-height: 30px;
   color: coral;
   justify-content: space-between;
   align-items: center;
+  p {
+    color: #ccc;
+    display: flex;
+    justify-content: space-between;
+  }
+  .type {
+    color: salmon;
+  }
 }
 .user-image-box {
   display: flex;
@@ -447,5 +463,10 @@
   .active {
     background-color: #009fe9;
   }
+}
+.join-card-red {
+  display: none;
+  justify-content: space-between;
+  color: cornflowerblue;
 }
 </style>
