@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="utf-8" />
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no, email=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <title></title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="filetype" content="1" />
+    <meta name="publishedtype" content="1" />
+    <meta name="pagetype" content="2" />
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="browsermode" content="application">
+    <meta name="x5-page-mode" content="app">
+    <style>
+        body {
+
+            background: #fff;
+            overflow: hidden;
+            height: 100%;
+            margin: 0;
+        }
+        .button {
+          width: 120px;
+          line-height: 45px;
+          background-color: #009fe9;
+          color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="button" onclick="nextDay()">下一天</div>
+    <div class="info-box"></div>
+    <script>
+        const serverIP = 'http://154.8.196.163:8007'
+        function getData(url, callBack) {
+          fetch(`${serverIP}/${url}`).then((response) => { return response.json(); }).then((res) => {
+            if (res.err === 0) {
+              callBack(res.data)
+            } else {
+              alert(res.message)
+            }
+          })
+        }
+        function nextDay () {
+          getData('nextDay', function (data) {
+            document.querySelector('.info-box').innerHTML = data
+          })
+        }
+    </script>
+</body>
+</html>

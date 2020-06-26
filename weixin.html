@@ -229,6 +229,20 @@
           exdate.setDate(exdate.getDate() + expiredays)
           document.cookie = c_name+ "=" + escape(value) + ";expires=" + exdate.toGMTString()
         }
+        var weixinUserInfo = null
+        const serverIP = 'http://154.8.196.163:8007'
+        function getLogin () {
+          getData(`getUserByOpenID?code=` + weixinUserInfo.openid, (data) => {
+            setCookie("userInfo", JSON.stringify(data))
+            // alert(JSON.stringify(data))
+            // 判断是否有用户
+            if (data) {
+              window.location.href = (location.origin + location.pathname).replace('weixin.html', 'index.html')
+            } else {
+              document.getElementById('userName').value = weixinUserInfo.nickname
+            }
+          }) 
+        }
         function register () {
           const registerUserName = document.querySelector('#userName').value;
           const registerPassWord = document.querySelector('.password').value
@@ -258,26 +272,15 @@
           const password = encry(rePassWord)
           // 获取是否被邀请的信息
           getData(`registerFormWeixin?username=${registerUserName}&password=${password}&phone=${phone}&phoneCode=${phoneCode}&inviter=${getUrlParam("inviter")}&num=${getUrlParam("num")}&openid=${weixinUserInfo.openid}&headimgurl=${weixinUserInfo.headimgurl}`, (data) => {
-            alert('注册成功!')
-            // this.toLogin()
+            getLogin()
           })
         }
-        let weixinUserInfo = ''
-        const serverIP = 'http://154.8.196.163:8007'
+        
         var code = getUrlParam("code");
         getData(`getAccessToken?code=` + code, (userInfo) => {
           // alert(JSON.stringify(userInfo))
           weixinUserInfo = userInfo
-          getData(`getUserByOpenID?code=` + userInfo.openid, (data) => {
-            setCookie("userInfo", JSON.stringify(data))
-            // alert(JSON.stringify(data))
-            // 判断是否有用户
-            if (data) {
-              window.location.href = (location.origin + location.pathname).replace('weixin.html', 'index.html')
-            } else {
-              document.getElementById('userName').value = userInfo.nickname
-            }
-          }) 
+          getLogin()
         })
     </script>
 </body>

@@ -14,6 +14,10 @@
     input(type="number" placeholder="总计需要打卡多少天" o-value="this.data.avtiveDays")
     .title(font="FZLTCHJW.TTF") 分成比例:
     input(type="number" placeholder="分成比例(1-99)" o-value="this.data.bonus")
+    .title(font="FZLTCHJW.TTF") 奖励方式:
+    .select-button-box
+      .select-button.item-1.active(o-tap="changeType(0)") 按比分配
+      .select-button.item-2(o-tap="changeType(1)") 随机分配
     .button(font="FZLTCHJW.TTF" o-tap="creatHome") 创建房间
 </template>
 
@@ -23,6 +27,7 @@
       name: "",
       avtiveDays: 5,
       bonus: 1,
+      type: 0
     },
     created: function () {
 
@@ -36,7 +41,7 @@
       const endTime = this.query('.end-time').value
       const startDay = this.query('.start-day').value
       console.log(startDay)
-      if (!userInfo.token || !userInfo.id) {
+      if (!userInfo || !userInfo.token || !userInfo.id) {
         owo.tool.toast('您还未登录!')
         owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
         return
@@ -65,13 +70,20 @@
         owo.tool.toast('结束时间没有设置!')
         return
       }
-      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}`, (data) => {
+      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('创建成功')
         else alert('创建成功')
         // do something
         // 保存token
         owo.go('home')
       })
+    },
+    changeType: function (type) {
+      this.queryAll('.select-button').forEach(element => {
+        element.classList.remove('active')
+      });
+      this.$target.classList.add('active')
+      this.data.type = parseInt(type)
     }
   }
 </script>
@@ -128,5 +140,18 @@ input {
   margin-top: 20px;
   
   box-shadow: 1px 1px 5px #9e0db7;
+}
+.select-button-box {
+  display: flex;
+  .select-button {
+    background-color: darkgray;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-right: 10px;
+    color: white;
+  }
+  .active {
+    background-color: #009fe9;
+  }
 }
 </style>

@@ -10,14 +10,14 @@
     img.so.so-4(src="@|394.png|")
     img.so.so-8(src="@|393.png|")
     //- 前三名名字和奖金
-    .name.name-1 郭培培
-    .gold.gold-1 135243
+    .name.name-1
+    .gold.gold-1
     img.so.so-7.user-image-1
-    .name.name-2 郭培培
-    .gold.gold-2 135243
+    .name.name-2
+    .gold.gold-2
     img.so.so-6.user-image-2
-    .name.name-3 郭培培
-    .gold.gold-3 135243
+    .name.name-3
+    .gold.gold-3
     img.so.so-5.user-image-3
   //- 完整排行榜
   ul.rank

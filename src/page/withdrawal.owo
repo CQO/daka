@@ -1,6 +1,13 @@
 <template lang="pug">
 .withdrawal
   plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="提现申请")
+  .title 联系方式
+  input(type="text" placeholder="提现金额")
+  .title 提现金额
+  input(type="text")
+  .title 收款账户信息
+  textarea(placeholder="平台给付权限正在申请中，目前请留下您的支付宝号码，我们的工作人员会在后台将与您核实将钱转入您的账户。")
+  .button 立即提现
 </template>
 
 <script>
@@ -12,5 +19,40 @@
 
 
 <style lang="less">
-
+.button {
+  width: 94%;
+  line-height: 45px;
+  color: white;
+  background-color: #009fe9;
+  text-align: center;
+  border-radius: 10px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  font-weight: bold;
+  font-size: 18px;
+}
+.title {
+  padding: 0 2%;
+  line-height: 30px;
+  color: #666;
+  background-color: gainsboro;
+}
+input {
+  display: block;
+  width: 96%;
+  height: 40px;
+  font-size: 18px;
+  border: none;
+  padding: 0 2%;
+}
+textarea {
+  width: 96%;
+  padding: 2%;
+  border: none;
+  height: 120px;
+  line-height: 20px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #ccc;
+}
 </style>

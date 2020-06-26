@@ -62,8 +62,10 @@
 <script>
   module.exports = {
     data: {
+      roomInfo: null,
       joinMoney: 5,
-      roomName: ''
+      roomName: '',
+      dakaTime: ''
     },
     created: function () {
       // 注册腾讯验证按钮
@@ -75,6 +77,7 @@
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (data) => {
+        this.data.roomInfo = data
         if (data.finish === 1) {
           setTimeout(() => {
             this.query('.no-button').innerHTML = `已结束!`
@@ -92,7 +95,7 @@
         this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`
         // 计算进度条进度
         this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
-        
+        this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
         this.query('.info').innerText = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
         // 判断是否可以参加挑战
         var dateObj = new Date();
@@ -196,7 +199,7 @@
       })
     },
     joinGame: function () {
-      owo.script.propShow.showProp(`参与此项挑战你需要支付${this.data.joinMoney}元入场费，打卡挑战期数为12期，每1天为一期，打卡时间为9：00-10：00，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, () => {
+      owo.script.propShow.showProp(`参与此项挑战你需要支付${this.data.joinMoney}元入场费，打卡挑战期数为${this.data.roomInfo.avtive_days}期，每1天为一期，打卡时间为${this.data.dakaTime}，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, () => {
         owo.script.propShow.hideProp()
         // owo.go('wallet', 'view-showbox=my')
         // owo.tool.toast('您的余额不足!')
@@ -398,6 +401,7 @@
       top: 10px;
       left: 2px;
       margin: auto;
+      border-radius: 25px;
     }
     span {
       position: absolute;
