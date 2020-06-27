@@ -98,6 +98,18 @@
 		{
 			"name": "dayjs",
 			"src": "http://cunchu.site/owo/script/dayjs.min.js"
+		},
+		{
+			"name": "transform",
+			"src": "https://cunchu.site/owo/script/transform.js"
+		},
+		{
+			"name": "alloy-finger",
+			"src": "https://cunchu.site/owo/script/alloy-finger.js"
+		},
+		{
+			"name": "alloy-crop",
+			"src": "https://cunchu.site/owo/script/alloy-crop.js"
 		}
 	],
 	"styleList": [

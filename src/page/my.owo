@@ -2,6 +2,7 @@
 .my
   .user-info
     .user-bar
+      input.user-image(type="file" o-change="uploadImage")
       img(src="@|user.svg|")
       .user-name
     //- 总收益
@@ -86,7 +87,37 @@
         document.querySelector('.outher-info-box').innerHTML = res
         owo.go('outherInfo')
       })
-      
+    },
+    uploadImage: function (e) {
+      // 更换头像
+      var file = this.$target.files[0];
+      let Orientation = null;
+      var reader = new FileReader(); //声明一个FileReader实例 
+      reader.readAsDataURL(file); //调用readAsDataURL方法来读取选中的图像文件
+      reader.onload = (e) => {
+        new AlloyCrop({
+          image_src: e.target.result,
+          width: 100,
+          height: 100,
+          output: 1,
+          ok: (base64, canvas) => {
+            fetch(`${serverIP}/upload`, { method:"POST", mode: 'cors', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({input: base64})}).then(response => response.json()).then(json => {
+              if (json.err === 0) {
+                this.query('.user-bar img').src = base64
+                getData(`changeUserImage?token=${userInfo.token}&userID=${userInfo.id}&newImage=${json.data}`, (data) => {
+                  owo.tool.toast('头像更换成功!')
+                })
+              } else {
+                owo.tool.toast('头像更换失败!')
+              }
+            })
+          },
+          cancel: function () {
+          },
+          ok_text:"确认",
+          cancel_text:'取消'
+        });
+      }
     }
   }
 </script>
@@ -222,5 +253,12 @@
       margin-top: 20px;
     }
   }
+}
+.user-image {
+  display: block;
+  position: absolute;
+  width: 55px;
+  height: 55px;
+  opacity: 0;
 }
 </style>

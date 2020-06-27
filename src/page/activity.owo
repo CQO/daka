@@ -11,6 +11,7 @@
 <script>
   module.exports = {
     show: function () {
+      if (!userInfo) return
       // 获取房间列表
       getData(`getHomeList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
         let newHtml = ''
@@ -78,8 +79,7 @@ h1 {
   padding: 10px 2vw;
   background-color: white;
   .left {
-    width: 70px;
-    padding: 8px;
+    width: 86px;
     background-color: #f8f8f8;
     border-radius: 10px;
     margin: 3px 5px;
@@ -144,8 +144,7 @@ h1 {
   margin-bottom: 10px;
 }
 .left {
-  width: 34px;
-  padding: 8px;
+  width: 50px;
   background-color: #b5b5b5;
   border-radius: 24px;
   margin: 3px 5px;

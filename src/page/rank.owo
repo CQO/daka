@@ -201,7 +201,7 @@
   width: 19.67%;
   height: 19.67%;
   z-index: -7;
-  border-radius: 35px;
+  border-radius: 55px;
 }
 .so-8 {
   left: 0%;
