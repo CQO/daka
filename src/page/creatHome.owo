@@ -26,6 +26,32 @@
         .select-button(o-class-active="this.data.type == 10" o-tap="changeType(10)") 10元
         .select-button(o-class-active="this.data.type == 50" o-tap="changeType(50)") 50元
         .select-button(o-class-active="this.data.type == 500" o-tap="changeType(500)") 500元
+    .select-image-box.clear
+      .title(font="FZLTCHJW.TTF") 房间图片:
+      .image-select.active(o-tap="changeImage('@|01.png|')")
+        img(src="@|01.png|")
+      .image-select(o-tap="changeImage('@|02.png|')")
+        img(src="@|02.png|")
+      .image-select(o-tap="changeImage('@|03.png|')")
+        img(src="@|03.png|")
+      .image-select(o-tap="changeImage('@|04.png|')")
+        img(src="@|04.png|")
+      .image-select(o-tap="changeImage('@|05.png|')")
+        img(src="@|05.png|")
+      .image-select(o-tap="changeImage('@|06.png|')")
+        img(src="@|06.png|")
+      .image-select(o-tap="changeImage('@|07.png|')")
+        img(src="@|07.png|")
+      .image-select(o-tap="changeImage('@|08.png|')")
+        img(src="@|08.png|")
+      .image-select(o-tap="changeImage('@|09.png|')")
+        img(src="@|09.png|")
+      .image-select(o-tap="changeImage('@|10.png|')")
+        img(src="@|10.png|")
+      .image-select(o-tap="changeImage('@|11.png|')")
+        img(src="@|11.png|")
+      .image-select(o-tap="changeImage('@|12.png|')")
+        img(src="@|12.png|")
     .button(font="FZLTCHJW.TTF" o-tap="creatHome") 创建房间
 </template>
 
@@ -35,7 +61,8 @@
       name: "",
       avtiveDays: 5,
       bonus: 1,
-      type: 0
+      type: 0,
+      imageUrl: '@|01.png|'
     },
     created: function () {
 
@@ -78,7 +105,7 @@
         owo.tool.toast('结束时间没有设置!')
         return
       }
-      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}`, (data) => {
+      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}&imageUrl=${this.data.imageUrl}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('创建成功')
         else alert('创建成功')
         // do something
@@ -100,6 +127,14 @@
         console.log(this)
         this.handleEvent(this, this.query('.select-money-box'))
       }
+    },
+    changeImage: function (url) {
+      this.queryAll('.image-select').forEach(element => {
+        element.classList.remove('active')
+      })
+      console.log(this.$target)
+      this.$target.classList.add('active')
+      this.data.imageUrl = url
     }
   }
 </script>
@@ -177,5 +212,23 @@ input {
 }
 .select-money-box {
   display: none;
+}
+.select-image-box {
+  .image-select {
+    float: left;
+    width: 25%;
+    height: 70px;
+    img {
+      width: 100%;
+      height: auto;
+      user-select: none;
+      pointer-events: none;
+    }
+  }
+  .active {
+    border: 1px solid #009fe9;
+    box-sizing: border-box;
+    background-color: transparent;
+  }
 }
 </style>

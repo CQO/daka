@@ -12,41 +12,39 @@
   module.exports = {
     show: function () {
       // 获取房间列表
-      getData('getHomeList', (data) => {
+      getData(`getHomeList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
         let newHtml = ''
-        
-        
+        // 正在进行的房间列表
+        let roomList = {}
         // 遍历出每一个房间
-        data.forEach(element => {
+        data.homeList.forEach(element => {
           const dataTime = JSON.parse(element.daka_time)
-          newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+          roomList[element.id] = element
+          newHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="${element.image_url}"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
         })
         this.query('.recommend-box').innerHTML = newHtml
-        
+        if (data.myHomeList) {
+          if (data.myHomeList.lenght == 0) this.query('.involved-title').style.display = 'none'
+          let myRoomGtml = ''
+          data.myHomeList.forEach(element => {
+            // 房间的时间
+            const roomTime = JSON.parse(element.daka_time)
+            const nowTime = getNowTime()
+            // 显示的文字
+            let showText = '今日已结束'
+            if (roomTime[0] > nowTime) {
+              showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
+            } else if (roomTime[1] > nowTime) {
+              showText = `可以打卡`
+            }
+            const backgroundImage = roomList[element.room_id] ? roomList[element.room_id].image_url : '@|gift.svg|'
+            myRoomGtml += `<div class="mini-card" o-tap="goInfo(${element.room_id})"><div class="left" style="background-image: url('${backgroundImage}')"></div><div class="cent"><h2>${element.room_name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
+            this.query('.my-recommend-box').innerHTML = myRoomGtml
+          });
+        }
         setTimeout(() => {
           this.handleEvent(this, this.$el)
         }, 100);
-      })
-      getData(`getMyRoom?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
-        if (data.lenght == 0) this.query('.involved-title').style.display = 'none'
-        let myRoomGtml = ''
-        data.forEach(element => {
-          // 房间的时间
-          const roomTime = JSON.parse(element.daka_time)
-          const nowTime = getNowTime()
-          // 显示的文字
-          let showText = '今日已结束'
-          if (roomTime[0] > nowTime) {
-            showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
-          } else if (roomTime[1] > nowTime) {
-            showText = `可以打卡`
-          }
-          myRoomGtml += `<div class="mini-card" o-tap="goInfo(${element.room_id})"><img class="left" src="@|gift.svg|"><div class="cent"><h2>${element.room_name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
-          this.query('.my-recommend-box').innerHTML = myRoomGtml
-          setTimeout(() => {
-            this.handleEvent(this, this.query('.my-recommend-box'))
-          }, 100);
-        });
       })
     },
     goInfo: function (id) {
@@ -82,7 +80,7 @@ h1 {
   .left {
     width: 70px;
     padding: 8px;
-    background-color: #b5b5b5;
+    background-color: #f8f8f8;
     border-radius: 10px;
     margin: 3px 5px;
   }
@@ -151,6 +149,9 @@ h1 {
   background-color: #b5b5b5;
   border-radius: 24px;
   margin: 3px 5px;
+  background-size: 35px;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 .cent {
   width: calc(100% - 150px);
