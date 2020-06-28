@@ -2,9 +2,9 @@
 .withdrawal
   plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="提现申请")
   .title 联系方式
-  input(type="text" placeholder="提现金额")
+  input(type="text" placeholder="您的手机号码")
   .title 提现金额
-  input(type="text")
+  input(type="text" placeholder="您的提现金额")
   .title 收款账户信息
   textarea(placeholder="平台给付权限正在申请中，目前请留下您的支付宝号码，我们的工作人员会在后台将与您核实将钱转入您的账户。")
   .button 立即提现
@@ -34,7 +34,7 @@
 }
 .title {
   padding: 0 2%;
-  line-height: 30px;
+  line-height: 35px;
   color: #666;
   background-color: gainsboro;
 }

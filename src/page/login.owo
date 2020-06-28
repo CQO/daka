@@ -261,6 +261,7 @@
   border-radius: 25px;
   display: block;
   margin-top: 30px;
+  z-index: 99;
 }
 input {
   border: none;
