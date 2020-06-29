@@ -20,7 +20,7 @@
         let newHtml = ``
         data.forEach(element => {
           const time = dayjs(parseInt(element.time)).format('YYYY年MM月DD日 HH:mm:ss')
-          newHtml += `<li><div class="left"><p class="name">${element.source}</p><p>${time}</p></div><div class="right"><span>${element.amount}</span></div></li>`
+          newHtml += `<li><div class="left"><p class="name">${element.source}</p><p>${time}</p></div><div class="right"><span>${element.amount}元</span></div></li>`
         })
         this.query('ul').innerHTML = newHtml
       })

@@ -11,9 +11,12 @@
 <script>
   module.exports = {
     show: function () {
-      if (!userInfo) return
+      let getUrl = 'getHomeList'
+      if (userInfo) {
+        getUrl = `getHomeList?token=${userInfo.token}&userID=${userInfo.id}`
+      }
       // 获取房间列表
-      getData(`getHomeList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+      getData(getUrl, (data) => {
         let newHtml = ''
         // 正在进行的房间列表
         let roomList = {}

@@ -155,7 +155,7 @@
         owo.tool.toast('两次输入的密码不一致哦!')
         return
       }
-      const password = this.encry(this.data.passWord)
+      const password = this.encry(this.data.registerPassWord)
       // 获取是否被邀请的信息
       const variable = _owo.getQueryVariable()
       getData(`/register?username=${this.data.registerUserName}&password=${password}&phone=${this.data.registerPhone}&phoneCode=${this.data.phoneCode}&inviter=${variable.inviter}`, (data) => {
@@ -193,7 +193,7 @@
         owo.tool.toast('手机验证码没有输入!')
         return
       }
-      const password = md5(this.data.forgetPassWordR + 'puge')
+      const password = this.encry(this.data.forgetPassWordR + 'puge')
       getData(`/forget?phone=${this.data.registerPhone}&password=${this.data.forgetPassWord}&code=${this.data.phoneCode}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('密码重置成功!')
         else alert('密码重置成功!')

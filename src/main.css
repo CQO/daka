@@ -10,6 +10,9 @@ body, html {
   -webkit-overflow-scrolling: touch;
   position: relative;
 }
+body, html, .page, .page-box {
+  height: 100%;
+}
 html {
   background-color: white;
   background-repeat: no-repeat;
@@ -104,13 +107,6 @@ img {
   background-image: url("@|stars.svg|");
 }
 
-.no-running .join-button, .no-running .daka-button {
-  display: none;
-}
-.no-running .no-button {
-  display: block;
-}
-
 .compensate .join-button, .compensate .daka-button {
   display: none;
 }
@@ -124,5 +120,13 @@ img {
 }
 
 .finish.info-page .no-button {
+  display: block;
+}
+
+
+.no-running .join-button, .no-running .daka-button, .no-running .compensate-button {
+  display: none;
+}
+.no-running .no-button {
   display: block;
 }

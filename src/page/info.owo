@@ -94,7 +94,7 @@
         // 计算进度条进度
         this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
         this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
-        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
+        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${data.avtive_days - data.clock_days}天]`
         
         this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
 

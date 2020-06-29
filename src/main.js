@@ -48,6 +48,10 @@ function getData (url, callBack) {
           owo.tool.toast('您的余额不足!')
           owo.go('wallet')
           break
+        case 104:
+          owo.tool.toast('补签卡数量不足!')
+          owo.go('myCard')
+          break
         default:
           owo.tool.toast(res.message)
       }

@@ -14,6 +14,7 @@
       .item(o-tap="changeMoney(50)") 50元
       .item(o-tap="changeMoney(100)") 100元
       .item(o-tap="changeMoney(500)") 500元
+      .item(o-tap="changeMoney(5000)") 5000元
   .line
   .card.select
     .weixin
@@ -28,8 +29,13 @@
     data: {
       payInfo: {}
     },
+    show: function () {
+      this.query('.info-bar .right').innerHTML = userInfo.balance + '元'
+    },
     changeMoney: function (number) {
       number = parseInt(number)
+      // 当前金额
+      
       this.query('.money-input').value = number
       if (userInfo.weixin_id) {
         getData(`credit?openid=${userInfo.weixin_id}&num=${number}`, (data) => {
