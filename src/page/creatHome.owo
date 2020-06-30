@@ -3,8 +3,8 @@
   .main-image
   .card-box
     .title(font="FZLTCHJW.TTF") 房间名称:
-    input(type="text" placeholder="请输入和你打卡内容有关的房间名" o-value="this.data.name")
-    .title(font="FZLTCHJW.TTF") 打卡开始时间:
+    input(type="text" placeholder="请输入和您打卡内容有关的房间名" o-value="this.data.name")
+    .title(font="FZLTCHJW.TTF") 报名日期:
     input.start-day(type="date" value="" placeholder="每天打卡开始日期" o-value="this.data.startDay")
     .title(font="FZLTCHJW.TTF") 打卡开始时间:
     input.start-time(type="time" value="10:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
@@ -13,7 +13,7 @@
     .title(font="FZLTCHJW.TTF") 打卡周期:
     input(type="number" placeholder="总计需要打卡多少天" o-value="this.data.avtiveDays")
     .title(font="FZLTCHJW.TTF") 分成比例:
-    input(type="number" placeholder="分成比例(1-99)" o-value="this.data.bonus")
+    input(type="number" placeholder="分成比例(1-99)" o-value="this.data.bonus" max="99")
     .title(font="FZLTCHJW.TTF") 奖励方式:
     .select-button-box
       .select-button.item-1.active(o-tap="changeType(0)") 按比分配

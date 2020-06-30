@@ -13,7 +13,7 @@
   .share-box
     .share
       h2 邀请好友
-      p 你的邀请链接，只有用户通过以下链接注册才会给你分红
+      p 您的邀请链接，只有用户通过以下链接注册才会给您分红
       textarea#invitationLink
       .button-box
         .button(o-tap="copyLink") 复制
@@ -27,7 +27,7 @@
     showLinkBox: function () {
       if (userInfo && userInfo.id) {
         const texta = document.getElementById('invitationLink')
-        texta.value = `${window.location.origin}/?view-loginContent=register&invitation=${userInfo.id}?#login`
+        texta.value = `http://demos.run/daka/index.html?view-loginContent=register&invitation=${userInfo.id}?#login`
         this.query('.share-box').style.display = 'block'
       } else {
         owo.tool.toast('需要登陆后才能使用此功能!')
@@ -38,7 +38,7 @@
       // 比例
       const texta = document.getElementById('invitationLink')
       const num = document.getElementById('invitationNum').value
-      texta.value = `${window.location.origin}/?view-loginContent=register&inviter=${userInfo.id}&num=${num}#login`
+      texta.value = `http://demos.run/daka/index.html?view-loginContent=register&inviter=${userInfo.id}&num=${num}#login`
       texta.select();
       if (document.execCommand(`Copy`)) {
         owo.tool.toast('复制成功!')

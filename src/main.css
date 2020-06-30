@@ -130,3 +130,11 @@ img {
 .no-running .no-button {
   display: block;
 }
+
+.no-attended .no-button {
+  display: none;
+}
+
+.no-attended .join-button {
+  display: block;
+}

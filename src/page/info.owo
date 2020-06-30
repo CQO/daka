@@ -105,7 +105,7 @@
           this.query('.join-card').style.display = 'none'
           this.data.joinMoney = data.type
         }
-        // 判断是否可以参加挑战
+        // 判断是否在挑战时间内
         var dateObj = new Date();
         const nowTime = dateObj.getHours() * 3600 + dateObj.getMinutes() * 60
         if (dakaTime[0] < nowTime && nowTime < dakaTime[1]) {
@@ -149,10 +149,11 @@
               successNum++
             }
           })
-          // console.log(fastestPeople)
+          console.log(myInfo)
           // 判断我有没有参与
           if (myInfo !== null) {
-            console.log(myInfo)
+            this.$el.classList.remove('no-attended')
+            // console.log(myInfo)
             if (myInfo.state == 1) {
               console.log('已成功打卡!')
               this.query('.no-button').innerHTML = `已成功打卡!`
@@ -169,6 +170,8 @@
               this.$el.classList.remove('not-started')
               this.$el.classList.remove('compensate')
             }
+          } else {
+            this.$el.classList.add('no-attended')
           }
           
           // 如果没有打卡成功的则不显示信息框
@@ -209,7 +212,7 @@
       })
     },
     joinGame: function () {
-      owo.script.propShow.showProp(`参与此项挑战你需要支付${this.data.joinMoney}元入场费，打卡挑战期数为${this.data.roomInfo.avtive_days}期，每1天为一期，打卡时间为${this.data.dakaTime}，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, () => {
+      owo.script.propShow.showProp(`参与此项挑战您需要支付${this.data.joinMoney}元入场费，打卡挑战期数为${this.data.roomInfo.avtive_days}期，每1天为一期，打卡时间为${this.data.dakaTime}，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, () => {
         owo.script.propShow.hideProp()
         // owo.go('wallet', 'view-showbox=my')
         // owo.tool.toast('您的余额不足!')
