@@ -12,7 +12,7 @@
     input.new-password-re(type="password")
     .button(o-tap="changePassWord") 修改密码
   .item-box
-    .item
+    .item(o-tap="weixinLoginUrl")
       img(src="@|weixin.png|")
       span 绑定微信
 </template>
@@ -39,6 +39,15 @@
       }
       getData(`changePassWord?token=${userInfo.token}&userID=${userInfo.id}&newPassword=${owo.script.login.encry(newPassword)}`, (data) => {
         owo.tool.toast('密码修改成功!')
+      })
+    },
+    weixinLoginUrl: function () {
+      getData('getWeixinBaseUrl', (url) => {
+        setCookie('bindUserInfo', JSON.stringify({
+          token: userInfo.token,
+          id: userInfo.id
+        }))
+        window.location.replace(url)
       })
     }
   }

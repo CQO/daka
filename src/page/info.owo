@@ -27,7 +27,7 @@
       p 5元
     //- 参加按钮
     .join-button(o-tap="joinGame") 参与挑战
-    .daka-button.captcha-button(data-appid="2092617728" data-cbfn="owo.script.info.dakaCallBack") 立即打卡
+    .daka-button.captcha-button(data-appid="2002224224" data-cbfn="owo.script.info.dakaCallBack") 立即打卡
     //- 补签按钮
     .compensate-button(o-tap="compensate") 立即补签(1张补签卡)
     .no-button
