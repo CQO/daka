@@ -32,7 +32,6 @@
     .view-register(route="register")
       //- 装饰背景
       img.bg-1(src="https://cunchu.site/puge/login/art.png")
-      p.title 欢迎注册PUGE账号
       input.register-input(type="text" o-value="this.data.registerUserName" placeholder="用户昵称")
       input.register-input(type="password" o-value="this.data.registerPassWord" placeholder="密码")
       input.register-input(type="password" o-value="this.data.registerPassWordR" placeholder="确认密码")
@@ -40,6 +39,7 @@
         input.register-input.phone-number(type="text" o-value="this.data.registerPhone" placeholder="手机号码")
         button.captcha-button(data-appid="2092617728" data-cbfn="callback" type="button") 发送验证码
       input.register-input(type="text" o-value="this.data.phoneCode" placeholder="手机验证码")
+      .user-info 注册即代表您已阅读并同意<a href="registerInfo.html">用户协议</a>
       .button(o-tap="register") 注册
 </template>
 
@@ -394,5 +394,14 @@ input {
     display: block;
     margin: 0 auto;
   }
+}
+.user-info {
+  font-size: 12px;
+  line-height: 30px;
+  text-align: right;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 10px;
+  color: #999;
 }
 </style>

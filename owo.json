@@ -193,6 +193,11 @@
 			"name": "outherInfo",
 			"src": "./src/page/outherInfo.owo",
 			"type": "page"
+		},
+		{
+			"name": "myInviter",
+			"src": "./src/page/myInviter.owo",
+			"type": "page"
 		}
 	],
 	"mode": {

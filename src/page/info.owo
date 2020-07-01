@@ -119,11 +119,10 @@
       })
       // 获取当前房间打卡用户
       getData(`getRoomUser?roomID=${roomID}`, (userList) => {
-        console.log(userList)
+        // console.log(userList)
         this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
         // 判断是否加入
         if (userList.length > 0) {
-          
           let myInfo = null
           // 判断打卡成功失败人数
           let successNum = 0
@@ -206,6 +205,7 @@
           this.query('.other-title-bar span').innerHTML = `${successNum}/${userList.length}的参与者已打卡`
           this.query('.other-people').style.display = 'block'
         } else {
+          this.$el.classList.add('no-attended')
           this.$el.classList.remove('not-started')
           this.query('.other-people').style.display = 'none'
         }

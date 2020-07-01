@@ -1,5 +1,5 @@
 <template lang="pug">
-.my-room
+.my-inviter
   .top-box
   ul
 </template>
@@ -7,19 +7,19 @@
 <script>
   module.exports = {
     show: function () {
-      getData(`getCreatRoom?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+      getData(`getInviter?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        let newHtml = ``
         if (data.length == 0) {
           this.query('ul').classList.add('no-data')
           return
         }
         this.query('ul').classList.remove('no-data')
-        let newHtml = ``
         data.forEach(element => {
-          let time = '未知时间'
-          if (element.creat_time) {
-            time = dayjs(parseInt(element.creat_time)).format('YYYY年MM月DD日 HH:mm:ss')
+          let time = '从未登录'
+          if (element.last_login_time) {
+            time = dayjs(parseInt(element.last_login_time * 1000)).format('YYYY年MM月DD日 HH:mm:ss')
           }
-          newHtml += `<li o-tap="goInfo(${element.id})" class="${element.recommend ? 'recommend': ''}"><div class="left"><p class="name">${element.name}</p><p>创建时间: ${time}</p><span>瓜分金额: ${element.money}</span></div></li>`
+          newHtml += `<li o-tap="goInfo(${element.id})"><div class="left"><p class="name">用户名称: ${element.username}</p><p>上次登录时间: ${time}</p></div></li>`
         })
         this.query('ul').innerHTML = newHtml
         setTimeout(() => {
@@ -35,7 +35,7 @@
 
 
 <style lang="less">
-.my-room {
+.my-clock {
   background-color: #f8f8f8;
 }
 .top-box {

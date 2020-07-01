@@ -27,7 +27,7 @@
     showLinkBox: function () {
       if (userInfo && userInfo.id) {
         const texta = document.getElementById('invitationLink')
-        texta.value = `http://demos.run/daka/index.html?view-loginContent=register&invitation=${userInfo.id}?#login`
+        texta.value = `http://dakadaka.net/index.html?view-loginContent=register&invitation=${userInfo.id}?#login`
         this.query('.share-box').style.display = 'block'
       } else {
         owo.tool.toast('需要登陆后才能使用此功能!')
@@ -37,8 +37,7 @@
     copyLink: function () {
       // 比例
       const texta = document.getElementById('invitationLink')
-      const num = document.getElementById('invitationNum').value
-      texta.value = `http://demos.run/daka/index.html?view-loginContent=register&inviter=${userInfo.id}&num=${num}#login`
+      texta.value = `http://dakadaka.net/index.html?view-loginContent=register&inviter=${userInfo.id}#login`
       texta.select();
       if (document.execCommand(`Copy`)) {
         owo.tool.toast('复制成功!')

@@ -95,7 +95,7 @@ if (storUserInfo) {
 getData('getSwiper', (data) => {
   let newHtml = ``
   data.forEach(element => {
-    newHtml += `<div class="swiper-slide"><a href="${element.url}"><img src="${element.image}"><div class="text">${element.desc}</div></a></div>`
+    newHtml += `<div class="swiper-slide"><a href="${element.url}"><img src="${element.image}"><div class="text">${element.description}</div></a></div>`
   })
   document.getElementsByClassName('swiper-wrapper')[0].innerHTML = newHtml
   // 轮播图展示区域swiper

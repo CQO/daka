@@ -8,6 +8,11 @@
   module.exports = {
     show: function () {
       getData(`getClockList?token=${userInfo.token}&userID=${userInfo.id}`, (data) => {
+        if (data.length == 0) {
+          this.query('ul').classList.add('no-data')
+          return
+        }
+        this.query('ul').classList.remove('no-data')
         let newHtml = ``
         data.forEach(element => {
           let time = '未知时间'

@@ -32,6 +32,9 @@
       .item-bar(go="myCard")
         .icon &#xe629;
         .text 我的卡券
+      .item-bar(go="myInviter")
+        .icon &#xe964;
+        .text 我的邀请
       .item-bar(go="changeUserInfo")
         .icon &#xe66b;
         .text 账号设置
