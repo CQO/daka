@@ -295,6 +295,7 @@
           var bindUserInfo = getCookie("bindUserInfo")
           if (bindUserInfo) {
             bindUserInfo = JSON.parse(bindUserInfo)
+            setCookie('bindUserInfo', '')
             getData(`bindWeixin?code=${weixinUserInfo.openid}&userID=${bindUserInfo.id}&token=${bindUserInfo.token}`, (data) => {
               alert('微信绑定成功!')
               window.location.href = (location.origin + location.pathname).replace('weixin.html', 'index.html')
