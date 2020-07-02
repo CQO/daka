@@ -136,10 +136,10 @@
               myInfo = element
             }
             if (element.state === 1) {
-              if (element.clock_time < fastestPeople.clock_time) {
+              if (element.clock_time && (element.clock_time < fastestPeople.clock_time)) {
                 fastestPeople = element
               }
-              if (element.clock_time > lastPeople.clock_time) {
+              if (element.clock_time && (element.clock_time > lastPeople.clock_time)) {
                 lastPeople = element
               }
               if (element.money > moneyPeople.money) {
