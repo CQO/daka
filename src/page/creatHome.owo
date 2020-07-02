@@ -7,7 +7,7 @@
     .title(font="FZLTCHJW.TTF") 报名日期:
     input.start-day(type="date" value="" placeholder="每天打卡开始日期" o-value="this.data.startDay")
     .title(font="FZLTCHJW.TTF") 打卡开始时间:
-    input.start-time(type="time" value="10:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
+    input.start-time(type="time" value="8:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
     .title(font="FZLTCHJW.TTF") 打卡结束时间:
     input.end-time(type="time" value="11:00" placeholder="每天打卡结束时间" o-value="this.data.endTime")
     .title(font="FZLTCHJW.TTF") 打卡周期:
@@ -70,10 +70,9 @@
       return(parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60)
     },
     creatHome: function () {
-      const startTime = this.query('.start-time').value
-      const endTime = this.query('.end-time').value
+      const startTime = this.timeHandle(this.query('.start-time').value)
+      const endTime = this.timeHandle(this.query('.end-time').value)
       const startDay = this.query('.start-day').value
-      console.log(startDay)
       if (!userInfo || !userInfo.token || !userInfo.id) {
         owo.tool.toast('您还未登录!')
         owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
@@ -103,7 +102,15 @@
         owo.tool.toast('结束时间没有设置!')
         return
       }
-      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${this.timeHandle(startTime)},${this.timeHandle(endTime)}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}&imageUrl=${this.data.imageUrl}`, (data) => {
+      if (endTime < startTime) {
+        owo.tool.toast('起始时间不能晚于结束时间!')
+      }
+      if (startTime < 21600 || endTime > 82800) {
+        owo.tool.toast('23:00-06:00不能设置为打卡时间')
+        return
+      }
+      
+      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${startTime},${endTime}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}&imageUrl=${this.data.imageUrl}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('创建成功')
         else alert('创建成功')
         // do something
