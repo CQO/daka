@@ -31,6 +31,7 @@
         return
       }
       getData(`apply?phone=${phoneNum}&token=${userInfo.token}&userID=${userInfo.id}&info=${info}&num=${money}`, () => {
+        userInfo.balance = userInfo.balance - money
         alert('申请成功，我们将于24小时内与您联系')
       })
     }

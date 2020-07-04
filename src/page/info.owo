@@ -40,19 +40,19 @@
         li.fastest
           .left
             img(src="@|user.svg|")
-            span 打卡之星
-            .name 招财进宝
-          .right 06:00:03打卡
+            span 最早打卡
+            .name
+          .right
         li.money
           .left
             img(src="@|user.svg|")
-            span(style=" background-color: darkgoldenrod;") 奖励之星
-            .name 招财进宝
-          .right 0.52元
+            span(style=" background-color: darkgoldenrod;") 土豪之星
+            .name
+          .right
         li.last
           .left
             img(src="@|user.svg|")
-            span(style=" background-color: chartreuse;") 惊险之星
+            span(style=" background-color: chartreuse;") 最晚打卡
             .name
           .right
 </template>
@@ -111,10 +111,20 @@
         if (dakaTime[0] < nowTime && nowTime < dakaTime[1]) {
           this.$el.classList.add('running')
           this.$el.classList.remove('no-running')
+          this.$el.classList.remove('is-close')
         } else {
-          this.query('.no-button').innerHTML = `未到活动时间${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
-          this.$el.classList.add('no-running')
-          this.$el.classList.remove('running')
+          // 判断是否为最后一天且超过打卡时间
+          if ((data.avtive_days - data.clock_days) <= 0 && nowTime > dakaTime[1]) {
+            this.query('.no-button').innerHTML = `将在次日凌晨1点进行结算`
+            this.$el.classList.add('is-close')
+            this.$el.classList.remove('no-running')
+            this.$el.classList.remove('running')
+          } else {
+            this.query('.no-button').innerHTML = `未到活动时间${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
+            this.$el.classList.add('no-running')
+            this.$el.classList.remove('running')
+            this.$el.classList.remove('is-close')
+          }
         }
       })
       // 获取当前房间打卡用户
@@ -123,55 +133,61 @@
         this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
         // 判断是否加入
         if (userList.length > 0) {
-          let myInfo = null
+          
           // 判断打卡成功失败人数
           let successNum = 0
           // 最先打卡者
           let fastestPeople = {clock_time: Infinity,}
           let moneyPeople = {money: 0,}
           let lastPeople = {clock_time: 0}
-          // 遍历打卡人员
-          userList.forEach(element => {
-            if (element.user_id == userInfo.id) {
-              myInfo = element
-            }
-            if (element.state === 1) {
-              if (element.clock_time && (element.clock_time < fastestPeople.clock_time)) {
-                fastestPeople = element
-              }
-              if (element.clock_time && (element.clock_time > lastPeople.clock_time)) {
-                lastPeople = element
-              }
-              if (element.money > moneyPeople.money) {
-                moneyPeople = element
-              }
-              successNum++
-            }
-          })
-          console.log(myInfo)
-          // 判断我有没有参与
-          if (myInfo !== null) {
-            this.$el.classList.remove('no-attended')
-            // console.log(myInfo)
-            if (myInfo.state == 1) {
-              console.log('已成功打卡!')
-              this.query('.no-button').innerHTML = `已成功打卡!`
-              this.$el.classList.add('not-started')
-              this.$el.classList.remove('attended')
-              this.$el.classList.remove('compensate')
-            } else if (myInfo.state == 2) {
-              console.log('可以补签!')
-              this.$el.classList.add('compensate')
-              this.$el.classList.remove('attended')
-              this.$el.classList.remove('not-started')
-            } else {
-              this.$el.classList.add('attended')
-              this.$el.classList.remove('not-started')
-              this.$el.classList.remove('compensate')
-            }
-          } else {
+          // 判断我是否参加
+          if (!userInfo || !userInfo.id) {
             this.$el.classList.add('no-attended')
+          } else {
+            let myInfo = null
+            // 遍历打卡人员
+            userList.forEach(element => {
+              if (element.user_id == userInfo.id) {
+                myInfo = element
+              }
+              if (element.state === 1) {
+                if (element.clock_time && (element.clock_time < fastestPeople.clock_time)) {
+                  fastestPeople = element
+                }
+                if (element.clock_time && (element.clock_time > lastPeople.clock_time)) {
+                  lastPeople = element
+                }
+                if (element.money > moneyPeople.money) {
+                  moneyPeople = element
+                }
+                successNum++
+              }
+            })
+            // 判断我有没有参与
+            if (myInfo !== null) {
+              this.$el.classList.remove('no-attended')
+              // console.log(myInfo)
+              if (myInfo.state == 1) {
+                console.log('已成功打卡!')
+                this.query('.no-button').innerHTML = `已成功打卡!`
+                this.$el.classList.add('not-started')
+                this.$el.classList.remove('attended')
+                this.$el.classList.remove('compensate')
+              } else if (myInfo.state == 2) {
+                console.log('可以补签!')
+                this.$el.classList.add('compensate')
+                this.$el.classList.remove('attended')
+                this.$el.classList.remove('not-started')
+              } else {
+                this.$el.classList.add('attended')
+                this.$el.classList.remove('not-started')
+                this.$el.classList.remove('compensate')
+              }
+            } else {
+              this.$el.classList.add('no-attended')
+            }
           }
+          
           
           // 如果没有打卡成功的则不显示信息框
           if (successNum == 0) {return}
@@ -185,14 +201,14 @@
             this.query('.fastest .name').innerText = data.username
           })
           // 投入最多的人
-          this.query('.money .right').innerText = '至少分得' + moneyPeople.money + '元'
+          this.query('.money .right').innerText = '挑战金额' + moneyPeople.money + '元'
           getData(`getUserShowInfo?userID=${moneyPeople.user_id}`, (data) => {
             if (!data) return
             this.query('.money .name').innerText = data.username
             if (data.image) this.query('.money img').src = data.image
           })
           // 最晚打卡的人
-          this.query('.last .right').innerText = dayjs(parseInt(fastestPeople.clock_time)).format('HH:mm:ss') + '打卡'
+          this.query('.last .right').innerText = dayjs(parseInt(lastPeople.clock_time)).format('HH:mm:ss') + '打卡'
           
           getData(`getUserShowInfo?userID=${lastPeople.user_id}`, (data) => {
             console.log('---------------------------')

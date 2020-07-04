@@ -42,6 +42,13 @@
           this.data.payInfo = data
         })
       } else {
+        getData('getWeixinBaseUrl', (url) => {
+          setCookie('bindUserInfo', JSON.stringify({
+            token: userInfo.token,
+            id: userInfo.id
+          }))
+          window.location.replace(url)
+        })
         owo.tool.toast('请先绑定微信后使用!')
       }
     },
@@ -60,6 +67,13 @@
           })
         })
       } else {
+        getData('getWeixinBaseUrl', (url) => {
+          setCookie('bindUserInfo', JSON.stringify({
+            token: userInfo.token,
+            id: userInfo.id
+          }))
+          window.location.replace(url)
+        })
         owo.tool.toast('请先绑定微信后使用!')
       }
     }

@@ -27,14 +27,14 @@
           roomList[element.id] = element
           // 判断是置顶还是
           if (element.overhead === 1) {
-            topHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="set-top" src="@|settop.png|"><img class="left" src="${element.image_url}"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            topHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="set-top" src="@|settop.png|"><div class="left" style="background-image: url(${element.image_url})"></div><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           } else {
-            nomaHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="left" src="${element.image_url}"><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            nomaHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><div class="left" style="background-image: url(${element.image_url})"></div><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           }
         })
         this.query('.recommend-box').innerHTML = topHtml + nomaHtml
         if (data.myHomeList) {
-          if (data.myHomeList.lenght == 0) this.query('.involved-title').style.display = 'none'
+          this.query('.involved-title').style.display = 'block'
           let myRoomGtml = ''
           data.myHomeList.forEach(element => {
             // 房间的时间
@@ -51,6 +51,8 @@
             myRoomGtml += `<div class="mini-card" o-tap="goInfo(${element.room_id})"><div class="left" style="background-image: url('${backgroundImage}')"></div><div class="cent"><h2>${element.room_name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
             this.query('.my-recommend-box').innerHTML = myRoomGtml
           });
+        } else {
+          this.query('.involved-title').style.display = 'none'
         }
         setTimeout(() => {
           this.handleEvent(this, this.$el)
@@ -89,8 +91,7 @@ h1 {
   background-color: white;
   position: relative;
   .left {
-    width: 86px;
-    background-color: #f8f8f8;
+    width: 60px;
     border-radius: 10px;
     margin: 3px 5px;
   }
@@ -101,17 +102,17 @@ h1 {
     top: -9px;
   }
   .cent {
-    width: calc(100% - 175px);
+    width: calc(100% - 168px);
     margin-left: 8px;
     h2 {
-      font-size: 18px;
+      font-size: 17px;
       line-height: 28px;
       color: #333;
     }
     p {
       font-size: 12px;
       color: #888;
-      height: 26px;
+      height: 20px;
     }
     .number {
       font-size: 12px;
@@ -161,18 +162,17 @@ h1 {
 }
 .left {
   width: 50px;
-  background-color: #b5b5b5;
   border-radius: 24px;
   margin: 3px 5px;
-  background-size: 35px;
+  background-size: 60px;
   background-position: center;
   background-repeat: no-repeat;
 }
 .cent {
-  width: calc(100% - 150px);
+  width: calc(100% - 160px);
   margin-left: 8px;
   h2 {
-    font-size: 16px;
+    font-size: 14px;
     line-height: 28px;
     color: #333;
     height: 28px;
@@ -183,7 +183,7 @@ h1 {
   p {
     font-size: 12px;
     color: #888;
-    line-height: 24px;
+    line-height: 20px;
   }
 }
 .right {
@@ -193,7 +193,7 @@ h1 {
   text-align: center;
   span {
     color: #ec814b;
-    font-size: 20px;
+    font-size: 12px;
     margin: 0 2px;
     font-weight: bold;
   }

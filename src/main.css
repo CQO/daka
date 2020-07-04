@@ -145,3 +145,11 @@ img {
   background-position: center;
   background-size: 100px;
 }
+
+.is-close .no-button {
+  display: block;
+}
+
+.is-close .join-button {
+  display: none;
+}
