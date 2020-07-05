@@ -150,6 +150,6 @@ img {
   display: block;
 }
 
-.is-close .join-button {
+.is-close .join-button, .is-close .join-card {
   display: none;
 }

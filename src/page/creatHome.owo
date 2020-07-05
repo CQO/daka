@@ -7,7 +7,7 @@
     .title(font="FZLTCHJW.TTF") 报名日期:
     input.start-day(type="date" value="" placeholder="每天打卡开始日期" o-value="this.data.startDay")
     .title(font="FZLTCHJW.TTF") 打卡开始时间:
-    input.start-time(type="time" value="8:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
+    input.start-time(type="time" value="08:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")
     .title(font="FZLTCHJW.TTF") 打卡结束时间:
     input.end-time(type="time" value="11:00" placeholder="每天打卡结束时间" o-value="this.data.endTime")
     .title(font="FZLTCHJW.TTF") 打卡周期:
@@ -65,6 +65,8 @@
       type: 0,
       imageUrl: '@|01.png|'
     },
+    show: function () {
+    },
     timeHandle: function (timeText) {
       const timeArr = timeText.split(':')
       return(parseInt(timeArr[0]) * 3600 + parseInt(timeArr[1]) * 60)
@@ -98,12 +100,18 @@
         owo.tool.toast('开始时间没有设置!')
         return
       }
+      const startClock = dayjs(this.query('.start-day').value + ' ' + this.query('.start-time').value)
+      if (startClock.diff() < 0) {
+        owo.tool.toast('开始时间不能早于当前时间!')
+        return
+      }
       if (!endTime) {
         owo.tool.toast('结束时间没有设置!')
         return
       }
       if (endTime < startTime) {
         owo.tool.toast('起始时间不能晚于结束时间!')
+        return
       }
       if (startTime < 21600 || endTime > 82800) {
         owo.tool.toast('23:00-06:00不能设置为打卡时间')

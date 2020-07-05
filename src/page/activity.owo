@@ -27,13 +27,13 @@
           roomList[element.id] = element
           // 判断是置顶还是
           if (element.overhead === 1) {
-            topHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="set-top" src="@|settop.png|"><div class="left" style="background-image: url(${element.image_url})"></div><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
+            topHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><img class="set-top" src="@|zhiding.svg|"><div class="left" style="background-image: url(${element.image_url})"></div><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           } else {
             nomaHtml += `<div class="max-card" o-tap="goInfo(${element.id})"><div class="left" style="background-image: url(${element.image_url})"></div><div class="cent"><h2>${element.name}</h2><p>每天${getTimeStr(dataTime[0])}~${getTimeStr(dataTime[1])}</p><div class="number">可瓜分<span>${element.money}</span>元</div></div><div class="right"><div class="button">参与挑战</div></div></div>`
           }
         })
         this.query('.recommend-box').innerHTML = topHtml + nomaHtml
-        if (data.myHomeList) {
+        if (data.myHomeList && data.myHomeList.length > 0) {
           this.query('.involved-title').style.display = 'block'
           let myRoomGtml = ''
           data.myHomeList.forEach(element => {
@@ -90,6 +90,7 @@ h1 {
   padding: 10px 2vw;
   background-color: white;
   position: relative;
+  overflow: hidden;
   .left {
     width: 60px;
     border-radius: 10px;
@@ -97,9 +98,9 @@ h1 {
   }
   .set-top {
     position: absolute;
-    right: -4px;
-    width: 20px;
-    top: -9px;
+    left: 0;
+    top: 0;
+    width: 35px;
   }
   .cent {
     width: calc(100% - 168px);
@@ -207,5 +208,8 @@ h1 {
     color: white;
     line-height: 25px;
   }
+}
+.involved-title {
+  display: none;
 }
 </style>

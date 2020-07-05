@@ -1,0 +1,8 @@
+<template lang="pug">
+.loading
+  .puge-loading(src="https://cunchu.site/puge/res/loading.svg" width="180" type="image/svg+xml" pluginspage="http://www.adobe.com/svg/viewer/install/")
+</template>
+
+<style lang="less">
+
+</style>

@@ -215,7 +215,8 @@
 			"server": true,
 			"autoReload": true,
 			"remoteDebug": true,
-			"watcherEnable": true
+			"watcherEnable": true,
+			"addVersion": false
 		},
 		"build": {
 			"debug": false,
@@ -232,7 +233,8 @@
 				"merge": false,
 				"allAnimate": false
 			},
-			"startAtHome": false
+			"startAtHome": false,
+			"addVersion": true
 		}
 	},
 	"globalAni": {
