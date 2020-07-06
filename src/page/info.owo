@@ -94,7 +94,9 @@
         // 计算进度条进度
         this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
         this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
-        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${data.avtive_days - data.clock_days}天]`
+        // 剩余几天
+        const shengyu = (dayjs(data.start_day).diff() < 0 ? 0 : 1) + (data.avtive_days - data.clock_days)
+        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
         
         this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
 
@@ -114,7 +116,7 @@
           this.$el.classList.remove('is-close')
         } else {
           // 判断是否为最后一天且超过打卡时间
-          if (dayjs(data.start_day).diff() < 0 && (data.avtive_days - data.clock_days) <= 0 && nowTime > dakaTime[1]) {
+          if (dayjs(data.start_day).diff() < 0 && (shengyu) <= 0 && nowTime > dakaTime[1]) {
             this.query('.no-button').innerHTML = `将在次日0点进行结算`
             this.$el.classList.add('is-close')
             this.$el.classList.remove('no-running')
@@ -157,6 +159,7 @@
             }
           } else {
             this.$el.classList.add('no-attended')
+            this.$el.classList.remove('attended')
           }
         } else {
           this.$el.classList.add('no-attended')
@@ -193,26 +196,27 @@
       })
       // 如果没有打卡成功的则不显示信息框
       if (successNum == 0) {
-        return null
+        return myInfo
       }
+
       // 最快的人
       this.query('.fastest .right').innerText = dayjs(parseInt(fastestPeople.clock_time)).format('HH:mm:ss') + '打卡'
       getData(`getUserShowInfo?userID=${fastestPeople.user_id}`, (data) => {
-        if (!data) return
+        if (!data) return myInfo
         if (data.image) this.query('.fastest img').src = data.image
         this.query('.fastest .name').innerText = data.username
       })
       // 投入最多的人
       this.query('.money .right').innerText = '挑战金额' + moneyPeople.money + '元'
       getData(`getUserShowInfo?userID=${moneyPeople.user_id}`, (data) => {
-        if (!data) return
+        if (!data) return myInfo
         this.query('.money .name').innerText = data.username
         if (data.image) this.query('.money img').src = data.image
       })
       // 最晚打卡的人
       this.query('.last .right').innerText = dayjs(parseInt(lastPeople.clock_time)).format('HH:mm:ss') + '打卡'
       getData(`getUserShowInfo?userID=${lastPeople.user_id}`, (data) => {
-        if (!data) return
+        if (!data) return myInfo
         if (data.image) this.query('.last img').src = data.image
         this.query('.last .name').innerText = data.username
       })
