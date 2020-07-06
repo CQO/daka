@@ -106,6 +106,10 @@
           this.query('.join-card-red').style.display = 'flex'
           this.query('.join-card').style.display = 'none'
           this.data.joinMoney = data.type
+        } else {
+          this.query('.join-card-red').style.display = 'none'
+          this.query('.join-card').style.display = 'block'
+          this.data.joinMoney = 5
         }
         // 判断是否在挑战时间内
         var dateObj = new Date();

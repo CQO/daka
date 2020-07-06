@@ -42,11 +42,24 @@
             const nowTime = getNowTime()
             // 显示的文字
             let showText = '今日已结束'
-            if (roomTime[0] > nowTime) {
-              showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
-            } else if (roomTime[1] > nowTime) {
-              showText = `可以打卡`
+            switch (element.state) {
+              case 1:
+                showText = '已经打卡'
+                break;
+              case 2:
+                showText = '需要补签'
+                break;
+              case 3:
+                showText = '打卡失败'
+                break;
+              default:
+                if (roomTime[0] > nowTime) {
+                  showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
+                } else if (roomTime[1] > nowTime) {
+                  showText = `可以打卡`
+                }
             }
+            
             const backgroundImage = roomList[element.room_id] ? roomList[element.room_id].image_url : '@|gift.svg|'
             myRoomGtml += `<div class="mini-card" o-tap="goInfo(${element.room_id})"><div class="left" style="background-image: url('${backgroundImage}')"></div><div class="cent"><h2>${element.room_name}</h2><p>每日打卡时间: [${getTimeStr(roomTime[0])} - ${getTimeStr(roomTime[1])}]</p></div><div class="right"><p>${showText}</p><div class="button">查看详情</div></div></div>`
             this.query('.my-recommend-box').innerHTML = myRoomGtml
