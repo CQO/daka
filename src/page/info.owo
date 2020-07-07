@@ -182,7 +182,7 @@
       this.query('.other-people').style.display = 'none'
       // 遍历打卡人员
       userList.forEach(element => {
-        if (element.user_id == userInfo.id) {
+        if (userInfo && element.user_id == userInfo.id) {
           myInfo = element
         }
         if (element.state === 1) {
