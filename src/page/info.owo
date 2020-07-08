@@ -108,9 +108,14 @@
         // 剩余几天
         const shengyu = (dayjs(data.start_day).diff() < 0 ? 0 : 1) + (data.avtive_days - data.clock_days)
         if (shengyu > 0) {
-          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
+          if (dayjs(data.start_day).diff() < 0) {
+            this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
+          } else {
+            this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [${data.start_day}开始]`
+          }
+          
         } else if (shengyu == 0) {
-          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [今日结束]`
+          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [最后一天]`
         } else {
           this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
         }
