@@ -74,17 +74,28 @@
     show: function () {
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id 
-      getData(`getRoomInfo?roomID=${roomID}`, (data) => {
-        this.data.roomInfo = data
+      getData(`getRoomInfo?roomID=${roomID}`, (infoData) => {
+        const data = infoData.roomInfo
+        const userList = infoData.userInfo
+        
         if (data.finish === 1) {
-          setTimeout(() => {
-            this.query('.no-button').innerHTML = `已结束!`
-          }, 100);
           this.$el.classList.add('finish')
           // 如果游戏结束了那么标记房间结束
-          getData(`markRoom?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}`)
+          if (userInfo) getData(`markRoom?roomID=${roomID}&token=${userInfo.token}&userID=${userInfo.id}`)
+          // 处理打卡结束后的结算信息
+          let noButtonText = '已结束'
+          infoData.userInfo.forEach(element => {
+            if (element.id === userInfo.id && element.income) {
+              noButtonText = `分得${element.income}元`
+            }
+          })
+          setTimeout(() => {
+            this.query('.no-button').innerHTML = noButtonText
+          }, 0);
+          this.query('.join-card').style.display = 'none'
         } else {
           this.$el.classList.remove('finish')
+          this.query('.join-card').style.display = 'block'
         }
         // 打卡时间
         let dakaTime = JSON.parse(data.daka_time)
@@ -96,7 +107,14 @@
         this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
         // 剩余几天
         const shengyu = (dayjs(data.start_day).diff() < 0 ? 0 : 1) + (data.avtive_days - data.clock_days)
-        this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
+        if (shengyu > 0) {
+          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
+        } else if (shengyu == 0) {
+          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [今日结束]`
+        } else {
+          this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
+        }
+        
         
         this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
 
@@ -108,7 +126,6 @@
           this.data.joinMoney = data.type
         } else {
           this.query('.join-card-red').style.display = 'none'
-          this.query('.join-card').style.display = 'block'
           this.data.joinMoney = 5
         }
         // 判断是否在挑战时间内
@@ -132,43 +149,7 @@
             this.$el.classList.remove('is-close')
           }
         }
-      })
-      // 获取当前房间打卡用户
-      getData(`getRoomUser?roomID=${roomID}`, (userList) => {
-        // console.log(userList)
-        this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
-        // 判断是否加入
-        if (userList.length > 0) {
-          // 判断我是否登录
-          let myInfo = this.getClockInfo(userList)
-          // 判断我有没有参与
-          if (myInfo !== null) {
-            this.$el.classList.remove('no-attended')
-            // console.log(myInfo)
-            if (myInfo.state == 1) {
-              console.log('已成功打卡!')
-              this.query('.no-button').innerHTML = `已成功打卡!`
-              this.$el.classList.add('not-started')
-              this.$el.classList.remove('attended')
-              this.$el.classList.remove('compensate')
-            } else if (myInfo.state == 2) {
-              console.log('可以补签!')
-              this.$el.classList.add('compensate')
-              this.$el.classList.remove('attended')
-              this.$el.classList.remove('not-started')
-            } else {
-              this.$el.classList.add('attended')
-              this.$el.classList.remove('not-started')
-              this.$el.classList.remove('compensate')
-            }
-          } else {
-            this.$el.classList.add('no-attended')
-            this.$el.classList.remove('attended')
-          }
-        } else {
-          this.$el.classList.add('no-attended')
-          this.$el.classList.remove('not-started')
-        }
+        this.handUserInfo(userList)
       })
     },
     getClockInfo: function (userList) {
@@ -227,6 +208,41 @@
       this.query('.other-people').style.display = 'block';
       this.query('.other-title-bar span').innerHTML = `${successNum}/${userList.length}的参与者已打卡`
       return myInfo
+    },
+    handUserInfo: function (userList) {
+      this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
+      // 判断是否加入
+      if (userList.length > 0) {
+        // 判断我是否登录
+        let myInfo = this.getClockInfo(userList)
+        // 判断我有没有参与
+        if (myInfo !== null) {
+          this.$el.classList.remove('no-attended')
+          // console.log(myInfo)
+          if (myInfo.state == 1) {
+            console.log('已成功打卡!')
+            this.query('.no-button').innerHTML = `已成功打卡!`
+            this.$el.classList.add('not-started')
+            this.$el.classList.remove('attended')
+            this.$el.classList.remove('compensate')
+          } else if (myInfo.state == 2) {
+            console.log('可以补签!')
+            this.$el.classList.add('compensate')
+            this.$el.classList.remove('attended')
+            this.$el.classList.remove('not-started')
+          } else {
+            this.$el.classList.add('attended')
+            this.$el.classList.remove('not-started')
+            this.$el.classList.remove('compensate')
+          }
+        } else {
+          this.$el.classList.add('no-attended')
+          this.$el.classList.remove('attended')
+        }
+      } else {
+        this.$el.classList.add('no-attended')
+        this.$el.classList.remove('not-started')
+      }
     },
     joinGame: function () {
       if (!userInfo || !userInfo.token || !userInfo.id) {
