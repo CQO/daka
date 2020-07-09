@@ -76,6 +76,7 @@
       const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (infoData) => {
         const data = infoData.roomInfo
+        this.data.roomInfo = data
         const userList = infoData.userInfo
         
         if (data.finish === 1) {
@@ -255,6 +256,7 @@
         owo.go('login/view-loginContent=login/moveToLeft/moveFromRight//moveToRight/moveFromLeft')
         return
       }
+      console.log(this.data.roomInfo)
       owo.script.propShow.showProp(`参与此项挑战您需要支付${this.data.joinMoney}元入场费，打卡挑战期数为${this.data.roomInfo.avtive_days}期，每1天为一期，打卡时间为${this.data.dakaTime}，挑战成功即可与其它胜利者瓜分奖池奖金，挑战成功人数越少您分得的奖金越多。`, () => {
         owo.script.propShow.hideProp()
         // owo.go('wallet', 'view-showbox=my')
