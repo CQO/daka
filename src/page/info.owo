@@ -75,6 +75,20 @@
       // 获取房间信息
       const roomID = _owo.getQueryVariable().id 
       getData(`getRoomInfo?roomID=${roomID}`, (infoData) => {
+        // 清除之前页面的class
+        this.$el.classList.remove('attended')
+        this.$el.classList.remove('compensate')
+        this.$el.classList.remove('not-started')
+        this.$el.classList.remove('running')
+        this.$el.classList.remove('is-close')
+        this.$el.classList.remove('no-attended')
+        this.$el.classList.remove('finish')
+        this.$el.classList.remove('fail')
+        this.query('.other-people').style.display = 'none'
+        this.query('.user-show').style.display = 'none'
+        this.query('.join-card').style.display = 'none'
+        this.query('.join-card-red').style.display = 'none'
+
         const data = infoData.roomInfo
         this.data.roomInfo = data
         const userList = infoData.userInfo
@@ -93,9 +107,7 @@
           setTimeout(() => {
             this.query('.no-button').innerHTML = noButtonText
           }, 0);
-          this.query('.join-card').style.display = 'none'
         } else {
-          this.$el.classList.remove('finish')
           this.query('.join-card').style.display = 'block'
         }
         // 打卡时间
@@ -112,47 +124,50 @@
           if (dayjs(data.start_day).diff() < 0) {
             this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [总天数${data.avtive_days}天/剩余${shengyu}天]`
           } else {
-            this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [${data.start_day}开始]`
+            this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 ${data.start_day}开始 共${data.avtive_days}天`
+            this.query('.no-button').innerHTML = `${data.start_day} 正式开始`
+            this.$el.classList.add('no-running')
+            return
           }
           
         } else if (shengyu == 0) {
           this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 [最后一天]`
         } else {
           this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡`
+          return
         }
         
         
         this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
-
+        this.query('.user-show').style.display = 'block'
         // 判断是否为固定加入金额
         if (data.type != 0) {
           this.query('.join-card-red').innerHTML = `<span>挑战金额:</span><span>${data.type}元</span>`
           this.query('.join-card-red').style.display = 'flex'
-          this.query('.join-card').style.display = 'none'
           this.data.joinMoney = data.type
         } else {
-          this.query('.join-card-red').style.display = 'none'
+          
           this.data.joinMoney = 5
         }
         // 判断是否在挑战时间内
         var dateObj = new Date();
         const nowTime = dateObj.getHours() * 3600 + dateObj.getMinutes() * 60
-        if (dakaTime[0] < nowTime && nowTime < dakaTime[1]) {
+        // 加20秒便于用户打卡
+        if (dakaTime[0] < nowTime + 20 && nowTime < dakaTime[1]) {
           this.$el.classList.add('running')
-          this.$el.classList.remove('no-running')
-          this.$el.classList.remove('is-close')
         } else {
           // 判断是否为最后一天且超过打卡时间
-          if (dayjs(data.start_day).diff() < 0 && (shengyu) <= 0 && nowTime > dakaTime[1]) {
+          
+          let lastDay = dayjs(data.start_day).add(data.avtive_days - 1, 'day')
+          let isLastDay = lastDay.diff() < 0
+          console.log(isLastDay)
+          console.log(lastDay.valueOf(), dayjs().valueOf(), lastDay.valueOf()- dayjs().valueOf())
+          if ((data.clock_days >= data.avtive_days) && isLastDay && nowTime > dakaTime[1]) {
             this.query('.no-button').innerHTML = `将在次日0点进行结算`
             this.$el.classList.add('is-close')
-            this.$el.classList.remove('no-running')
-            this.$el.classList.remove('running')
           } else {
             this.query('.no-button').innerHTML = `未到活动时间${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
             this.$el.classList.add('no-running')
-            this.$el.classList.remove('running')
-            this.$el.classList.remove('is-close')
           }
         }
         this.handUserInfo(userList)
@@ -166,7 +181,6 @@
       let fastestPeople = {clock_time: Infinity,}
       let moneyPeople = {money: 0,}
       let lastPeople = {clock_time: 0}
-      this.query('.other-people').style.display = 'none'
       // 遍历打卡人员
       userList.forEach(element => {
         if (userInfo && element.user_id == userInfo.id) {
@@ -216,6 +230,7 @@
       return myInfo
     },
     handUserInfo: function (userList) {
+
       this.query('.user-show span').innerText = `当前有${userList.length}人参与打卡`
       // 判断是否加入
       if (userList.length > 0) {
@@ -223,31 +238,22 @@
         let myInfo = this.getClockInfo(userList)
         // 判断我有没有参与
         if (myInfo !== null) {
-          this.$el.classList.remove('no-attended')
           // console.log(myInfo)
           if (myInfo.state == 1) {
             console.log('已成功打卡!')
             this.query('.no-button').innerHTML = `已成功打卡!`
             this.$el.classList.add('not-started')
-            this.$el.classList.remove('attended')
-            this.$el.classList.remove('compensate')
           } else if (myInfo.state == 2) {
             console.log('可以补签!')
             this.$el.classList.add('compensate')
-            this.$el.classList.remove('attended')
-            this.$el.classList.remove('not-started')
           } else {
             this.$el.classList.add('attended')
-            this.$el.classList.remove('not-started')
-            this.$el.classList.remove('compensate')
           }
         } else {
           this.$el.classList.add('no-attended')
-          this.$el.classList.remove('attended')
         }
       } else {
         this.$el.classList.add('no-attended')
-        this.$el.classList.remove('not-started')
       }
     },
     joinGame: function () {

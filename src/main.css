@@ -115,7 +115,7 @@ img {
   display: block;
 }
 
-.finish.info-page .join-button, .finish.info-page .daka-button, .finish.info-page .compensate-button {
+.finish.info-page .join-button, .finish.info-page .daka-button {
   display: none;
 }
 
@@ -124,7 +124,7 @@ img {
 }
 
 
-.no-running .join-button, .no-running .daka-button, .no-running .compensate-button {
+.no-running .join-button, .no-running .daka-button {
   display: none;
 }
 .no-running .no-button {
@@ -150,6 +150,6 @@ img {
   display: block;
 }
 
-.is-close .join-button, .is-close .join-card {
+.is-close .join-button, .is-close .join-cardm, .is-close .daka-button {
   display: none;
 }

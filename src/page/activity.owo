@@ -40,8 +40,9 @@
             // 房间的时间
             const roomTime = JSON.parse(element.daka_time)
             const nowTime = getNowTime()
+            console.log(element)
             // 显示的文字
-            let showText = '今日已结束'
+            let showText = ''
             switch (element.state) {
               case 1:
                 showText = '已经打卡'
@@ -57,6 +58,8 @@
                   showText = `将于<span>${getTimeStr(roomTime[0])}</span>开始`
                 } else if (roomTime[1] > nowTime) {
                   showText = `可以打卡`
+                } else if (roomTime[1] < nowTime) {
+                  showText = '今日已结束'
                 }
             }
             
