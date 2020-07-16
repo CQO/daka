@@ -3,7 +3,7 @@
   plug(_name="module8" _src="https://template.owo.ink/a15de138d45c3d51.owo" _title="提现申请")
   .title 联系方式
   input.phone(type="text" placeholder="您的手机号码")
-  .title 提现金额(提现后24小时内到账，费率0.8%)
+  .title 提现金额(只能为整数,提现后24小时内到账，费率0.8%)
   input.money(type="number" placeholder="您的提现金额")
   .title 收款账户信息
   textarea.info(placeholder="平台给付权限正在申请中，目前请留下您的支付宝号码，我们的工作人员会在后台将与您核实将钱转入您的账户。")
@@ -16,7 +16,8 @@
     },
     apply: function () {
       const phoneNum = this.query('.phone').value
-      const money = parseFloat(this.query('.money').value)
+      const money = parseInt(this.query('.money').value)
+      this.query('.money').value = money
       const info = this.query('.info').value
       if (!phoneNum) {
         owo.tool.toast('手机号码不能为空!')

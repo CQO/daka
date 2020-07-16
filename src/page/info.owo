@@ -84,6 +84,7 @@
         this.$el.classList.remove('no-attended')
         this.$el.classList.remove('finish')
         this.$el.classList.remove('fail')
+        this.$el.classList.remove('no-running')
         this.query('.other-people').style.display = 'none'
         this.query('.user-show').style.display = 'none'
         this.query('.join-card').style.display = 'none'
@@ -107,14 +108,12 @@
           setTimeout(() => {
             this.query('.no-button').innerHTML = noButtonText
           }, 0);
-        } else {
-          this.query('.join-card').style.display = 'block'
         }
         // 打卡时间
         let dakaTime = JSON.parse(data.daka_time)
         this.data.roomName = data.name
         this.query('.title-bar h2').innerText = data.name
-        this.query('.title-bar h3').innerHTML = `当前挑战金额 <span>${data.money}</span> 元`
+        this.query('.title-bar h3').innerHTML = `奖池金额 <span>${data.money}</span> 元`
         // 计算进度条进度
         this.query('.progress').style.width = (data.clock_days / data.avtive_days) * 100 + '%'
         this.data.dakaTime = `${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}`
@@ -127,7 +126,6 @@
             this.query('.info').innerHTML = `每天${getTimeStr(dakaTime[0])}-${getTimeStr(dakaTime[1])}打卡 ${data.start_day}开始 共${data.avtive_days}天`
             this.query('.no-button').innerHTML = `${data.start_day} 正式开始`
             this.$el.classList.add('no-running')
-            return
           }
           
         } else if (shengyu == 0) {
@@ -146,7 +144,7 @@
           this.query('.join-card-red').style.display = 'flex'
           this.data.joinMoney = data.type
         } else {
-          
+          this.query('.join-card').style.display = 'block'
           this.data.joinMoney = 5
         }
         // 判断是否在挑战时间内
@@ -349,7 +347,6 @@
   font-size: 14px;
   color: #888;
   line-height: 24px;
-  height: 24px;
 }
 .progress-box {
   height: 8px;

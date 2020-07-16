@@ -135,9 +135,6 @@ img {
   display: none;
 }
 
-.no-attended .join-button {
-  display: block;
-}
 
 .no-data {
   background-image: url('@|no-data.png|');
@@ -147,6 +144,10 @@ img {
 }
 
 .is-close .no-button {
+  display: block;
+}
+
+.no-attended .join-button {
   display: block;
 }
 
