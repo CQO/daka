@@ -14,6 +14,8 @@
     input(type="number" placeholder="总计需要打卡多少天" o-value="this.data.avtiveDays")
     .title(font="FZLTCHJW.TTF") 分成比例:
     input(type="number" placeholder="分成比例(1-99)" o-value="this.data.bonus" max="99")
+    .title(font="FZLTCHJW.TTF") 房间宣言:
+    input(type="text" placeholder="介绍一些房间信息" o-value="this.data.roomText")
     .title(font="FZLTCHJW.TTF") 奖励方式:
     .select-button-box
       .select-button.item-1.active(o-tap="changeType(0)") 按比分配
@@ -63,7 +65,8 @@
       avtiveDays: 5,
       bonus: 1,
       type: 0,
-      imageUrl: '@|01.png|'
+      imageUrl: '@|01.png|',
+      roomText: ''
     },
     show: function () {
     },
@@ -118,7 +121,7 @@
         return
       }
       
-      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${startTime},${endTime}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}&imageUrl=${this.data.imageUrl}`, (data) => {
+      getData(`creathome?name=${this.data.name}&avtiveDays=${this.data.avtiveDays}&bonus=${this.data.bonus}&dakaTime=[${startTime},${endTime}]&token=${userInfo.token}&userID=${userInfo.id}&startDay=${startDay}&type=${this.data.type}&imageUrl=${this.data.imageUrl}&roomText=${this.data.roomText}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('创建成功')
         else alert('创建成功')
         // do something

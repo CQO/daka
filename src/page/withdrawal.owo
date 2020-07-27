@@ -5,7 +5,9 @@
   input.phone(type="text" placeholder="您的手机号码")
   .title 提现金额(只能为整数,提现后24小时内到账，费率0.8%)
   input.money(type="number" placeholder="您的提现金额")
-  .title 收款账户信息
+  .title 姓名
+  input.name(type="text" placeholder="请输入支付宝账号姓名")
+  .title 支付宝账号
   textarea.info(placeholder="平台给付权限正在申请中，目前请留下您的支付宝号码，我们的工作人员会在后台将与您核实将钱转入您的账户。")
   .button(o-tap="apply") 立即提现
 </template>
@@ -19,6 +21,7 @@
       const money = parseInt(this.query('.money').value)
       this.query('.money').value = money
       const info = this.query('.info').value
+      const name = this.query('.name').value
       if (!phoneNum) {
         owo.tool.toast('手机号码不能为空!')
         return
@@ -27,11 +30,15 @@
         owo.tool.toast('提现金额不能为空!')
         return
       }
+      if (!name) {
+        owo.tool.toast('支付宝账号姓名不能为空!')
+        return
+      }
       if (money > userInfo.balance) {
         alert('提现金额不能大于用户余额!')
         return
       }
-      getData(`apply?phone=${phoneNum}&token=${userInfo.token}&userID=${userInfo.id}&info=${info}&num=${money}`, () => {
+      getData(`apply?phone=${phoneNum}&token=${userInfo.token}&userID=${userInfo.id}&info=${info}&num=${money}&name=${name}`, () => {
         userInfo.balance = userInfo.balance - money
         alert('申请成功，我们将于24小时内与您联系')
       })

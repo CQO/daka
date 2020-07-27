@@ -13,7 +13,8 @@
     //- 用户展示
     .user-show.card
       span
-      p
+      p.room-info
+      p.message
     //- 设置挑战金额
     .join-card.card
       .title(font="FZLTCHJW.TTF") 可选挑战金额:
@@ -135,8 +136,10 @@
           return
         }
         
-        
-        this.query('.user-show p').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
+        if (data.roomText) {
+          this.query('.user-show .message').innerHTML = `用户留言: ${data.roomText}`
+        }
+        this.query('.user-show .room-info').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
         this.query('.user-show').style.display = 'block'
         // 判断是否为固定加入金额
         if (data.type != 0) {
@@ -241,12 +244,15 @@
             console.log('已成功打卡!')
             this.query('.no-button').innerHTML = `已成功打卡!`
             this.$el.classList.add('not-started')
+            this.query('.title-bar h2').innerText = this.query('.title-bar h2').innerText + `已经打卡`
           } else if (myInfo.state == 2) {
             console.log('可以补签!')
             this.$el.classList.add('compensate')
+            this.query('.title-bar h2').innerText = this.query('.title-bar h2').innerText + `需要补签`
           } else {
             this.$el.classList.add('attended')
           }
+          
         } else {
           this.$el.classList.add('no-attended')
         }
