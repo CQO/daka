@@ -193,8 +193,8 @@
         owo.tool.toast('手机验证码没有输入!')
         return
       }
-      const password = this.encry(this.data.forgetPassWordR + 'puge')
-      getData(`/forget?phone=${this.data.registerPhone}&password=${this.data.forgetPassWord}&code=${this.data.phoneCode}`, (data) => {
+      const password = this.encry(this.data.forgetPassWordR)
+      getData(`/forget?phone=${this.data.registerPhone}&password=${password}&code=${this.data.phoneCode}`, (data) => {
         if (owo.tool.toast) owo.tool.toast('密码重置成功!')
         else alert('密码重置成功!')
         this.toLogin()
