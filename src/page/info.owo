@@ -137,7 +137,9 @@
         }
         
         if (data.roomText) {
-          this.query('.user-show .message').innerHTML = `用户留言: ${data.roomText}`
+          this.query('.user-show .message').innerHTML = `房间宣言: ${data.roomText}`
+        } else {
+          this.query('.user-show .message').innerHTML = ''
         }
         this.query('.user-show .room-info').innerHTML = `<span>奖金分配模式: <span class="type">${data.type == 0 ? '按比例分配' : '随机分配'}</span></span> <span>房间佣金: ${data.bonus}%</span>`
         this.query('.user-show').style.display = 'block'

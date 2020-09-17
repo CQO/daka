@@ -28,6 +28,11 @@
     created: function () {
       this.showReward()
     },
+    show: function () {
+      // if ('_cordovaNative' in window) {
+      //   StatusBar.backgroundColorByHexString("#cb79d3");
+      // }
+    },
     showReward: function () {
       this.$el.classList.remove('invite')
       // 获取房间列表

@@ -202,7 +202,19 @@
     },
     weixinLoginUrl: function () {
       getData('getWeixinLoginUrl', (url) => {
-        window.location.replace(url)
+        // 判断是否app模式
+        if ('_cordovaNative' in window) {
+          var scope = "snsapi_userinfo",
+              state = "_" + (+new Date());
+
+          Wechat.auth(function (installed) {
+              alert("Wechat installed: " + (installed ? "Yes" : "No"));
+          }, function (reason) {
+              alert("Failed: " + reason);
+          });
+        } else {
+          window.location.replace(url)
+        }
       })
     }
   }

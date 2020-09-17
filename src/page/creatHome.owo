@@ -4,7 +4,7 @@
   .card-box
     .title(font="FZLTCHJW.TTF") 房间名称:
     input(type="text" placeholder="请输入和您打卡内容有关的房间名" o-value="this.data.name")
-    .title(font="FZLTCHJW.TTF") 报名日期:
+    .title(font="FZLTCHJW.TTF") 开始打卡日期:
     input.start-day(type="date" value="" placeholder="每天打卡开始日期" o-value="this.data.startDay")
     .title(font="FZLTCHJW.TTF") 打卡开始时间:
     input.start-time(type="time" value="08:00" placeholder="每天打卡开始时间" o-value="this.data.startTime")

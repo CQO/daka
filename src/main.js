@@ -1,3 +1,10 @@
+
+if ('_cordovaNative' in window) {
+  var scriptcordova = document.createElement('script');
+  scriptcordova.async = false;
+  scriptcordova.src = 'cordova.js';
+  document.head.appendChild(scriptcordova);
+}
 function scrollIntoView () {
   window.scrollTo(0, 0)
 }
@@ -133,3 +140,10 @@ function getCookie(c_name) {
   }
   return ""
 }
+
+document.addEventListener('deviceready', onDeviceReady, false);
+
+function onDeviceReady() {
+  
+}
+
